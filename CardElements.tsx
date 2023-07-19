@@ -96,11 +96,13 @@ interface CardNumberProps {
 export class CardNumberElementClass extends Component<CardNumberProps> {
   private ref: React.RefObject<TextInput>;
   private readonly id: string;
+  #value: string;
 
   constructor(props: CardNumberProps) {
     super(props);
     this.ref = React.createRef();
     this.id = uuid.v4() as string;
+    this.#value = '';
   }
 
   #testFunction() {

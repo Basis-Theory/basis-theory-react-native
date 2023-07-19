@@ -98,7 +98,7 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <CardNumberElementClass btRef={ref} style={styles.input} />
+          <CardNumberElement btRef={ref} style={styles.input} />
           <Text
             style={[
               styles.sectionDescription,
