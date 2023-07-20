@@ -81,8 +81,11 @@ export const useCardNumber = ({ btRef, inputBtRef }: UseCardNumberParams) => {
 
   useEffect(() => {
     if (inputBtRef) {
+      const elementValue = _elementValues[inputBtRef.id];
       const newTextInputValue = inputBtRef.format(
-        _elementValues[inputBtRef.id]
+        typeof elementValue === 'string'
+          ? elementValue
+          : JSON.stringify(elementValue)
       );
       setTextInputValue(newTextInputValue);
     }

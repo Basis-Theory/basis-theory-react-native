@@ -11,6 +11,7 @@
   "dependencies": {
     "@basis-theory/basis-theory-js": "^1.79.3",
     "card-validator": "^8.1.1",
+    "lodash.set": "^4.3.2",
     "react": "18.2.0",
     "react-native": "0.71.3",
     "react-native-mask-input": "^1.2.3",
@@ -24,6 +25,7 @@
     "@react-native-community/eslint-config": "^3.2.0",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^29.2.1",
+    "@types/lodash.set": "^4.3.7",
     "@types/react": "^18.2.15",
     "@types/react-test-renderer": "^18.0.0",
     "@types/uuid": "^9.0.2",
