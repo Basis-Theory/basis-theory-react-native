@@ -9,4 +9,6 @@ interface BTRefBase {
   format: (plaintextValue: string) => string;
 }
 
-export type BTRef = BTRefBase & CommonBTRefFunctions;
+type BTRef = BTRefBase & CommonBTRefFunctions;
+
+export type { BTRefBase, BTRef };

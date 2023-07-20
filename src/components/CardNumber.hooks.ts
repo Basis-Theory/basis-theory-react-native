@@ -2,9 +2,10 @@ import type { ForwardedRef } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
-import type { BTRef } from '../BaseElementTypes';
+import type { BTRef, BTRefBase } from '../BaseElementTypes';
 import type { CardNumberVerification } from 'card-validator/dist/card-number';
 import cardValidator from 'card-validator';
+import { _elementValues } from '../ElementValues';
 
 type Mask = (RegExp | string)[];
 
@@ -59,9 +60,10 @@ const cardNumberMask = ({ cardNumber, card }: CardNumberMaskParams): Mask => {
 
 type UseCardNumberParams = {
   btRef: ForwardedRef<BTRef>;
+  inputBtRef?: BTRefBase;
 };
 
-export const useCardNumber = ({ btRef }: UseCardNumberParams) => {
+export const useCardNumber = ({ btRef, inputBtRef }: UseCardNumberParams) => {
   const textInputRef = useRef<TextInput>(null);
   const [id] = useState(uuid.v4() as string);
   const [mask, setMask] = useState<Mask>(defaultCardNumberMask);
@@ -76,6 +78,15 @@ export const useCardNumber = ({ btRef }: UseCardNumberParams) => {
     },
     []
   );
+
+  useEffect(() => {
+    if (inputBtRef) {
+      const newTextInputValue = inputBtRef.format(
+        _elementValues[inputBtRef.id]
+      );
+      setTextInputValue(newTextInputValue);
+    }
+  }, [inputBtRef]);
 
   useEffect(() => {
     const { card } = cardValidator.number(textInputValue, { maxLength: 16 });
