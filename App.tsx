@@ -1,13 +1,13 @@
-import React, { useRef } from "react";
+import React, { useRef } from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
-  View
-} from "react-native";
-import { CardNumber } from "./src/components/CardNumber";
-import type { BTRef } from "./src/BaseElementTypes";
+  View,
+} from 'react-native';
+import type { BTRef } from './src';
+import { CardNumber } from './src';
 
 const App = (): JSX.Element => {
   const ref = useRef<BTRef>(null);
@@ -30,19 +30,19 @@ const App = (): JSX.Element => {
 
 const styles = StyleSheet.create({
   cardNumber: {
-    backgroundColor: "#eeeeee",
-    borderColor: "blue",
+    backgroundColor: '#eeeeee',
+    borderColor: 'blue',
     borderWidth: 2,
-    color: "purple",
+    color: 'purple',
     height: 40,
     margin: 12,
-    padding: 10
+    padding: 10,
   },
   viewContainer: {
-    display: "flex",
-    flexDirection: "column",
-    marginTop: 32
-  }
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: 32,
+  },
 });
 
 export default App;
