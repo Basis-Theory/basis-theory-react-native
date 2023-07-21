@@ -1,12 +1,13 @@
 {
-  "name": "basistheory-react-native",
+  "name": "@basis-theory/basis-theory-react-native",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint . --quiet",
-    "start": "react-native start"
+    "start": "react-native start",
+    "prepack": "bob build"
   },
   "dependencies": {
     "@basis-theory/basis-theory-js": "^1.79.3",
@@ -34,7 +35,30 @@
     "eslint-config-get-off-my-lawn": "^7.2.0",
     "metro-react-native-babel-preset": "0.73.7",
     "prettier": "^2.4.1",
+    "react-native-builder-bob": "^0.21.3",
     "react-test-renderer": "18.2.0",
     "typescript": "4.8.4"
-  }
+  },
+  "main": "dist/commonjs/index.js",
+  "react-native": "src/index.ts",
+  "module": "dist/module/index.js",
+  "types": "dist/typescript/src/index.d.ts",
+  "files": [
+    "src",
+    "dist",
+    "!**/tests"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "dist",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/"
+  ]
 }
