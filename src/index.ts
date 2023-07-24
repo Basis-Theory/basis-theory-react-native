@@ -1,6 +1,6 @@
-import { CardNumber } from './components/CardNumber';
+import { CardNumberElement } from './components/CardNumberElement';
 import { BasisTheoryElements } from './BasisTheoryElements';
 import type { BTRef } from './BaseElementTypes';
 
 export type { BTRef };
-export { CardNumber, BasisTheoryElements };
+export { CardNumberElement, BasisTheoryElements };

@@ -63,7 +63,7 @@ type UseCardNumberParams = {
   inputBtRef?: BTRefBase;
 };
 
-export const useCardNumber = ({ btRef, inputBtRef }: UseCardNumberParams) => {
+export const useCardNumberElement = ({ btRef, inputBtRef }: UseCardNumberParams) => {
   const textInputRef = useRef<TextInput>(null);
   const [id] = useState(uuid.v4() as string);
   const [mask, setMask] = useState<Mask>(defaultCardNumberMask);

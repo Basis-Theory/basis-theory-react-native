@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import type { BTRef } from './src';
-import { BasisTheoryElements, CardNumber } from './src';
+import { BasisTheoryElements, CardNumberElement } from './src';
 
 const App = (): JSX.Element => {
   const ref = useRef<BTRef>(null);
@@ -17,7 +17,7 @@ const App = (): JSX.Element => {
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={styles.viewContainer}>
-          <CardNumber
+          <CardNumberElement
             btRef={ref}
             placeholder="Card Number"
             style={styles.cardNumber}

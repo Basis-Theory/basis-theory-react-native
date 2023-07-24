@@ -2,7 +2,7 @@ import type { ForwardedRef } from 'react';
 import React from 'react';
 import type { StyleProp, TextStyle } from 'react-native';
 import type { BTRef, BTRefBase } from '../BaseElementTypes';
-import { useCardNumber } from './CardNumber.hooks';
+import { useCardNumberElement } from './CardNumberElement.hooks';
 import MaskInput from 'react-native-mask-input';
 import { _elementValues } from '../ElementValues';
 
@@ -14,7 +14,7 @@ type CardNumberProps = {
   placeholder?: string;
 };
 
-export const CardNumber = ({
+export const CardNumberElement = ({
   btRef,
   style,
   editable,
@@ -22,7 +22,7 @@ export const CardNumber = ({
   inputBtRef,
 }: CardNumberProps) => {
   const { textInputRef, id, setTextInputValue, textInputValue, mask } =
-    useCardNumber({
+    useCardNumberElement({
       btRef,
       inputBtRef,
     });
