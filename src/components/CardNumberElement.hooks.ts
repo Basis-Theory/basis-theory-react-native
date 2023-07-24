@@ -2,7 +2,7 @@ import type { ForwardedRef } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
-import type { BTRef, BTRefBase } from '../BaseElementTypes';
+import type { BTRef, InputBTRef } from '../BaseElementTypes';
 import type { CardNumberVerification } from 'card-validator/dist/card-number';
 import cardValidator from 'card-validator';
 import { _elementValues } from '../ElementValues';
@@ -60,10 +60,9 @@ const cardNumberMask = ({ cardNumber, card }: CardNumberMaskParams): Mask => {
 
 type UseCardNumberParams = {
   btRef: ForwardedRef<BTRef>;
-  inputBtRef?: BTRefBase;
 };
 
-export const useCardNumberElement = ({ btRef, inputBtRef }: UseCardNumberParams) => {
+export const useCardNumberElement = ({ btRef }: UseCardNumberParams) => {
   const textInputRef = useRef<TextInput>(null);
   const [id] = useState(uuid.v4() as string);
   const [mask, setMask] = useState<Mask>(defaultCardNumberMask);
@@ -78,18 +77,6 @@ export const useCardNumberElement = ({ btRef, inputBtRef }: UseCardNumberParams)
     },
     []
   );
-
-  useEffect(() => {
-    if (inputBtRef) {
-      const elementValue = _elementValues[inputBtRef.id];
-      const newTextInputValue = inputBtRef.format(
-        typeof elementValue === 'string'
-          ? elementValue
-          : JSON.stringify(elementValue)
-      );
-      setTextInputValue(newTextInputValue);
-    }
-  }, [inputBtRef]);
 
   useEffect(() => {
     const { card } = cardValidator.number(textInputValue, { maxLength: 16 });
@@ -115,6 +102,15 @@ export const useCardNumberElement = ({ btRef, inputBtRef }: UseCardNumberParams)
       blur: () => {
         textInputRef.current?.blur();
       },
+      setValue: (inputBtRef: InputBTRef) => {
+        const elementValue = _elementValues[inputBtRef.id];
+        const newTextInputValue = inputBtRef.format(
+          typeof elementValue === 'string'
+            ? elementValue
+            : JSON.stringify(elementValue)
+        );
+        setTextInputValue(newTextInputValue);
+      }
     };
 
     if (typeof btRef === 'function') {

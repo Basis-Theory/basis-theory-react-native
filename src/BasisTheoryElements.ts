@@ -3,7 +3,7 @@ import { BasisTheory } from '@basis-theory/basis-theory-js';
 import { Token, TokenData } from '@basis-theory/basis-theory-js/types/models';
 import { _elementValues } from './ElementValues';
 import uuid from 'react-native-uuid';
-import { BTRefBase } from './BaseElementTypes';
+import { InputBTRef } from './BaseElementTypes';
 import set from 'lodash.set';
 
 export class BasisTheoryElements {
@@ -49,7 +49,7 @@ export class BasisTheoryElements {
         const id = uuid.v4() as string;
 
         _elementValues[id] = value;
-        const btRefBase: BTRefBase = {
+        const btRefBase: InputBTRef = {
           id: id,
           format: (plaintextValue) => plaintextValue,
         };

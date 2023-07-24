@@ -2,13 +2,14 @@ interface CommonBTRefFunctions {
   clear: () => void;
   focus: () => void;
   blur: () => void;
+  setValue: (inputBTRef: InputBTRef) => void;
 }
 
-interface BTRefBase {
+interface InputBTRef {
   id: string;
   format: (plaintextValue: string) => string;
 }
 
-type BTRef = BTRefBase & CommonBTRefFunctions;
+type BTRef = InputBTRef & CommonBTRefFunctions;
 
-export type { BTRefBase, BTRef };
+export type { InputBTRef, BTRef };

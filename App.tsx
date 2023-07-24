@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import type { BTRef } from './src';
-import { BasisTheoryElements, CardNumberElement } from './src';
+import { CardNumberElement } from './src';
 
 const App = (): JSX.Element => {
   const ref = useRef<BTRef>(null);
