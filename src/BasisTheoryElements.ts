@@ -1,4 +1,7 @@
-import type { CreateSessionResponse } from '@basis-theory/basis-theory-js/types/sdk';
+import type {
+  BasisTheory as BasisTheoryType,
+  CreateSessionResponse,
+} from '@basis-theory/basis-theory-js/types/sdk';
 import { BasisTheory } from '@basis-theory/basis-theory-js';
 import { Token, TokenData } from '@basis-theory/basis-theory-js/types/models';
 import { _elementValues } from './ElementValues';
@@ -8,21 +11,25 @@ import set from 'lodash.set';
 
 export class BasisTheoryElements {
   public static apiKey: string = '';
-  private static btInstance: BasisTheory = new BasisTheory();
+  static #btInstance: BasisTheoryType;
 
   constructor() {}
 
-  public static createSession(apiKey?: string): Promise<CreateSessionResponse> {
-    return BasisTheoryElements.btInstance.sessions.create({
-      apiKey: BasisTheoryElements.getApiKey(apiKey),
-    });
+  public static async createSession(
+    apiKey?: string
+  ): Promise<CreateSessionResponse> {
+    const btInstance = await BasisTheoryElements.getBtInstance(apiKey);
+
+    return btInstance.sessions.create();
   }
 
   public static async getTokenById(
     id: string,
     apiKey?: string
   ): Promise<Token<unknown>> {
-    const token = await BasisTheoryElements.btInstance.tokens.retrieve(id, {
+    const btInstance = await BasisTheoryElements.getBtInstance(apiKey);
+
+    const token = await btInstance.tokens.retrieve(id, {
       apiKey: BasisTheoryElements.getApiKey(apiKey),
     });
 
@@ -77,6 +84,18 @@ export class BasisTheoryElements {
     });
 
     return result;
+  }
+
+  private static async getBtInstance(
+    apiKey?: string
+  ): Promise<BasisTheoryType> {
+    if (!BasisTheoryElements.#btInstance) {
+      BasisTheoryElements.#btInstance = await new BasisTheory().init(
+        BasisTheoryElements.getApiKey(apiKey)
+      );
+    }
+
+    return BasisTheoryElements.#btInstance;
   }
 
   private static resolvePath(
