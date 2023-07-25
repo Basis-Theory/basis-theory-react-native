@@ -12,4 +12,6 @@ interface InputBTRef {
 
 type BTRef = InputBTRef & CommonBTRefFunctions;
 
-export type { InputBTRef, BTRef };
+type Mask = (RegExp | string)[];
+
+export type { InputBTRef, BTRef, Mask };

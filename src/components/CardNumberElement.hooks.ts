@@ -2,12 +2,12 @@ import type { ForwardedRef } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
-import type { BTRef, InputBTRef } from '../BaseElementTypes';
+import type { BTRef, InputBTRef, Mask } from '../BaseElementTypes';
 import type { CardNumberVerification } from 'card-validator/dist/card-number';
 import cardValidator from 'card-validator';
 import { _elementValues } from '../ElementValues';
-
-type Mask = (RegExp | string)[];
+import { useBtRefUnmount } from './shared/useBtRefUnmount.hooks';
+import { useBtRef } from './shared/useBtRef.hooks';
 
 const defaultCardNumberMask = [
   /\d/u,
@@ -58,25 +58,17 @@ const cardNumberMask = ({ cardNumber, card }: CardNumberMaskParams): Mask => {
   return mask;
 };
 
-type UseCardNumberParams = {
-  btRef: ForwardedRef<BTRef>;
+export type UseCardNumberElementProps = {
+  btRef?: ForwardedRef<BTRef>;
 };
 
-export const useCardNumberElement = ({ btRef }: UseCardNumberParams) => {
+export const useCardNumberElement = ({ btRef }: UseCardNumberElementProps) => {
   const textInputRef = useRef<TextInput>(null);
   const [id] = useState(uuid.v4() as string);
   const [mask, setMask] = useState<Mask>(defaultCardNumberMask);
   const [textInputValue, setTextInputValue] = useState<string>('');
 
-  useEffect(
-    () => () => {
-      // this suggests to have btRef as the dep, but we only want to set btRef to
-      // null once on unmount
-      // eslint-disable-next-line react-hooks/exhaustive-deps, no-param-reassign, unicorn/no-null
-      btRef = null;
-    },
-    []
-  );
+  useBtRefUnmount({ btRef });
 
   useEffect(() => {
     const { card } = cardValidator.number(textInputValue, { maxLength: 16 });
@@ -89,37 +81,7 @@ export const useCardNumberElement = ({ btRef }: UseCardNumberParams) => {
     );
   }, [textInputValue]);
 
-  useEffect(() => {
-    const newBtRef = {
-      id,
-      format: (plaintextValue: string) => plaintextValue,
-      clear: () => {
-        textInputRef.current?.clear();
-      },
-      focus: () => {
-        textInputRef.current?.focus();
-      },
-      blur: () => {
-        textInputRef.current?.blur();
-      },
-      setValue: (inputBtRef: InputBTRef) => {
-        const elementValue = _elementValues[inputBtRef.id];
-        const newTextInputValue = inputBtRef.format(
-          typeof elementValue === 'string'
-            ? elementValue
-            : JSON.stringify(elementValue)
-        );
-        setTextInputValue(newTextInputValue);
-      }
-    };
-
-    if (typeof btRef === 'function') {
-      btRef(newBtRef);
-    } else if (btRef && typeof btRef === 'object') {
-      // eslint-disable-next-line no-param-reassign
-      btRef.current = newBtRef;
-    }
-  }, [btRef, textInputRef, id]);
+  useBtRef({ btRef, textInputRef, id, setTextInputValue });
 
   return {
     textInputRef,

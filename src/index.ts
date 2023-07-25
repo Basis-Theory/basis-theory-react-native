@@ -1,7 +1,7 @@
 import 'react-native-url-polyfill/auto';
 import { CardNumberElement } from './components/CardNumberElement';
 import { BasisTheoryElements } from './BasisTheoryElements';
-import type { BTRef } from './BaseElementTypes';
+import type { BTRef, InputBTRef } from './BaseElementTypes';
 
-export type { BTRef };
+export type { BTRef, InputBTRef };
 export { CardNumberElement, BasisTheoryElements };
