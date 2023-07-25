@@ -1,5 +1,5 @@
 {
-  "branches": [
+  "branches": ["release",
     {
       "name": "master",
       "prerelease": "beta"
