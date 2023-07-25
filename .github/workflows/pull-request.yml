@@ -1,0 +1,32 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: [master, release]
+
+jobs:
+  verify:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: ['18.x']
+        os: [ubuntu-latest]
+    env:
+      CI: 1
+      NPM_TOKEN: ${{ secrets.NPM_RELEASE_TOKEN }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install deps (with cache)
+        uses: bahmutov/npm-install@v1
+        with:
+          install-command: yarn --frozen-lockfile --no-progress --ignore-scripts
+
+      - name: Verify
+        run: make verify
