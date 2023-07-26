@@ -2,7 +2,7 @@ import type { ForwardedRef } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
-import type { BTRef, InputBTRef, Mask } from '../BaseElementTypes';
+import type { BTRef, Mask } from '../BaseElementTypes';
 import { useBtRefUnmount } from './shared/useBtRefUnmount.hooks';
 import { useBtRef } from './shared/useBtRef.hooks';
 
