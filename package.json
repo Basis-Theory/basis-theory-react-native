@@ -48,7 +48,6 @@
     "typescript": "4.8.4"
   },
   "main": "dist/commonjs/index.js",
-  "react-native": "src/index.ts",
   "module": "dist/module/index.js",
   "types": "dist/typescript/src/index.d.ts",
   "files": [
