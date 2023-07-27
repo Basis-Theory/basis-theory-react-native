@@ -5,7 +5,6 @@ import uuid from 'react-native-uuid';
 import type { BTRef, InputBTRef, Mask } from '../BaseElementTypes';
 import type { CardNumberVerification } from 'card-validator/dist/card-number';
 import cardValidator from 'card-validator';
-import { _elementValues } from '../ElementValues';
 import { useBtRefUnmount } from './shared/useBtRefUnmount.hooks';
 import { useBtRef } from './shared/useBtRef.hooks';
 
