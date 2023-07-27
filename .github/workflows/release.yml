@@ -5,20 +5,20 @@ on:
     branches: [master, release]
 
 jobs:
-#  request_approval:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Send Deploy Request
-#        uses: Basis-Theory/github-actions/deploy-slack-action@master
-#        with:
-#          slack-api-token: ${{ secrets.SLACK_DUCKBOT_API_KEY }}
-#          channel: ${{ vars.SLACK_DUCKBOT_PRODUCT_APPROVAL_CHANNEL }}
-#          mention-person: ${{ vars.SLACK_DUCKBOT_PRODUCT_APPROVER }}
-#          status: 'request'
+  request_approval:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Deploy Request
+        uses: Basis-Theory/github-actions/deploy-slack-action@master
+        with:
+          slack-api-token: ${{ secrets.SLACK_DUCKBOT_API_KEY }}
+          channel: ${{ vars.SLACK_DUCKBOT_PRODUCT_APPROVAL_CHANNEL }}
+          mention-person: ${{ vars.SLACK_DUCKBOT_PRODUCT_APPROVER }}
+          status: 'request'
 
   build-release:
     runs-on: ${{ matrix.os }}
-#    environment: Production
+    environment: Production
     strategy:
       matrix:
         node: ['18.x']
