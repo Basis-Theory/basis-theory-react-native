@@ -14,6 +14,6 @@ else
   yarn install --frozen-lockfile
 fi
 
-yarn prepack
+yarn build
 
 cd "$current_directory"
