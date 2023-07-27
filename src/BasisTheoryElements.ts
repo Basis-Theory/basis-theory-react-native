@@ -36,7 +36,9 @@ export class BasisTheoryElements {
       apiKey: BasisTheoryElements.getApiKey(apiKey),
     });
 
-    const result = BasisTheoryElements.replaceTokenData({ data: token.data });
+    const result = BasisTheoryElements.replaceSensitiveData({
+      data: token.data,
+    });
 
     token.data = result.data as TokenData;
 
@@ -47,21 +49,23 @@ export class BasisTheoryElements {
     {
       method,
       ...proxyRequest
-    }: ProxyRequestOptions & { method: keyof BasisTheory['proxy'] },
+    }: Omit<ProxyRequestOptions, 'includeResponseHeaders'> & {
+      method: keyof BasisTheory['proxy'];
+    },
     apiKey?: string
   ): Promise<unknown> {
     const btInstance = await BasisTheoryElements.getBtInstance(apiKey);
 
     proxyRequest.apiKey = apiKey;
     const proxyResponse = await btInstance.proxy[method](proxyRequest);
-    const result = BasisTheoryElements.replaceTokenData({
+    const result = BasisTheoryElements.replaceSensitiveData({
       data: proxyResponse,
     });
 
     return result.data;
   }
 
-  private static replaceTokenData(
+  private static replaceSensitiveData(
     token: Record<string, unknown>,
     result: Record<string, unknown> = {},
     parentObject: unknown = undefined
@@ -95,7 +99,7 @@ export class BasisTheoryElements {
             []
           );
         } else {
-          BasisTheoryElements.replaceTokenData(
+          BasisTheoryElements.replaceSensitiveData(
             value as Record<string, unknown>,
             result,
             tokenDataPath
