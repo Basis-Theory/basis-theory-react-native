@@ -1,3 +1,10 @@
+# [1.0.0-beta.5](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2023-07-27)
+
+
+### Bug Fixes
+
+* removes react-native prop from package.json ([#18](https://github.com/Basis-Theory/basis-theory-react-native/issues/18)) ([b2389c3](https://github.com/Basis-Theory/basis-theory-react-native/commit/b2389c309b57ef4276e2e93309d03edeeedf4cb9))
+
 # [1.0.0-beta.4](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2023-07-27)
 
 
