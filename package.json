@@ -6,7 +6,7 @@
     "ios": "react-native run-ios",
     "lint": "eslint . --quiet",
     "start": "react-native start",
-    "prepack": "bob build && node prepare.js",
+    "build": "bob build && node prepare.js",
     "release": "semantic-release"
   },
   "dependencies": {
