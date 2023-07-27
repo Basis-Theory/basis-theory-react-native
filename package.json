@@ -68,5 +68,8 @@
   "eslintIgnore": [
     "node_modules/",
     "dist/"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
