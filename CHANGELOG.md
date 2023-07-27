@@ -1,3 +1,10 @@
+# [1.0.0-beta.3](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2023-07-27)
+
+
+### Bug Fixes
+
+* fixes publish to NPM ([#16](https://github.com/Basis-Theory/basis-theory-react-native/issues/16)) ([60264e7](https://github.com/Basis-Theory/basis-theory-react-native/commit/60264e70cdb8964ba2746f08bc2af93066c82f1c))
+
 # [1.0.0-beta.2](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2023-07-27)
 
 
