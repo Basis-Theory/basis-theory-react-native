@@ -1,6 +1,7 @@
 import type {
   BasisTheory as BasisTheoryType,
   CreateSessionResponse,
+  ProxyRequestOptions,
 } from '@basis-theory/basis-theory-js/types/sdk';
 import { BasisTheory } from '@basis-theory/basis-theory-js';
 import { Token, TokenData } from '@basis-theory/basis-theory-js/types/models';
@@ -20,7 +21,9 @@ export class BasisTheoryElements {
   ): Promise<CreateSessionResponse> {
     const btInstance = await BasisTheoryElements.getBtInstance(apiKey);
 
-    return btInstance.sessions.create();
+    return btInstance.sessions.create({
+      apiKey: BasisTheoryElements.getApiKey(apiKey),
+    });
   }
 
   public static async getTokenById(
@@ -38,6 +41,24 @@ export class BasisTheoryElements {
     token.data = result.data as TokenData;
 
     return Promise.resolve(token);
+  }
+
+  public static async proxy(
+    {
+      method,
+      ...proxyRequest
+    }: ProxyRequestOptions & { method: keyof BasisTheory['proxy'] },
+    apiKey?: string
+  ): Promise<unknown> {
+    const btInstance = await BasisTheoryElements.getBtInstance(apiKey);
+
+    proxyRequest.apiKey = apiKey;
+    const proxyResponse = await btInstance.proxy[method](proxyRequest);
+    const result = BasisTheoryElements.replaceTokenData({
+      data: proxyResponse,
+    });
+
+    return result.data;
   }
 
   private static replaceTokenData(
