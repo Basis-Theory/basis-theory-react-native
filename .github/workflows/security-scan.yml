@@ -33,12 +33,11 @@ jobs:
           args: --all-sub-projects --severity-threshold=high
   failure-message:
     runs-on: ubuntu-latest
-    if: ${{ always() }}
+    if: ${{ failure() }}
     needs: [scan-code, scan-deps]
     steps:
       - name: React Native Dependency Security Scan
         uses: 8398a7/action-slack@v3
-        if: failure()
         with:
           author_name: Security Scan
           status: ${{ job.status }}
