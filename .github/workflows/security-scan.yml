@@ -1,6 +1,8 @@
 name: Security Scan
 
 on:
+  pull_request:
+    branches: [master, release]
   schedule:
     - cron: '0 12 * * 1' # 12pm UTC every Monday
   workflow_dispatch:
@@ -30,6 +32,9 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   scan-deps:
+    - name: Checkout
+    uses: actions/checkout@v3
+
     runs-on: ubuntu-latest
     steps:      
       - name: Snyk dependency scan
