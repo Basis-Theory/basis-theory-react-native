@@ -32,11 +32,10 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   scan-deps:
-    - name: Checkout
-    uses: actions/checkout@v3
-
     runs-on: ubuntu-latest
-    steps:      
+    steps:     
+      - name: Checkout
+        uses: actions/checkout@v3 
       - name: Snyk dependency scan
         uses: snyk/actions/node@master
         env:
