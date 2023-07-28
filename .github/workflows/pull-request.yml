@@ -5,7 +5,7 @@ on:
     branches: [master, release]
 
 jobs:
-  scan:
+  scan-code:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,7 +17,9 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_API_KEY }}
         with:
           command: code test --all-sub-projects --severity-threshold=medium
-
+  scan-deps:
+    runs-on: ubuntu-latest
+    steps:      
       - name: Snyk dependency scan
         uses: snyk/actions/node@master
         env:
