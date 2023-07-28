@@ -33,6 +33,7 @@ jobs:
           args: --all-sub-projects --severity-threshold=high
   failure-message:
     runs-on: ubuntu-latest
+    if: ${{ always() }}
     needs: [scan-code, scan-deps]
     steps:
       - name: React Native Dependency Security Scan
