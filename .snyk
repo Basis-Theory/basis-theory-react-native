@@ -1,0 +1,6 @@
+version: v3.0.0
+ignore:
+  SNYK-JS-LODASHSET-1320032:
+    - path to library using > seperator :
+      reason: 'Fixed with Object.freeze(Object.prototype) from suggestion in https://security.snyk.io/vuln/SNYK-JS-LODASHSET-1320032'
+      expires: '2024-01-31T12:00:00.000Z' # 6 months from found date 07/21/2023
