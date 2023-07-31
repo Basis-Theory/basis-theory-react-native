@@ -1,3 +1,10 @@
+# [1.0.0-beta.6](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2023-07-31)
+
+
+### Bug Fixes
+
+* removes includeResponseHeaders from proxy service ([#20](https://github.com/Basis-Theory/basis-theory-react-native/issues/20)) ([f43fdcc](https://github.com/Basis-Theory/basis-theory-react-native/commit/f43fdcc1c545e425437c53f5422ff87118daa650))
+
 # [1.0.0-beta.5](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2023-07-27)
 
 
