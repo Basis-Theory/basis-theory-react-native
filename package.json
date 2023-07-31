@@ -70,5 +70,9 @@
   ],
   "publishConfig": {
     "access": "public"
+  },
+  "resolutions": {
+    "semver": "^5.7.2",
+    "unset-value": "^2.0.1"
   }
 }

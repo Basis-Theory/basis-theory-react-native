@@ -70,6 +70,8 @@ export class BasisTheoryElements {
     result: Record<string, unknown> = {},
     parentObject: unknown = undefined
   ): Record<string, unknown> {
+    // addresses vulnerability in lodash.set https://security.snyk.io/vuln/SNYK-JS-LODASHSET-1320032
+    Object.freeze(Object.prototype);
     Object.entries(token).forEach(([key, value]) => {
       const tokenDataPath = BasisTheoryElements.resolvePath(
         token,
