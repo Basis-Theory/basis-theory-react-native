@@ -2,7 +2,7 @@ interface CommonBTRefFunctions {
   clear: () => void;
   focus: () => void;
   blur: () => void;
-  setValue: (inputBTRef: InputBTRef) => void;
+  setValue: ValueSetter;
 }
 
 interface InputBTRef {
@@ -10,8 +10,15 @@ interface InputBTRef {
   format: (plaintextValue: string) => string;
 }
 
+type InputBtDateRef = {
+  year: InputBTRef;
+  month: InputBTRef;
+};
+
+type ValueSetter = (val: InputBTRef | InputBtDateRef | undefined) => void;
+
 type BTRef = InputBTRef & CommonBTRefFunctions;
 
 type Mask = (RegExp | string)[];
 
-export type { InputBTRef, BTRef, Mask };
+export type { InputBTRef, BTRef, Mask, InputBtDateRef, ValueSetter };
