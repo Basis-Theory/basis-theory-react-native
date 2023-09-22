@@ -1,3 +1,10 @@
+# [1.0.0-beta.7](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2023-09-22)
+
+
+### Features
+
+* allow to set expiration date from Card token ([#23](https://github.com/Basis-Theory/basis-theory-react-native/issues/23)) ([52db679](https://github.com/Basis-Theory/basis-theory-react-native/commit/52db6794238e3a00aff803bb372648ee8ea96493))
+
 # [1.0.0-beta.6](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2023-07-31)
 
 
