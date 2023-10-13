@@ -7,9 +7,10 @@ cd $(dirname $0)/..
 
 yarn lint
 
+
 #echo "Running tests..."
 
-#yarn test
+yarn test
 
 result=$?
 
