@@ -1,3 +1,4 @@
+import { compose } from 'ramda';
 import {
   Dispatch,
   ForwardedRef,
@@ -5,14 +6,14 @@ import {
   SetStateAction,
   useEffect,
 } from 'react';
+import { TextInput } from 'react-native';
 import {
   BTRef,
-  InputBtDateRef,
   InputBTRef,
+  InputBtDateRef,
   ValueSetter,
 } from '../../BaseElementTypes';
 import { _elementValues } from '../../ElementValues';
-import { TextInput } from 'react-native';
 
 interface UseBtRefProps {
   btRef?: ForwardedRef<BTRef>;
@@ -52,6 +53,19 @@ const isInputBtDateRef = (
 ): ref is InputBtDateRef =>
   Boolean((ref as InputBtDateRef).month && (ref as InputBtDateRef).year);
 
+const valueFormatter = (ref: InputBTRef | InputBtDateRef | undefined) => {
+  if (!ref) return '';
+
+  if (isInputBtDateRef(ref)) {
+    const month = formatValue(ref.month).padStart(2, '0');
+    const year = formatValue(ref.year).slice(-2);
+
+    return `${month}/${year}`;
+  }
+
+  return formatValue(ref);
+};
+
 export const useBtRef = ({
   btRef,
   textInputRef,
@@ -59,22 +73,7 @@ export const useBtRef = ({
   setTextInputValue,
 }: UseBtRefProps) => {
   useEffect(() => {
-    const valueSetter: ValueSetter = (ref) => {
-      if (!ref) {
-        setTextInputValue('');
-      } else if (isInputBtDateRef(ref)) {
-        const formattedYear = formatValue(ref.year);
-        const formattedMonth = formatValue(ref.month);
-
-        setTextInputValue(
-          `${formattedMonth.padStart(2, '0')}/${formattedYear.slice(-2)}`
-        );
-      } else {
-        const val = formatValue(ref);
-
-        setTextInputValue(val);
-      }
-    };
+    const valueSetter = compose(setTextInputValue, valueFormatter);
 
     const newBtRef = createBtRef({ id, textInputRef, valueSetter });
 
