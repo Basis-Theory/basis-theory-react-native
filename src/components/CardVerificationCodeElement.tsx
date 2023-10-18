@@ -18,10 +18,12 @@ export const CardVerificationCodeElement = ({
   style,
   editable,
   placeholder,
+  cvcLength,
 }: CardVerificationCodeProps) => {
   const { textInputRef, id, setTextInputValue, textInputValue, mask } =
     useCardVerificationCodeElement({
       btRef,
+      cvcLength,
     });
 
   return (
