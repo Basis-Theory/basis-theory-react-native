@@ -1,4 +1,3 @@
-import 'react-native-url-polyfill/auto';
 import { CardNumberElement } from './components/CardNumberElement';
 import { CardVerificationCodeElement } from './components/CardVerificationCodeElement';
 import { CardExpirationDateElement } from './components/CardExpirationDateElement';
