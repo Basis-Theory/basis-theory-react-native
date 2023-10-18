@@ -21,4 +21,11 @@ type BTRef = InputBTRef & CommonBTRefFunctions;
 
 type Mask = (RegExp | string)[];
 
+export enum ElementType {
+  CARD_NUMBER = 'cardNumber',
+  EXPIRATION_DATE = 'expirationDate',
+  CVC = 'cvc',
+  TEXT = 'text',
+}
+
 export type { InputBTRef, BTRef, Mask, InputBtDateRef, ValueSetter };
