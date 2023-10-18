@@ -4,11 +4,11 @@
 
 import 'react-native';
 import React from 'react';
-import { CardVerificationCodeElement } from '../../src/components/CardVerificationCodeElement';
 
 import { render, fireEvent, screen } from '@testing-library/react-native';
+import { TextElement } from '../../src';
 
-describe('CardVerificationCodeElement', () => {
+describe('TextElement', () => {
   const mockedRef = {
     current: {
       id: '123',
@@ -20,32 +20,22 @@ describe('CardVerificationCodeElement', () => {
     },
   };
 
-  describe('dynamic mask', () => {
-    test.each([3, 4])(
-      'applies mask correctly with cvcLength = %d',
-      (cvcLength) => {
-        render(
-          <CardVerificationCodeElement
-            btRef={mockedRef}
-            placeholder="CVC"
-            cvcLength={cvcLength}
-            style={{}}
-          />
-        );
+  describe('Field', () => {
+    test('works', () => {
+      render(
+        <TextElement btRef={mockedRef} placeholder="Name on Card" style={{}} />
+      );
 
-        const el = screen.getByPlaceholderText('CVC');
+      const el = screen.getByPlaceholderText('Name on Card');
 
-        fireEvent.changeText(el, '12345');
+      fireEvent.changeText(el, 'Peter Panda');
 
-        const expectedValue = cvcLength === 3 ? '123' : '1234';
-
-        expect(el.props.value).toStrictEqual(expectedValue);
-      }
-    );
+      expect(el.props.value).toStrictEqual('Peter Panda');
+    });
   });
 
-  describe('Validation', () => {
-    describe('CVC validation', () => {
+  describe('Events', () => {
+    describe('OnChange w/ mask', () => {
       test.each([
         [
           'should error',
@@ -53,7 +43,7 @@ describe('CardVerificationCodeElement', () => {
           {
             complete: false,
             empty: false,
-            errors: [{ targetId: 'cvc', type: 'incomplete' }],
+            errors: [{ targetId: 'text', type: 'incomplete' }],
             maskSatisfied: false,
             valid: false,
           },
@@ -72,29 +62,41 @@ describe('CardVerificationCodeElement', () => {
         ],
         [
           `shouldn't error`,
-          '123',
+          '1234567890',
           {
             complete: true,
             maskSatisfied: true,
             valid: true,
             empty: false,
           },
-          '123',
+          '123-45-6789',
         ],
       ])('input: %s', (_, inputValue, expectedEvent, expectedValue) => {
         const onChange = jest.fn();
 
         render(
-          <CardVerificationCodeElement
+          <TextElement
             btRef={mockedRef}
-            placeholder="CVC"
-            cvcLength={3}
+            placeholder="SSN"
+            mask={[
+              /\d/u,
+              /\d/u,
+              /\d/u,
+              '-',
+              /\d/u,
+              /\d/u,
+              '-',
+              /\d/u,
+              /\d/u,
+              /\d/u,
+              /\d/u,
+            ]}
             style={{}}
             onChange={onChange}
           />
         );
 
-        const el = screen.getByPlaceholderText('CVC');
+        const el = screen.getByPlaceholderText('SSN');
 
         fireEvent.changeText(el, inputValue);
 
