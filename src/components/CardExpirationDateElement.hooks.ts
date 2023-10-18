@@ -1,38 +1,46 @@
 import type { ForwardedRef } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
-import type { BTRef, Mask } from '../BaseElementTypes';
-import { useBtRefUnmount } from './shared/useBtRefUnmount.hooks';
-import { useBtRef } from './shared/useBtRef.hooks';
-
-const defaultExpirationDateMask = [/\d/u, /\d/u, '/', /\d/u, /\d/u];
+import { ElementType, type BTRef } from '../BaseElementTypes';
+import { useBtRefUnmount } from './shared/useBtRefUnmount';
+import { useBtRef } from './shared/useBtRef';
+import { useMask } from './shared/useMask';
+import { useUserEventHandlers } from './shared/useUserEventHandlers';
+import { EventConsumer } from './shared/useElementEvent';
 
 export type UseCardExpirationDateElementProps = {
   btRef?: ForwardedRef<BTRef>;
+  onChange?: EventConsumer;
 };
 
 export const useCardExpirationDateElement = ({
   btRef,
+  onChange,
 }: UseCardExpirationDateElementProps) => {
+  const type = ElementType.EXPIRATION_DATE;
+
   const textInputRef = useRef<TextInput>(null);
-  const [id] = useState(uuid.v4() as string);
-  const [mask, setMask] = useState<Mask>(defaultExpirationDateMask);
-  const [textInputValue, setTextInputValue] = useState<string>('');
+  const [elementValue, setElementValue] = useState<string>('');
+
+  const id = useMemo(() => uuid.v4().toString(), []);
 
   useBtRefUnmount({ btRef });
 
-  useEffect(() => {
-    setMask(defaultExpirationDateMask);
-  }, [textInputValue]);
+  const mask = useMask({ type });
 
-  useBtRef({ btRef, textInputRef, id, setTextInputValue });
+  useBtRef({ btRef, textInputRef, id, setTextInputValue: setElementValue });
+
+  const { _onChange } = useUserEventHandlers({
+    setElementValue,
+    element: { id, mask, type },
+    onChange,
+  });
 
   return {
     textInputRef,
-    id,
-    setTextInputValue,
-    textInputValue,
+    textInputValue: elementValue,
     mask,
+    _onChange,
   };
 };

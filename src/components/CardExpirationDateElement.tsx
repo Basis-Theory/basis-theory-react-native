@@ -18,20 +18,19 @@ export const CardExpirationDateElement = ({
   style,
   editable,
   placeholder,
+  onChange,
 }: CardExpirationDateProps) => {
-  const { textInputRef, id, setTextInputValue, textInputValue, mask } =
+  const { textInputRef, _onChange, textInputValue, mask } =
     useCardExpirationDateElement({
       btRef,
+      onChange,
     });
 
   return (
     <MaskInput
       editable={editable}
       mask={mask}
-      onChangeText={(masked) => {
-        _elementValues[id] = masked;
-        setTextInputValue(masked);
-      }}
+      onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
       ref={textInputRef}
