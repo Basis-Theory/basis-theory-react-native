@@ -18,20 +18,19 @@ export const CardNumberElement = ({
   style,
   editable,
   placeholder,
+  onChange,
 }: CardNumberProps) => {
-  const { textInputRef, id, setTextInputValue, textInputValue, mask } =
+  const { textInputRef, _onChange, textInputValue, mask } =
     useCardNumberElement({
       btRef,
+      onChange,
     });
 
   return (
     <MaskInput
       editable={editable}
       mask={mask}
-      onChangeText={(masked) => {
-        _elementValues[id] = masked;
-        setTextInputValue(masked);
-      }}
+      onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
       ref={textInputRef}

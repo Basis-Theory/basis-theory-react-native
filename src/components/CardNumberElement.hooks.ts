@@ -1,92 +1,46 @@
 import type { ForwardedRef } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
-import type { BTRef, InputBTRef, Mask } from '../BaseElementTypes';
-import type { CardNumberVerification } from 'card-validator/dist/card-number';
-import cardValidator from 'card-validator';
-import { useBtRefUnmount } from './shared/useBtRefUnmount.hooks';
-import { useBtRef } from './shared/useBtRef.hooks';
-
-const defaultCardNumberMask = [
-  /\d/u,
-  /\d/u,
-  /\d/u,
-  /\d/u,
-  ' ',
-  /\d/u,
-  /\d/u,
-  /\d/u,
-  /\d/u,
-  ' ',
-  /\d/u,
-  /\d/u,
-  /\d/u,
-  /\d/u,
-  ' ',
-  /\d/u,
-  /\d/u,
-  /\d/u,
-  /\d/u,
-];
-
-type CardNumberMaskParams = Pick<CardNumberVerification, 'card'> & {
-  cardNumber: string;
-};
-
-const cardNumberMask = ({ cardNumber, card }: CardNumberMaskParams): Mask => {
-  let mask = defaultCardNumberMask;
-
-  const digitsOnly = cardNumber.replace(/\D+/gu, '');
-
-  if (card) {
-    // find current length index
-    const lIndex = card.lengths.findIndex((l) => l > digitsOnly.length);
-    const length = (card.lengths[lIndex] ||
-      card.lengths[card.lengths.length - 1]) as number;
-
-    // initialize a \d mask with current length
-    mask = Array.from<RegExp | string>({ length }).fill(/\d/u);
-
-    // replaces gaps with whitespace
-    card.gaps.forEach((gap, i) => {
-      mask.splice(gap + i, 0, ' ');
-    });
-  }
-
-  return mask;
-};
+import { ElementType, type BTRef } from '../BaseElementTypes';
+import { useBtRef } from './shared/useBtRef';
+import { useBtRefUnmount } from './shared/useBtRefUnmount';
+import { EventConsumer } from './shared/useElementEvent';
+import { useMask } from './shared/useMask';
+import { useUserEventHandlers } from './shared/useUserEventHandlers';
 
 export type UseCardNumberElementProps = {
   btRef?: ForwardedRef<BTRef>;
+  onChange?: EventConsumer;
 };
 
-export const useCardNumberElement = ({ btRef }: UseCardNumberElementProps) => {
+export const useCardNumberElement = ({
+  btRef,
+  onChange,
+}: UseCardNumberElementProps) => {
+  const type = ElementType.CARD_NUMBER;
+
   const textInputRef = useRef<TextInput>(null);
-  const [id] = useState(uuid.v4() as string);
-  const [mask, setMask] = useState<Mask>(defaultCardNumberMask);
-  const [textInputValue, setTextInputValue] = useState<string>('');
+  const [elementValue, setElementValue] = useState<string>('');
+
+  const id = useMemo(() => uuid.v4().toString(), []);
 
   useBtRefUnmount({ btRef });
 
-  useEffect(() => {
-    const { card } = cardValidator.number(textInputValue, { maxLength: 16 });
+  const mask = useMask({ type, id });
 
-    setMask(
-      cardNumberMask({
-        card,
-        cardNumber: textInputValue,
-      })
-    );
-  }, [textInputValue]);
+  useBtRef({ btRef, textInputRef, id, setTextInputValue: setElementValue });
 
-  useBtRef({ btRef, textInputRef, id, setTextInputValue });
+  const { _onChange } = useUserEventHandlers({
+    setElementValue,
+    element: { id, mask, type },
+    onChange: onChange,
+  });
 
   return {
     textInputRef,
-    id,
-    setTextInputValue,
-    textInputValue,
+    textInputValue: elementValue,
+    _onChange,
     mask,
   };
 };
