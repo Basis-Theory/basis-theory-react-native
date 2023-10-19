@@ -36,14 +36,16 @@ const createCardMask = (cardNumber: string, card: CardMetadata) => {
   const digitsOnly = extractDigits(cardNumber) ?? '';
 
   const lengthIndex = findIndex(
-    (length) => length > digitsOnly.length,
+    (length) => length >= digitsOnly.length,
     card.lengths
   );
 
+  // current length or next length if current mask is met and next length exists
   const length =
-    lengthIndex >= 0
-      ? card.lengths[lengthIndex]
-      : card.lengths[card.lengths.length - 1];
+    card.lengths[lengthIndex] == digitsOnly.length &&
+    card.lengths[lengthIndex + 1]
+      ? card.lengths[lengthIndex + 1]
+      : card.lengths[lengthIndex];
 
   const mask = Array.from<string | RegExp>({ length }).fill(/\d/u);
 

@@ -9,8 +9,12 @@ import {
   T,
   partial,
   flip,
+  reject,
+  max,
+  reduce,
 } from 'ramda';
 import { ElementType, Mask } from '../../BaseElementTypes';
+import { extractDigits } from './utils';
 
 type ValidationResult = 'invalid' | 'incomplete' | undefined;
 
@@ -19,14 +23,48 @@ interface ValidatorResult {
   isPotentiallyValid: boolean;
 }
 
+const removeMax = (list: number[]) =>
+  reject(equals(reduce(max, -Infinity, list)), list);
+
 type ValidatorFunction = (value: string) => ValidatorResult;
 
 const _cardCvvValidator = partial(flip(cvv), [[3, 4]]);
-const _cardNumberValidator = partial(flip(number), [
-  {
+
+const _cardNumberValidator = (value: string) => {
+  const { isValid, isPotentiallyValid, card } = number(value, {
     luhnValidateUnionPay: true,
-  },
-]);
+  });
+
+  const brandsWithMultipleCardLenghts = [
+    'diners-club',
+    'discover',
+    'jcb',
+    'maestro',
+    'mir',
+    'unionpay',
+    'visa',
+  ];
+
+  const cardNumber = extractDigits(value);
+
+  // overrides "card validator" defaults for cards with multiple number lengths
+  // that could be valid
+  const expectedLengths =
+    card && brandsWithMultipleCardLenghts.includes(card.type)
+      ? removeMax(card.lengths)
+      : [];
+
+  if (
+    cardNumber &&
+    expectedLengths?.includes(cardNumber.length) &&
+    !isValid &&
+    isPotentiallyValid
+  ) {
+    return { isValid: false, isPotentiallyValid: false };
+  }
+
+  return { isValid, isPotentiallyValid };
+};
 const _expirationDateValidator = expirationDate;
 
 const _maskValidator = (mask: Mask = [], value: string) => {
