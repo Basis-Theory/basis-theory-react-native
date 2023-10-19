@@ -1,3 +1,15 @@
+# [1.0.0-beta.9](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.8...v1.0.0-beta.9) (2023-10-19)
+
+
+### Bug Fixes
+
+* ramda types ([#27](https://github.com/Basis-Theory/basis-theory-react-native/issues/27)) ([8489375](https://github.com/Basis-Theory/basis-theory-react-native/commit/8489375634965935aa991dc763fd2b2f93cc8728))
+
+
+### Features
+
+* adds dynamic mask to cvc element ([#25](https://github.com/Basis-Theory/basis-theory-react-native/issues/25)) ([3e4271e](https://github.com/Basis-Theory/basis-theory-react-native/commit/3e4271e5c076c0eebe0e749035a3e29113fef0f8))
+
 # [1.0.0-beta.8](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2023-10-13)
 
 
