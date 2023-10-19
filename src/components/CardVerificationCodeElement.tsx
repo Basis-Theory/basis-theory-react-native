@@ -20,7 +20,7 @@ export const CardVerificationCodeElement = ({
   cvcLength,
   onChange,
 }: CardVerificationCodeProps) => {
-  const { textInputRef, textInputValue, mask, _onChange } =
+  const { elementRef, elementValue, mask, _onChange } =
     useCardVerificationCodeElement({
       btRef,
       cvcLength,
@@ -34,9 +34,9 @@ export const CardVerificationCodeElement = ({
       onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
-      ref={textInputRef}
+      ref={elementRef}
       style={style}
-      value={textInputValue}
+      value={elementValue}
     />
   );
 };

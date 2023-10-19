@@ -20,11 +20,10 @@ export const CardNumberElement = ({
   placeholder,
   onChange,
 }: CardNumberProps) => {
-  const { textInputRef, _onChange, textInputValue, mask } =
-    useCardNumberElement({
-      btRef,
-      onChange,
-    });
+  const { elementRef, _onChange, elementValue, mask } = useCardNumberElement({
+    btRef,
+    onChange,
+  });
 
   return (
     <MaskInput
@@ -33,9 +32,9 @@ export const CardNumberElement = ({
       onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
-      ref={textInputRef}
+      ref={elementRef}
       style={style}
-      value={textInputValue}
+      value={elementValue}
     />
   );
 };

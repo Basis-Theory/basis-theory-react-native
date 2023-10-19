@@ -22,7 +22,7 @@ export const useCardExpirationDateElement = ({
 }: UseCardExpirationDateElementProps) => {
   const type = ElementType.EXPIRATION_DATE;
 
-  const textInputRef = useRef<TextInput>(null);
+  const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
 
   useBtRefUnmount({ btRef });
@@ -31,9 +31,9 @@ export const useCardExpirationDateElement = ({
 
   useBtRef({
     btRef,
-    textInputRef,
+    elementRef,
     id: id,
-    setTextInputValue: setElementValue,
+    setElementValue,
   });
 
   const { _onChange } = useUserEventHandlers({
@@ -43,8 +43,8 @@ export const useCardExpirationDateElement = ({
   });
 
   return {
-    textInputRef,
-    textInputValue: elementValue,
+    elementRef,
+    elementValue,
     mask,
     _onChange,
   };

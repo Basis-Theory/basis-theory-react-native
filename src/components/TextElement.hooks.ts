@@ -21,12 +21,12 @@ export const useTextElement = ({
   mask,
   onChange,
 }: UseTextElementProps) => {
-  const textInputRef = useRef<TextInput>(null);
+  const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
 
   useBtRefUnmount({ btRef });
 
-  useBtRef({ btRef, textInputRef, id, setTextInputValue: setElementValue });
+  useBtRef({ btRef, elementRef, id, setElementValue });
 
   const { _onChange } = useUserEventHandlers({
     setElementValue,
@@ -35,9 +35,8 @@ export const useTextElement = ({
   });
 
   return {
-    textInputRef,
+    elementRef,
     _onChange,
-    textInputValue: elementValue,
-    _mask: mask,
+    elementValue,
   };
 };

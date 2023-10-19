@@ -20,7 +20,7 @@ export const CardExpirationDateElement = ({
   placeholder,
   onChange,
 }: CardExpirationDateProps) => {
-  const { textInputRef, _onChange, textInputValue, mask } =
+  const { elementRef, _onChange, elementValue, mask } =
     useCardExpirationDateElement({
       btRef,
       onChange,
@@ -33,9 +33,9 @@ export const CardExpirationDateElement = ({
       onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
-      ref={textInputRef}
+      ref={elementRef}
       style={style}
-      value={textInputValue}
+      value={elementValue}
     />
   );
 };

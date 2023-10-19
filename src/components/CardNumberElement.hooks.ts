@@ -21,14 +21,14 @@ export const useCardNumberElement = ({
   onChange,
 }: UseCardNumberElementProps) => {
   const type = ElementType.CARD_NUMBER;
-  const textInputRef = useRef<TextInput>(null);
+  const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
 
   useBtRefUnmount({ btRef });
 
   const mask = useMask({ type, id });
 
-  useBtRef({ btRef, textInputRef, id, setTextInputValue: setElementValue });
+  useBtRef({ btRef, elementRef, id, setElementValue });
 
   const { _onChange } = useUserEventHandlers({
     setElementValue,
@@ -37,8 +37,8 @@ export const useCardNumberElement = ({
   });
 
   return {
-    textInputRef,
-    textInputValue: elementValue,
+    elementRef,
+    elementValue,
     _onChange,
     mask,
   };

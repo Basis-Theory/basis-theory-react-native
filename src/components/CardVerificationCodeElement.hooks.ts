@@ -26,14 +26,14 @@ export const useCardVerificationCodeElement = ({
 }: UseCardVerificationCodeElementProps) => {
   const type = ElementType.CVC;
 
-  const textInputRef = useRef<TextInput>(null);
+  const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
 
   useBtRefUnmount({ btRef });
 
   const mask = useMask({ maskLength: cvcLength, type });
 
-  useBtRef({ btRef, textInputRef, id, setTextInputValue: setElementValue });
+  useBtRef({ btRef, elementRef, id, setElementValue });
 
   const { _onChange } = useUserEventHandlers({
     setElementValue,
@@ -42,8 +42,8 @@ export const useCardVerificationCodeElement = ({
   });
 
   return {
-    textInputRef,
-    textInputValue: elementValue,
+    elementRef,
+    elementValue,
     mask,
     _onChange,
   };

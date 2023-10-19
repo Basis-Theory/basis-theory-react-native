@@ -18,7 +18,7 @@ export const TextElement = ({
   onChange,
   mask,
 }: TextElementProps) => {
-  const { textInputRef, textInputValue, _mask, _onChange } = useTextElement({
+  const { elementRef, elementValue, _onChange } = useTextElement({
     btRef,
     onChange,
     mask,
@@ -27,13 +27,13 @@ export const TextElement = ({
   return (
     <MaskInput
       editable={editable}
-      mask={_mask}
+      mask={mask}
       onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
-      ref={textInputRef}
+      ref={elementRef}
       style={style}
-      value={textInputValue}
+      value={elementValue}
     />
   );
 };
