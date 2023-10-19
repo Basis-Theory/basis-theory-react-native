@@ -20,7 +20,7 @@ describe('CardVerificationCodeElement', () => {
     },
   };
 
-  describe('dynamic mask', () => {
+  describe('mask', () => {
     test.each([3, 4])(
       'applies mask correctly with cvcLength = %d',
       (cvcLength) => {
@@ -44,63 +44,61 @@ describe('CardVerificationCodeElement', () => {
     );
   });
 
-  describe('Validation', () => {
-    describe('CVC validation', () => {
-      test.each([
-        [
-          'should error',
-          '1',
-          {
-            complete: false,
-            empty: false,
-            errors: [{ targetId: 'cvc', type: 'incomplete' }],
-            maskSatisfied: false,
-            valid: false,
-          },
-          '1',
-        ],
-        [
-          'prevents addition of chars that do not belong to the mask',
-          '#####',
-          {
-            complete: false,
-            empty: true,
-            maskSatisfied: false,
-            valid: false,
-          },
-          '',
-        ],
-        [
-          `shouldn't error`,
-          '123',
-          {
-            complete: true,
-            maskSatisfied: true,
-            valid: true,
-            empty: false,
-          },
-          '123',
-        ],
-      ])('input: %s', (_, inputValue, expectedEvent, expectedValue) => {
-        const onChange = jest.fn();
+  describe('Validation and Change Events', () => {
+    test.each([
+      [
+        'should error: incomplete',
+        '1',
+        {
+          complete: false,
+          empty: false,
+          errors: [{ targetId: 'cvc', type: 'incomplete' }],
+          maskSatisfied: false,
+          valid: false,
+        },
+        '1',
+      ],
+      [
+        'prevents addition of chars that do not belong to the mask',
+        '#####',
+        {
+          complete: false,
+          empty: true,
+          maskSatisfied: false,
+          valid: false,
+        },
+        '',
+      ],
+      [
+        `shouldn't error`,
+        '123',
+        {
+          complete: true,
+          maskSatisfied: true,
+          valid: true,
+          empty: false,
+        },
+        '123',
+      ],
+    ])('input: %s', (_, inputValue, expectedEvent, expectedValue) => {
+      const onChange = jest.fn();
 
-        render(
-          <CardVerificationCodeElement
-            btRef={mockedRef}
-            placeholder="CVC"
-            cvcLength={3}
-            style={{}}
-            onChange={onChange}
-          />
-        );
+      render(
+        <CardVerificationCodeElement
+          btRef={mockedRef}
+          placeholder="CVC"
+          cvcLength={3}
+          style={{}}
+          onChange={onChange}
+        />
+      );
 
-        const el = screen.getByPlaceholderText('CVC');
+      const el = screen.getByPlaceholderText('CVC');
 
-        fireEvent.changeText(el, inputValue);
+      fireEvent.changeText(el, inputValue);
 
-        expect(el.props.value).toStrictEqual(expectedValue);
-        expect(onChange).toHaveBeenCalledWith(expectedEvent);
-      });
+      expect(el.props.value).toStrictEqual(expectedValue);
+      expect(onChange).toHaveBeenCalledWith(expectedEvent);
     });
   });
 });
