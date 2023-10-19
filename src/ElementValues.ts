@@ -1,1 +1,1 @@
-export const _elementValues: Record<string, unknown> = {};
+export const _elementValues: Record<string, string> = {};

@@ -1,5 +1,5 @@
 import type { ForwardedRef } from 'react';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
 import { ElementType, type BTRef, type Mask } from '../BaseElementTypes';
@@ -14,6 +14,8 @@ export type UseTextElementProps = {
   onChange?: EventConsumer;
 };
 
+const id = uuid.v4().toString();
+
 export const useTextElement = ({
   btRef,
   mask,
@@ -21,8 +23,6 @@ export const useTextElement = ({
 }: UseTextElementProps) => {
   const textInputRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
-
-  const id = useMemo(() => uuid.v4().toString(), []);
 
   useBtRefUnmount({ btRef });
 

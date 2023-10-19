@@ -14,6 +14,8 @@ export type UseCardExpirationDateElementProps = {
   onChange?: EventConsumer;
 };
 
+const id = uuid.v4().toString();
+
 export const useCardExpirationDateElement = ({
   btRef,
   onChange,
@@ -23,13 +25,16 @@ export const useCardExpirationDateElement = ({
   const textInputRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
 
-  const id = useMemo(() => uuid.v4().toString(), []);
-
   useBtRefUnmount({ btRef });
 
   const mask = useMask({ type });
 
-  useBtRef({ btRef, textInputRef, id, setTextInputValue: setElementValue });
+  useBtRef({
+    btRef,
+    textInputRef,
+    id: id,
+    setTextInputValue: setElementValue,
+  });
 
   const { _onChange } = useUserEventHandlers({
     setElementValue,
