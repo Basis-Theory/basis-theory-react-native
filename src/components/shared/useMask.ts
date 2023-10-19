@@ -1,7 +1,8 @@
-import { findIndex, isNil, replace } from 'ramda';
+import { findIndex, isNil } from 'ramda';
 import { ElementType } from '../../BaseElementTypes';
 import { _elementValues } from '../../ElementValues';
 import { type CardMetadata, useCardMetadata } from './useCardMetadata';
+import { extractDigits } from './utils';
 
 type UseMask = { maskLength?: number; type: ElementType; id?: string };
 
@@ -32,7 +33,7 @@ const createCardMask = (cardNumber: string, card: CardMetadata) => {
     return DEFAULT_CARD_NUMBER_MASK;
   }
 
-  const digitsOnly = replace(/\D+/gu, '', cardNumber ?? '');
+  const digitsOnly = extractDigits(cardNumber) ?? '';
 
   const lengthIndex = findIndex(
     (length) => length > digitsOnly.length,

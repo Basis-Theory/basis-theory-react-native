@@ -3,6 +3,7 @@ import { ElementType, Mask } from '../../BaseElementTypes';
 import { useElementValidation } from './useElementValidation';
 import { isEmpty } from 'ramda';
 import { useMemo } from 'react';
+import { useCardMetadata } from './useCardMetadata';
 
 export type ElementEvent = Omit<ChangeEvent, 'type'>;
 
@@ -20,6 +21,8 @@ export const useElementEvent = ({
   mask,
 }: UseElementEventProps): CreateEvent => {
   const { getValidationStrategy } = useElementValidation();
+  const { getMetadataFromCardNumber: _getMetadataFromCardNumber } =
+    useCardMetadata();
 
   const validator = useMemo(() => getValidationStrategy(type), [type]);
 
@@ -29,12 +32,22 @@ export const useElementEvent = ({
     return error ? [{ targetId: type, type: error }] : undefined;
   };
 
+  const getMetadataFromCardNumber = (value: string) => {
+    if (type !== ElementType.CARD_NUMBER) return undefined;
+
+    const { cvcLenth, cardBin, cardLast4, brand } =
+      _getMetadataFromCardNumber(value);
+
+    return { cvcLenth, cardBin, cardLast4, brand };
+  };
+
   return (value: string) => {
     const empty = isEmpty(value);
     const errors = validate(value);
     const valid = !empty && !errors;
     const maskSatisfied = mask ? value.length == mask.length : true;
     const complete = !errors && maskSatisfied;
+    const additionalCardMetadata = getMetadataFromCardNumber(value);
 
     return {
       empty,
@@ -42,6 +55,7 @@ export const useElementEvent = ({
       valid,
       maskSatisfied,
       complete,
+      ...additionalCardMetadata,
     };
   };
 };

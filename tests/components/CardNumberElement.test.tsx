@@ -45,6 +45,7 @@ describe('CardNumberElement', () => {
           'should error',
           '4',
           {
+            brand: 'unknown',
             complete: false,
             empty: false,
             errors: [{ targetId: 'cardNumber', type: 'incomplete' }],
@@ -57,6 +58,7 @@ describe('CardNumberElement', () => {
           'prevents addition of chars that do not belong to the mask',
           '#####',
           {
+            brand: 'unknown',
             complete: false,
             empty: true,
             maskSatisfied: false,
@@ -68,7 +70,11 @@ describe('CardNumberElement', () => {
           `shouldn't error`,
           '4242424242424242',
           {
+            brand: 'visa',
+            cardBin: '42424242',
+            cardLast4: '4242',
             complete: true,
+            cvcLenth: 3,
             maskSatisfied: true,
             valid: true,
             empty: false,
@@ -81,6 +87,10 @@ describe('CardNumberElement', () => {
           {
             complete: true,
             maskSatisfied: true,
+            brand: 'visa',
+            cardBin: '42424242',
+            cardLast4: '4242',
+            cvcLenth: 3,
             valid: true,
             empty: false,
           },
