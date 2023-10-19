@@ -39,7 +39,7 @@ describe('CardNumberElement', () => {
   });
 
   describe('Validation', () => {
-    describe('CVC validation', () => {
+    describe('Card Number validation', () => {
       test.each([
         [
           'should error',
@@ -76,15 +76,15 @@ describe('CardNumberElement', () => {
           '4242 4242 4242 4242',
         ],
         [
-          `shouldn't error2`,
-          '4242424242424242424',
+          `should work when mask is re-computed (ie. 16 -> 18 digits)`,
+          '424242424242424242',
           {
             complete: true,
             maskSatisfied: true,
             valid: true,
             empty: false,
           },
-          '4242 4242 4242 4242424',
+          '4242 4242 4242 424242',
         ],
       ])('input: %s', (_, inputValue, expectedEvent, expectedValue) => {
         const onChange = jest.fn();
