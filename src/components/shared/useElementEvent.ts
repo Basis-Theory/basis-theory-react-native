@@ -4,6 +4,7 @@ import { useElementValidation } from './useElementValidation';
 import { isEmpty } from 'ramda';
 import { useMemo } from 'react';
 import { useCardMetadata } from './useCardMetadata';
+import { extractDigits } from './utils';
 
 export type ElementEvent = Omit<ChangeEvent, 'type'>;
 
@@ -35,19 +36,27 @@ export const useElementEvent = ({
   const getMetadataFromCardNumber = (value: string) => {
     if (type !== ElementType.CARD_NUMBER) return undefined;
 
-    const { cvcLenth, cardBin, cardLast4, brand } =
+    const { cvcLenth, cardBin, cardLast4, brand, lengths } =
       _getMetadataFromCardNumber(value);
 
-    return { cvcLenth, cardBin, cardLast4, brand };
+    return {
+      card: { cvcLenth, cardBin, cardLast4, brand },
+      lengths,
+    };
   };
 
   return (value: string) => {
+    const metadata = getMetadataFromCardNumber(value);
     const empty = isEmpty(value);
     const errors = validate(value);
     const valid = !empty && !errors;
-    const maskSatisfied = mask ? value.length == mask.length : true;
+
+    const maskSatisfied = mask
+      ? metadata?.lengths?.includes(extractDigits(value)?.length!!) ??
+        mask.length == value.length
+      : true;
+
     const complete = !errors && maskSatisfied;
-    const additionalCardMetadata = getMetadataFromCardNumber(value);
 
     return {
       empty,
@@ -55,7 +64,7 @@ export const useElementEvent = ({
       valid,
       maskSatisfied,
       complete,
-      ...additionalCardMetadata,
+      ...metadata?.card,
     };
   };
 };
