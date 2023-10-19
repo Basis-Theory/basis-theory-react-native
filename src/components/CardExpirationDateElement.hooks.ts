@@ -1,5 +1,5 @@
 import type { ForwardedRef } from 'react';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
 import { ElementType, type BTRef } from '../BaseElementTypes';
