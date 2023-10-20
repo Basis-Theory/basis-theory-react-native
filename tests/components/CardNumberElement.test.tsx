@@ -62,7 +62,7 @@ describe('CardNumberElement', () => {
         brand: 'visa',
         cardBin: undefined, // card is not valid hence cardBin is not computed
         cardLast4: undefined, // card is not valid hence cardLast4 is not computed
-        cvcLenth: 3,
+        cvcLength: 3,
         complete: false,
         empty: false,
         errors: [{ targetId: 'cardNumber', type: 'invalid' }],
@@ -79,7 +79,7 @@ describe('CardNumberElement', () => {
         brand: 'visa',
         cardBin: undefined, // card is not valid hence cardBin is not computed
         cardLast4: undefined, // card is not valid hence cardLast4 is not computed
-        cvcLenth: 3,
+        cvcLength: 3,
         complete: false,
         empty: false,
         errors: [{ targetId: 'cardNumber', type: 'incomplete' }],
@@ -96,7 +96,7 @@ describe('CardNumberElement', () => {
         brand: 'visa',
         cardBin: undefined, // card is not valid hence cardBin is not computed
         cardLast4: undefined, // card is not valid hence cardLast4 is not computed
-        cvcLenth: 3,
+        cvcLength: 3,
         complete: false,
         empty: false,
         errors: [{ targetId: 'cardNumber', type: 'invalid' }],
@@ -128,7 +128,7 @@ describe('CardNumberElement', () => {
           brand: 'visa',
           cardBin: undefined, // card is not valid hence cardBin is not computed
           cardLast4: undefined, // card is not valid hence cardLast4 is not computed
-          cvcLenth: 3,
+          cvcLength: 3,
           complete: false,
           empty: false,
           errors: [{ targetId: 'cardNumber', type: 'invalid' }],
@@ -157,7 +157,7 @@ describe('CardNumberElement', () => {
           cardBin: '42424242',
           cardLast4: '4242',
           complete: true,
-          cvcLenth: 3,
+          cvcLength: 3,
           maskSatisfied: true,
           valid: true,
           empty: false,
@@ -173,7 +173,7 @@ describe('CardNumberElement', () => {
           brand: 'visa',
           cardBin: '42424242',
           cardLast4: '4242',
-          cvcLenth: 3,
+          cvcLength: 3,
           valid: true,
           empty: false,
         },

@@ -36,11 +36,11 @@ export const useElementEvent = ({
   const getMetadataFromCardNumber = (value: string) => {
     if (type !== ElementType.CARD_NUMBER) return undefined;
 
-    const { cvcLenth, cardBin, cardLast4, brand, lengths } =
+    const { cvcLength, cardBin, cardLast4, brand, lengths } =
       _getMetadataFromCardNumber(value);
 
     return {
-      card: { cvcLenth, cardBin, cardLast4, brand },
+      card: { cvcLength, cardBin, cardLast4, brand },
       lengths,
     };
   };

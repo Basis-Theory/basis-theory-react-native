@@ -5,7 +5,7 @@ export type CardMetadata = {
   brand: string;
   lengths: number[] | undefined;
   gaps: number[] | undefined;
-  cvcLenth?: number;
+  cvcLength?: number;
   cardLast4?: string;
   cardBin?: string;
 };
@@ -35,7 +35,7 @@ export const useCardMetadata = () => {
       brand: card?.type ?? 'unknown',
       lengths: card?.lengths,
       gaps: card?.gaps,
-      cvcLenth: card?.code.size,
+      cvcLength: card?.code.size,
     };
   };
 
