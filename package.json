@@ -78,12 +78,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "jest": {
-    "preset": "react-native",
-    "setupFilesAfterEnv": [
-      "@testing-library/jest-native/extend-expect"
-    ]
-  },
   "resolutions": {
     "semver": "^5.7.2",
     "unset-value": "^2.0.1",
