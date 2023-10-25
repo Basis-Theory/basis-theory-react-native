@@ -82,7 +82,7 @@ export class BasisTheoryElements {
       if (BasisTheoryElements.isValueAPrimitive(value)) {
         const id = uuid.v4() as string;
 
-        _elementValues[id] = value;
+        _elementValues[id] = value as string;
         const btRefBase: InputBTRef = {
           id: id,
           format: (plaintextValue) => plaintextValue,

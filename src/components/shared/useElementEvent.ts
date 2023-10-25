@@ -1,10 +1,10 @@
-import { ChangeEvent } from '@basis-theory/basis-theory-react/types';
 import { ElementType, Mask } from '../../BaseElementTypes';
 import { useElementValidation } from './useElementValidation';
 import { isEmpty } from 'ramda';
 import { useMemo } from 'react';
 import { useCardMetadata } from './useCardMetadata';
 import { extractDigits } from './utils';
+import { ChangeEvent } from '@basis-theory/basis-theory-js/types/elements';
 
 export type ElementEvent = Omit<ChangeEvent, 'type'>;
 
