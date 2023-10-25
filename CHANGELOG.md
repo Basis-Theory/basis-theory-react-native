@@ -1,3 +1,10 @@
+# [1.0.0-beta.10](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.9...v1.0.0-beta.10) (2023-10-25)
+
+
+### Features
+
+* adds field validation and onChange events ([#26](https://github.com/Basis-Theory/basis-theory-react-native/issues/26)) ([a916f05](https://github.com/Basis-Theory/basis-theory-react-native/commit/a916f05fe49dc81fb372e1e738c4e8ee39e1ad8a))
+
 # [1.0.0-beta.9](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.8...v1.0.0-beta.9) (2023-10-19)
 
 
