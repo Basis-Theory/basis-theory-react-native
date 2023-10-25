@@ -1,7 +1,6 @@
 import React from 'react';
-import type { StyleProp, TextStyle } from 'react-native';
+import { type StyleProp, type TextStyle } from 'react-native';
 import MaskInput from 'react-native-mask-input';
-import { _elementValues } from '../ElementValues';
 import {
   useCardVerificationCodeElement,
   UseCardVerificationCodeElementProps,
@@ -19,26 +18,25 @@ export const CardVerificationCodeElement = ({
   editable,
   placeholder,
   cvcLength,
+  onChange,
 }: CardVerificationCodeProps) => {
-  const { textInputRef, id, setTextInputValue, textInputValue, mask } =
+  const { elementRef, elementValue, mask, _onChange } =
     useCardVerificationCodeElement({
       btRef,
       cvcLength,
+      onChange,
     });
 
   return (
     <MaskInput
       editable={editable}
       mask={mask}
-      onChangeText={(masked) => {
-        _elementValues[id] = masked;
-        setTextInputValue(masked);
-      }}
+      onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
-      ref={textInputRef}
+      ref={elementRef}
       style={style}
-      value={textInputValue}
+      value={elementValue}
     />
   );
 };

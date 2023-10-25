@@ -17,21 +17,21 @@ import { _elementValues } from '../../ElementValues';
 
 interface UseBtRefProps {
   btRef?: ForwardedRef<BTRef>;
-  textInputRef: RefObject<TextInput>;
+  elementRef: RefObject<TextInput>;
   id: string;
-  setTextInputValue: Dispatch<SetStateAction<string>>;
+  setElementValue: Dispatch<SetStateAction<string>>;
 }
 
 type CreateBtRefArgs = {
   valueSetter: ValueSetter;
-} & Omit<UseBtRefProps, 'setTextInputValue' | 'btRef'>;
+} & Omit<UseBtRefProps, 'setElementValue' | 'btRef'>;
 
-const createBtRef = ({ id, textInputRef, valueSetter }: CreateBtRefArgs) => ({
+const createBtRef = ({ id, elementRef, valueSetter }: CreateBtRefArgs) => ({
   id,
   format: (plaintextValue: string) => plaintextValue,
-  clear: () => textInputRef?.current?.clear(),
-  focus: () => textInputRef?.current?.focus(),
-  blur: () => textInputRef?.current?.blur(),
+  clear: () => elementRef?.current?.clear(),
+  focus: () => elementRef?.current?.focus(),
+  blur: () => elementRef?.current?.blur(),
   setValue: valueSetter,
 });
 
@@ -68,15 +68,15 @@ const valueFormatter = (ref: InputBTRef | InputBtDateRef | undefined) => {
 
 export const useBtRef = ({
   btRef,
-  textInputRef,
+  elementRef,
   id,
-  setTextInputValue,
+  setElementValue,
 }: UseBtRefProps) => {
   useEffect(() => {
-    const valueSetter = compose(setTextInputValue, valueFormatter);
+    const valueSetter = compose(setElementValue, valueFormatter);
 
-    const newBtRef = createBtRef({ id, textInputRef, valueSetter });
+    const newBtRef = createBtRef({ id, elementRef, valueSetter });
 
     updateRef(btRef!!, newBtRef);
-  }, [btRef, textInputRef, id]);
+  }, [btRef, elementRef, id]);
 };

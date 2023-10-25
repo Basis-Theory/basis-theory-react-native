@@ -4,9 +4,9 @@
 
 import 'react-native';
 import React from 'react';
-import { CardVerificationCodeElement } from '../../src/components/CardVerificationCodeElement';
 
 import { render, fireEvent, screen } from '@testing-library/react-native';
+import { CardExpirationDateElement } from '../../src';
 
 describe('CardVerificationCodeElement', () => {
   const mockedRef = {
@@ -21,27 +21,21 @@ describe('CardVerificationCodeElement', () => {
   };
 
   describe('mask', () => {
-    test.each([3, 4])(
-      'applies mask correctly with cvcLength = %d',
-      (cvcLength) => {
-        render(
-          <CardVerificationCodeElement
-            btRef={mockedRef}
-            placeholder="CVC"
-            cvcLength={cvcLength}
-            style={{}}
-          />
-        );
+    test('input masks date correctly', () => {
+      render(
+        <CardExpirationDateElement
+          btRef={mockedRef}
+          placeholder="Expiration Date"
+          style={{}}
+        />
+      );
 
-        const el = screen.getByPlaceholderText('CVC');
+      const el = screen.getByPlaceholderText('Expiration Date');
 
-        fireEvent.changeText(el, '12345');
+      fireEvent.changeText(el, '1234');
 
-        const expectedValue = cvcLength === 3 ? '123' : '1234';
-
-        expect(el.props.value).toStrictEqual(expectedValue);
-      }
-    );
+      expect(el.props.value).toStrictEqual('12/34');
+    });
   });
 
   describe('Validation and Change Events', () => {
@@ -52,11 +46,23 @@ describe('CardVerificationCodeElement', () => {
         {
           complete: false,
           empty: false,
-          errors: [{ targetId: 'cvc', type: 'incomplete' }],
+          errors: [{ targetId: 'expirationDate', type: 'incomplete' }],
           maskSatisfied: false,
           valid: false,
         },
         '1',
+      ],
+      [
+        'should error: invalid',
+        '14/99',
+        {
+          complete: false,
+          empty: false,
+          errors: [{ targetId: 'expirationDate', type: 'invalid' }],
+          maskSatisfied: true,
+          valid: false,
+        },
+        '14/99',
       ],
       [
         'prevents addition of chars that do not belong to the mask',
@@ -71,29 +77,28 @@ describe('CardVerificationCodeElement', () => {
       ],
       [
         `shouldn't error`,
-        '123',
+        '1234',
         {
           complete: true,
           maskSatisfied: true,
           valid: true,
           empty: false,
         },
-        '123',
+        '12/34',
       ],
     ])('input: %s', (_, inputValue, expectedEvent, expectedValue) => {
       const onChange = jest.fn();
 
       render(
-        <CardVerificationCodeElement
+        <CardExpirationDateElement
           btRef={mockedRef}
-          placeholder="CVC"
-          cvcLength={3}
+          placeholder="Expiration Date"
           style={{}}
           onChange={onChange}
         />
       );
 
-      const el = screen.getByPlaceholderText('CVC');
+      const el = screen.getByPlaceholderText('Expiration Date');
 
       fireEvent.changeText(el, inputValue);
 

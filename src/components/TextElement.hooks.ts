@@ -1,35 +1,42 @@
 import type { ForwardedRef } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
-import type { BTRef, Mask } from '../BaseElementTypes';
-import { useBtRefUnmount } from './shared/useBtRefUnmount.hooks';
-import { useBtRef } from './shared/useBtRef.hooks';
+import { ElementType, type BTRef, type Mask } from '../BaseElementTypes';
+import { useBtRefUnmount } from './shared/useBtRefUnmount';
+import { useBtRef } from './shared/useBtRef';
+import { EventConsumer } from './shared/useElementEvent';
+import { useUserEventHandlers } from './shared/useUserEventHandlers';
 
 export type UseTextElementProps = {
   btRef?: ForwardedRef<BTRef>;
   mask?: Mask;
+  onChange?: EventConsumer;
 };
 
-export const useTextElement = ({ btRef, ...props }: UseTextElementProps) => {
-  const textInputRef = useRef<TextInput>(null);
-  const [id] = useState(uuid.v4() as string);
-  const [mask, setMask] = useState<Mask | undefined>(undefined);
-  const [textInputValue, setTextInputValue] = useState<string>('');
+const id = uuid.v4().toString();
+
+export const useTextElement = ({
+  btRef,
+  mask,
+  onChange,
+}: UseTextElementProps) => {
+  const elementRef = useRef<TextInput>(null);
+  const [elementValue, setElementValue] = useState<string>('');
 
   useBtRefUnmount({ btRef });
 
-  useEffect(() => {
-    setMask(props.mask);
-  }, [textInputValue, props.mask]);
+  useBtRef({ btRef, elementRef, id, setElementValue });
 
-  useBtRef({ btRef, textInputRef, id, setTextInputValue });
+  const { _onChange } = useUserEventHandlers({
+    setElementValue,
+    element: { id, mask, type: ElementType.TEXT },
+    onChange: onChange,
+  });
 
   return {
-    textInputRef,
-    id,
-    setTextInputValue,
-    textInputValue,
-    mask,
+    elementRef,
+    _onChange,
+    elementValue,
   };
 };

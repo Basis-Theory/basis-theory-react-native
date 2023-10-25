@@ -1,48 +1,50 @@
 import type { ForwardedRef } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
-import type { BTRef, Mask } from '../BaseElementTypes';
-import { useBtRefUnmount } from './shared/useBtRefUnmount.hooks';
-import { useBtRef } from './shared/useBtRef.hooks';
+import { ElementType, type BTRef } from '../BaseElementTypes';
+import { useBtRefUnmount } from './shared/useBtRefUnmount';
+import { useBtRef } from './shared/useBtRef';
 
-const defaultCvcMask = [/\d/u, /\d/u, /\d/u, /\d/u];
-
-const createMask = (length: number): Mask =>
-  Array.from<string | RegExp>({ length }).fill(/\d/u);
-
-const isCVCOutOfRange = (cvcLength: number) => cvcLength > 4 || cvcLength < 3;
+import { _elementValues } from '../ElementValues';
+import { EventConsumer } from './shared/useElementEvent';
+import { useUserEventHandlers } from './shared/useUserEventHandlers';
+import { useMask } from './shared/useMask';
 
 export type UseCardVerificationCodeElementProps = {
   btRef?: ForwardedRef<BTRef>;
   cvcLength?: number;
+  onChange?: EventConsumer;
 };
+
+const id = uuid.v4().toString();
 
 export const useCardVerificationCodeElement = ({
   btRef,
   cvcLength = 3,
+  onChange,
 }: UseCardVerificationCodeElementProps) => {
-  const textInputRef = useRef<TextInput>(null);
-  const [id] = useState(uuid.v4() as string);
-  const [mask, setMask] = useState<Mask>(defaultCvcMask);
-  const [textInputValue, setTextInputValue] = useState<string>('');
+  const type = ElementType.CVC;
+
+  const elementRef = useRef<TextInput>(null);
+  const [elementValue, setElementValue] = useState<string>('');
 
   useBtRefUnmount({ btRef });
 
-  useEffect(() => {
-    const length = isCVCOutOfRange(cvcLength) ? 4 : cvcLength;
-    const mask = createMask(length);
+  const mask = useMask({ maskLength: cvcLength, type });
 
-    setMask(mask);
-  }, [textInputValue, cvcLength]);
+  useBtRef({ btRef, elementRef, id, setElementValue });
 
-  useBtRef({ btRef, textInputRef, id, setTextInputValue });
+  const { _onChange } = useUserEventHandlers({
+    setElementValue,
+    element: { id, mask, type },
+    onChange,
+  });
 
   return {
-    textInputRef,
-    id,
-    setTextInputValue,
-    textInputValue,
+    elementRef,
+    elementValue,
     mask,
+    _onChange,
   };
 };

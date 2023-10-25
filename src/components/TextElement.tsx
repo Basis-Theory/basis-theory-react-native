@@ -15,25 +15,25 @@ export const TextElement = ({
   style,
   editable,
   placeholder,
+  onChange,
+  mask,
 }: TextElementProps) => {
-  const { textInputRef, id, setTextInputValue, textInputValue, mask } =
-    useTextElement({
-      btRef,
-    });
+  const { elementRef, elementValue, _onChange } = useTextElement({
+    btRef,
+    onChange,
+    mask,
+  });
 
   return (
     <MaskInput
       editable={editable}
       mask={mask}
-      onChangeText={(masked) => {
-        _elementValues[id] = masked;
-        setTextInputValue(masked);
-      }}
+      onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
-      ref={textInputRef}
+      ref={elementRef}
       style={style}
-      value={textInputValue}
+      value={elementValue}
     />
   );
 };
