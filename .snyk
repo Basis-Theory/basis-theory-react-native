@@ -1,6 +1,16 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
 version: v1.25.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-LODASHSET-1320032:
-    - lodash.set@4.3.2:
-      reason: 'Fixed with Object.freeze(Object.prototype) from suggestion in https://security.snyk.io/vuln/SNYK-JS-LODASHSET-1320032'
-      expires: '2024-01-31T12:00:00.000Z' #6 months from found date 07/21/2023. check https://github.com/lodash/lodash/issues/5499 for any updates and revert https://github.com/Basis-Theory/basis-theory-react-native/pull/21/commits/37eddf1f973a904ff7a1a640d05c982b49d94b0a
+    - lodash.set@4.3.2: null
+    - reason: >-
+        Fixed with Object.freeze(Object.prototype) from suggestion in
+        https://security.snyk.io/vuln/SNYK-JS-LODASHSET-1320032
+    - expires: '2024-01-31T12:00:00.000Z'
+  SNYK-JS-AXIOS-6032459:
+    - '*': null
+    - reason: >-
+       'Does not apply to react native per https://github.com/axios/axios/blob/9588fcdec8aca45c3ba2f7968988a5d03f23168c/lib/adapters/xhr.js#L145'
+    - expires: '2024-01-24T18:01:50.804Z'
+patch: {}
