@@ -8,7 +8,7 @@ import { BasisTheory } from '@basis-theory/basis-theory-js';
 import { Proxy } from './modules/proxy';
 import { Sessions } from './modules/sessions';
 import { Tokens } from './modules/tokens';
-import { useBasisTheoryFromContext } from './BasiTheoryProvider';
+import { useBasisTheoryFromContext } from './BasisTheoryProvider';
 
 const _BasisTheoryElements = async ({ apiKey }: { apiKey: string }) => {
   let bt: BasisTheoryType = await new BasisTheory().init(apiKey);
