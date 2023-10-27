@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { _elementValues } from '../../ElementValues';
 import { EventConsumer, useElementEvent } from './useElementEvent';
 import { ElementType, Mask } from '../../BaseElementTypes';
+import { identity } from 'ramda';
 
 type UseUserEventHandlers = {
   setElementValue: Dispatch<SetStateAction<string>>;
@@ -11,18 +12,20 @@ type UseUserEventHandlers = {
     mask?: Mask;
   };
   onChange?: EventConsumer;
+  transform?: (value: string) => string;
 };
 
 export const useUserEventHandlers = ({
   setElementValue,
   element,
   onChange,
+  transform = identity,
 }: UseUserEventHandlers) => {
   const createEvent = useElementEvent(element);
 
   return {
     _onChange: (_elementValue: string) => {
-      _elementValues[element.id] = _elementValue;
+      _elementValues[element.id] = transform(_elementValue);
 
       setElementValue(() => {
         if (onChange) {
