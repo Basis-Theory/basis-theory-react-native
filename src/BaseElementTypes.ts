@@ -28,4 +28,13 @@ export enum ElementType {
   TEXT = 'text',
 }
 
-export type { InputBTRef, BTRef, Mask, InputBtDateRef, ValueSetter };
+type PrimitiveType = string | boolean | number | undefined | null;
+
+export type {
+  BTRef,
+  InputBTRef,
+  InputBtDateRef,
+  Mask,
+  PrimitiveType,
+  ValueSetter,
+};
