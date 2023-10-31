@@ -9,6 +9,7 @@ import { Proxy } from './modules/proxy';
 import { Sessions } from './modules/sessions';
 import { Tokens } from './modules/tokens';
 import { useBasisTheoryFromContext } from './BasisTheoryProvider';
+import { logger } from './utils/logging';
 
 const _BasisTheoryElements = async ({ apiKey }: { apiKey: string }) => {
   let bt: BasisTheoryType = await new BasisTheory().init(apiKey);
@@ -49,10 +50,14 @@ const useBasisTheory = (
         try {
           const bt = await _BasisTheoryElements({ apiKey });
 
+          logger.log.info('Succesfully initialized Elements');
+
           setState({
             bt,
           });
         } catch (error) {
+          logger.log.error('Error while initializing Elements', error as Error);
+
           setState({
             error: error as Error,
           });
