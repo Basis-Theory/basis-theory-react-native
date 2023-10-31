@@ -7,11 +7,13 @@ import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
 import { EventConsumer } from './shared/useElementEvent';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
+import { TransformType } from './shared/useTransform';
 
 export type UseTextElementProps = {
   btRef?: ForwardedRef<BTRef>;
   mask?: Mask;
   onChange?: EventConsumer;
+  transform?: TransformType;
 };
 
 const id = uuid.v4().toString();
@@ -20,6 +22,7 @@ export const useTextElement = ({
   btRef,
   mask,
   onChange,
+  transform,
 }: UseTextElementProps) => {
   const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
@@ -32,6 +35,7 @@ export const useTextElement = ({
     setElementValue,
     element: { id, mask, type: ElementType.TEXT },
     onChange: onChange,
+    transform,
   });
 
   return {

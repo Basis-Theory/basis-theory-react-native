@@ -33,7 +33,7 @@ export const useCardNumberElement = ({
 
   const { _onChange } = useUserEventHandlers({
     setElementValue,
-    transform: (val) => val.replaceAll(' ', ''),
+    transform: [' ', ''],
     element: { id, mask, type },
     onChange: onChange,
   });
