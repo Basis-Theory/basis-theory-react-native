@@ -8,6 +8,7 @@ import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { EventConsumer } from './shared/useElementEvent';
 import { useMask } from './shared/useMask';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
+import { replace } from 'ramda';
 
 export type UseCardNumberElementProps = {
   btRef?: ForwardedRef<BTRef>;
@@ -32,6 +33,7 @@ export const useCardNumberElement = ({
 
   const { _onChange } = useUserEventHandlers({
     setElementValue,
+    transform: (val) => val.replaceAll(' ', ''),
     element: { id, mask, type },
     onChange: onChange,
   });

@@ -1,0 +1,161 @@
+import { Token, TokenData } from '@basis-theory/basis-theory-js/types/models';
+import * as state from '../../src/ElementValues';
+import {
+  replaceElementRefs,
+  replaceSensitiveData,
+} from '../../src/utils/dataManipulationUtils';
+import { BTRef } from '../../src';
+
+/* Mock state for replaceElementRefs tests */
+jest.mock('../../src/ElementValues', () => ({
+  _elementValues: {
+    '123': 'my very sensitive value',
+    '456': 'my other very sensitive value',
+    firstArrayElement: 'first sensitive element in array',
+    secondArrayElement: 'second sensitive element in array',
+  },
+}));
+
+/* hard codes id for replaceSensitiveData, this will keep the same ID for all tests
+ * and the replaceSensitiveData function will rewrite the same property on _elementValues
+ * does not feel ideal but we have to deal with uuid.v4() somehow
+ */
+
+jest.mock('react-native-uuid', () => ({
+  v4: () => 'myVeryUniqueId',
+}));
+
+describe('replace element refs', () => {
+  test('replaces refs with proper values', () => {
+    console.log(state._elementValues);
+
+    const tokenWithRef = {
+      id: 'tokenID',
+      type: 'card',
+      data: {
+        number: { id: '123', format: jest.fn },
+        nestedObject: {
+          test: { id: '456', format: jest.fn },
+        },
+        myArray: [
+          { id: 'firstArrayElement', format: jest.fn },
+          { id: 'secondArrayElement', format: jest.fn },
+        ],
+      },
+    };
+
+    const expectedResult = {
+      id: 'tokenID',
+      type: 'card',
+      data: {
+        number: 'my very sensitive value',
+        nestedObject: {
+          test: 'my other very sensitive value',
+        },
+        myArray: [
+          'first sensitive element in array',
+          'second sensitive element in array',
+        ],
+      },
+    };
+
+    const result = replaceElementRefs(tokenWithRef);
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+});
+
+describe('replace sensitive data', () => {
+  test('replaces values in data when value is object', () => {
+    const token = {
+      type: 'token',
+      enrichments: { token: '123' },
+      data: {
+        number: '4242424242424241',
+      },
+    };
+
+    const result = replaceSensitiveData(token) as Token<{ number: BTRef }>;
+
+    expect((result.data as { number: BTRef }).number?.id).toStrictEqual(
+      'myVeryUniqueId'
+    );
+    expect(state._elementValues.myVeryUniqueId).toStrictEqual(
+      '4242424242424241'
+    );
+  });
+
+  test('replaces values in data when value is object recursively', () => {
+    const token = {
+      type: 'token',
+      enrichments: { token: '123' },
+      data: {
+        card: { number: '4242424242424242' },
+      },
+    };
+
+    const result = replaceSensitiveData(token) as Token<{ number: BTRef }>;
+
+    expect(
+      (result.data as { card: { number: BTRef } }).card?.number.id
+    ).toStrictEqual('myVeryUniqueId');
+    expect(state._elementValues.myVeryUniqueId).toStrictEqual(
+      '4242424242424242'
+    );
+  });
+
+  test('replaces values in data when value is array', () => {
+    const token = {
+      type: 'token',
+      enrichments: { token: '123' },
+      data: ['4242424242424243'],
+    };
+
+    const result = replaceSensitiveData(token) as Token<{ number: BTRef }>;
+
+    expect((result.data as unknown as BTRef[])[0].id).toStrictEqual(
+      'myVeryUniqueId'
+    );
+
+    expect(state._elementValues.myVeryUniqueId).toStrictEqual(
+      '4242424242424243'
+    );
+  });
+
+  test('replaces values in data when value is array recursively', () => {
+    const token = {
+      type: 'token',
+      enrichments: { token: '123' },
+      data: [{ card: { number: '4242424242424244' } }],
+    };
+
+    const result = replaceSensitiveData(token) as Token<{ number: BTRef }>;
+
+    expect(
+      (result.data as unknown as { card: { number: BTRef } }[])[0].card.number
+        .id
+    ).toStrictEqual('myVeryUniqueId');
+
+    expect(state._elementValues.myVeryUniqueId).toStrictEqual(
+      '4242424242424244'
+    );
+  });
+
+  test('replaces values in data when value is string', () => {
+    const token = {
+      type: 'token',
+      enrichments: { token: '123' },
+      data: '4242424242424245',
+    };
+
+    const result = replaceSensitiveData(token) as Token<{ number: BTRef }>;
+
+    expect((result.data as unknown as BTRef).id).toStrictEqual(
+      'myVeryUniqueId'
+    );
+
+    expect(state._elementValues.myVeryUniqueId).toStrictEqual(
+      '4242424242424245'
+    );
+  });
+});

@@ -6,7 +6,35 @@ import { useCardMetadata } from './useCardMetadata';
 import { extractDigits } from './utils';
 import { ChangeEvent } from '@basis-theory/basis-theory-js/types/elements';
 
-export type ElementEvent = Omit<ChangeEvent, 'type'>;
+interface FieldError {
+  targetId: string;
+  type: 'incomplete' | 'invalid';
+}
+
+export type ElementEvent = {
+  /**
+   * `true` if the element is empty.
+   */
+  empty: boolean;
+  /**
+   * `true` if the input `valid` and `maskSatisfied` properties are `true`.
+   */
+  complete: boolean;
+  /**
+   * `true` if the input is valid according to validation for each element.
+   * Defaults to `true` if no validation is defined for the element.
+   */
+  valid?: boolean;
+  /**
+   * `true` if the input satisfies the mask length requirements.
+   * Defaults to `true` if no mask is provided.
+   */
+  maskSatisfied?: boolean;
+  /**
+   * Array of objects that indicates if an element is invalid or incomplete.
+   */
+  errors?: FieldError[];
+};
 
 export type EventConsumer = (event: ElementEvent) => void;
 
