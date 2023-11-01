@@ -74,7 +74,7 @@ export const useMask = ({ maskLength, type, id }: UseMask) => {
 
   if (type === ElementType.CARD_NUMBER) {
     if (id) {
-      const cardNumber = _elementValues[id];
+      const cardNumber = _elementValues[id] as string;
       const card = getMetadataFromCardNumber(cardNumber);
 
       const mask = createCardMask(cardNumber, card);
