@@ -1,3 +1,11 @@
+# [1.0.0-beta.11](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.10...v1.0.0-beta.11) (2023-11-01)
+
+
+### Features
+
+* adds datadog logging ([#29](https://github.com/Basis-Theory/basis-theory-react-native/issues/29)) ([4239bc3](https://github.com/Basis-Theory/basis-theory-react-native/commit/4239bc372c98e379a3aa51b5b4a11a1089685c23))
+* collect cards ([#28](https://github.com/Basis-Theory/basis-theory-react-native/issues/28)) ([d48ea4a](https://github.com/Basis-Theory/basis-theory-react-native/commit/d48ea4a77af2d6780e584b9018d45572d798713c))
+
 # [1.0.0-beta.10](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.9...v1.0.0-beta.10) (2023-10-25)
 
 
