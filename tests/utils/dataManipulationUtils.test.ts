@@ -1,10 +1,10 @@
-import { Token, TokenData } from '@basis-theory/basis-theory-js/types/models';
+import { Token } from '@basis-theory/basis-theory-js/types/models';
+import { BTRef } from '../../src';
 import * as state from '../../src/ElementValues';
 import {
   replaceElementRefs,
   replaceSensitiveData,
 } from '../../src/utils/dataManipulationUtils';
-import { BTRef } from '../../src';
 
 /* Mock state for replaceElementRefs tests */
 jest.mock('../../src/ElementValues', () => ({
@@ -27,8 +27,6 @@ jest.mock('react-native-uuid', () => ({
 
 describe('replace element refs', () => {
   test('replaces refs with proper values', () => {
-    console.log(state._elementValues);
-
     const tokenWithRef = {
       id: 'tokenID',
       type: 'card',

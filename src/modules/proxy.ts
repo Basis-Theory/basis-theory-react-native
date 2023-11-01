@@ -3,6 +3,7 @@ import { ProxyRequestOptions } from '@basis-theory/basis-theory-js/types/sdk';
 
 import type { BasisTheory as BasisTheoryType } from '@basis-theory/basis-theory-js/types/sdk';
 import { replaceSensitiveData } from '../utils/dataManipulationUtils';
+import { logger } from '../utils/logging';
 
 export const Proxy = (bt: BasisTheoryType) => {
   const proxy = async (
@@ -14,11 +15,17 @@ export const Proxy = (bt: BasisTheoryType) => {
     },
     apiKey?: string
   ): Promise<unknown> => {
-    proxyRequest.apiKey = apiKey;
-    const proxyResponse = await bt.proxy[method](proxyRequest);
-    const result = replaceSensitiveData(proxyResponse);
+    try {
+      proxyRequest.apiKey = apiKey;
+      const proxyResponse = await bt.proxy[method](proxyRequest);
+      const result = replaceSensitiveData(proxyResponse);
 
-    return result;
+      logger.log.info('Succesfully invoked proxy');
+
+      return result;
+    } catch (error) {
+      logger.log.error('Error while invoking proxy', error as Error);
+    }
   };
 
   return proxy;
