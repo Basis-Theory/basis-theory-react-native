@@ -5,8 +5,6 @@ import uuid from 'react-native-uuid';
 import { ElementType, type BTRef } from '../BaseElementTypes';
 import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
-
-import { _elementValues } from '../ElementValues';
 import { EventConsumer } from './shared/useElementEvent';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
 import { useMask } from './shared/useMask';

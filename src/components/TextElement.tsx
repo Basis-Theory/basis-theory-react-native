@@ -2,7 +2,6 @@ import React from 'react';
 import type { StyleProp, TextStyle } from 'react-native';
 import { useTextElement, UseTextElementProps } from './TextElement.hooks';
 import MaskInput from 'react-native-mask-input';
-import { _elementValues } from '../ElementValues';
 
 type TextElementProps = {
   style?: StyleProp<TextStyle>;

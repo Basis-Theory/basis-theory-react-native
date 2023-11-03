@@ -1,7 +1,6 @@
 import React from 'react';
 import type { StyleProp, TextStyle } from 'react-native';
 import MaskInput from 'react-native-mask-input';
-import { _elementValues } from '../ElementValues';
 import {
   useCardExpirationDateElement,
   UseCardExpirationDateElementProps,
