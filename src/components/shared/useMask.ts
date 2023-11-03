@@ -2,7 +2,7 @@ import { findIndex, isNil } from 'ramda';
 import { ElementType } from '../../BaseElementTypes';
 import { _elementValues } from '../../ElementValues';
 import { type CardMetadata, useCardMetadata } from './useCardMetadata';
-import { extractDigits } from './utils';
+import { extractDigits } from '../../utils/shared';
 
 type UseMask = { maskLength?: number; type: ElementType; id?: string };
 
