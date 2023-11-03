@@ -3,8 +3,7 @@ import { useElementValidation } from './useElementValidation';
 import { isEmpty } from 'ramda';
 import { useMemo } from 'react';
 import { useCardMetadata } from './useCardMetadata';
-import { extractDigits } from './utils';
-import { ChangeEvent } from '@basis-theory/basis-theory-js/types/elements';
+import { extractDigits } from '../../utils/shared';
 
 interface FieldError {
   targetId: string;
