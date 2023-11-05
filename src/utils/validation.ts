@@ -1,20 +1,8 @@
 import { cvv, number, expirationDate } from 'card-validator';
-import {
-  isEmpty,
-  is,
-  split,
-  cond,
-  equals,
-  always,
-  T,
-  partial,
-  flip,
-  reject,
-  max,
-  reduce,
-} from 'ramda';
-import { ElementType, Mask } from '../BaseElementTypes';
-import { extractDigits } from './shared';
+import { isEmpty, split, cond, equals, always, T, partial, flip } from 'ramda';
+import { BTRef, ElementType, Mask, PrimitiveType } from '../BaseElementTypes';
+import { extractDigits, isRegExp, isString, removeMax } from './shared';
+import { _elementValues } from '../ElementValues';
 
 type ValidationResult = 'invalid' | 'incomplete' | undefined;
 
@@ -22,9 +10,6 @@ interface ValidatorResult {
   isValid: boolean;
   isPotentiallyValid: boolean;
 }
-
-const removeMax = (list: number[]) =>
-  reject(equals(reduce(max, -Infinity, list)), list);
 
 type ValidatorFunction = (value: string) => ValidatorResult;
 
@@ -68,9 +53,6 @@ const _cardNumberValidator = (value: string) => {
 const _expirationDateValidator = expirationDate;
 
 const _maskValidator = (mask: Mask = [], value: string) => {
-  const isRegExp = is(RegExp);
-  const isString = is(String);
-
   const customZip = <T, U, V>(fn: (a: T, b: U) => V, a: T[], b: U[]): V[] =>
     a.map((x, i) => fn(x, b[i]));
 

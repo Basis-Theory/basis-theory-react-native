@@ -1,33 +1,12 @@
-import {
-  anyPass,
-  assoc,
-  cond,
-  equals,
-  identity,
-  is,
-  isNil,
-  map,
-  mapObjIndexed,
-  type,
-} from 'ramda';
+import { assoc, cond, identity, isNil, map, mapObjIndexed } from 'ramda';
 import uuid from 'react-native-uuid';
-import type { BTRef, PrimitiveType } from '../BaseElementTypes';
-import { Token } from '@basis-theory/basis-theory-js/types/models';
+import type { PrimitiveType } from '../BaseElementTypes';
 import { _elementValues } from '../ElementValues';
+import { _getValidationStrategy } from './validation';
+import { isObject, isPrimitive, isToken, isBtRef } from './shared';
 
-const isObject = (val: unknown): val is Record<string, unknown> =>
-  equals('Object', type(val));
-
-const isToken = (val: unknown): val is Token =>
-  !isNil((val as Token).data) && !isNil((val as Token).type);
-
-const isBtRef = (val: unknown): val is BTRef =>
-  !isNil(_elementValues[(val as BTRef).id]);
-
-const isPrimitive = anyPass([is(String), is(Boolean), is(Number), isNil]);
-
-const createBtInputRef = (val: PrimitiveType) => {
-  if (isNil(val)) return null;
+const createBtInputRef = (value: PrimitiveType) => {
+  if (isNil(value)) return null;
 
   const id = uuid.v4().toString();
   _elementValues[id] = val;
