@@ -1,5 +1,5 @@
 import type { ForwardedRef } from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
 import { ElementType, type BTRef } from '../BaseElementTypes';
@@ -8,7 +8,6 @@ import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { EventConsumer } from './shared/useElementEvent';
 import { useMask } from './shared/useMask';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
-import { replace } from 'ramda';
 
 export type UseCardNumberElementProps = {
   btRef?: ForwardedRef<BTRef>;

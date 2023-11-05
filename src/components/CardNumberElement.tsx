@@ -3,7 +3,7 @@ import type { StyleProp, TextStyle } from 'react-native';
 import {
   useCardNumberElement,
   UseCardNumberElementProps,
-} from './CardNumberElement.hooks';
+} from './CardNumberElement.hook';
 import MaskInput from 'react-native-mask-input';
 import { _elementValues } from '../ElementValues';
 
