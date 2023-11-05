@@ -5,7 +5,6 @@ import {
   UseCardNumberElementProps,
 } from './CardNumberElement.hook';
 import MaskInput from 'react-native-mask-input';
-import { _elementValues } from '../ElementValues';
 
 type CardNumberProps = {
   style?: StyleProp<TextStyle>;
