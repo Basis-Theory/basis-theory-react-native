@@ -30,11 +30,14 @@ export enum ElementType {
 
 type PrimitiveType = string | boolean | number | undefined | null;
 
+type ValidationResult = 'invalid' | 'incomplete' | undefined;
+
 export type {
   BTRef,
   InputBTRef,
   InputBtDateRef,
   Mask,
   PrimitiveType,
+  ValidationResult,
   ValueSetter,
 };

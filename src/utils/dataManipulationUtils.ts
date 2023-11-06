@@ -9,7 +9,7 @@ const createBtInputRef = (value: PrimitiveType) => {
   if (isNil(value)) return null;
 
   const id = uuid.v4().toString();
-  _elementValues[id] = val;
+  _elementValues[id] = value;
 
   return {
     id,

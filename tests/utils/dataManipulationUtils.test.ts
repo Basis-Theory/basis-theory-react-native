@@ -7,14 +7,6 @@ import {
 } from '../../src/utils/dataManipulationUtils';
 
 /* Mock state for replaceElementRefs tests */
-jest.mock('../../src/ElementValues', () => ({
-  _elementValues: {
-    '123': 'my very sensitive value',
-    '456': 'my other very sensitive value',
-    firstArrayElement: 'first sensitive element in array',
-    secondArrayElement: 'second sensitive element in array',
-  },
-}));
 
 /* hard codes id for replaceSensitiveData, this will keep the same ID for all tests
  * and the replaceSensitiveData function will rewrite the same property on _elementValues
@@ -26,6 +18,19 @@ jest.mock('react-native-uuid', () => ({
 }));
 
 describe('replace element refs', () => {
+  beforeEach(() => {
+    //@ts-ignore
+    state._elementValues = {
+      '123': 'my very sensitive value',
+      '456': 'my other very sensitive value',
+      firstArrayElement: 'first sensitive element in array',
+      secondArrayElement: 'second sensitive element in array',
+    };
+  });
+  afterAll(() => {
+    //@ts-ignore
+    state._elementValues = {};
+  });
   test('replaces refs with proper values', () => {
     const tokenWithRef = {
       id: 'tokenID',

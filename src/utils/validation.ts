@@ -1,10 +1,7 @@
-import { cvv, number, expirationDate } from 'card-validator';
-import { isEmpty, split, cond, equals, always, T, partial, flip } from 'ramda';
-import { BTRef, ElementType, Mask, PrimitiveType } from '../BaseElementTypes';
+import { cvv, expirationDate, number } from 'card-validator';
+import { T, always, cond, equals, flip, isEmpty, partial, split } from 'ramda';
+import { ElementType, Mask, ValidationResult } from '../BaseElementTypes';
 import { extractDigits, isRegExp, isString, removeMax } from './shared';
-import { _elementValues } from '../ElementValues';
-
-type ValidationResult = 'invalid' | 'incomplete' | undefined;
 
 interface ValidatorResult {
   isValid: boolean;

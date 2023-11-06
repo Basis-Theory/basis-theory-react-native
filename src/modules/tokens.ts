@@ -1,4 +1,4 @@
-import {
+import type {
   CreateToken,
   Token,
   TokenData,
@@ -8,14 +8,15 @@ import {
   replaceElementRefs,
   replaceSensitiveData,
 } from '../utils/dataManipulationUtils';
-
 import type {
   BasisTheory as BasisTheoryType,
   RequestOptions,
 } from '@basis-theory/basis-theory-js/types/sdk';
 import { logger } from '../utils/logging';
+import { _elementErrors } from '../ElementValues';
+import { isNilOrEmpty } from '../utils/shared';
 
-type CreateTokenWithBtRef = Omit<CreateToken, 'data'> & {
+export type CreateTokenWithBtRef = Omit<CreateToken, 'data'> & {
   data: TokenData<BTRef>;
 };
 
@@ -43,6 +44,14 @@ export const Tokens = (bt: BasisTheoryType) => {
     tokenWithRef: CreateTokenWithBtRef,
     requestOptions?: RequestOptions
   ) => {
+    if (!isNilOrEmpty(_elementErrors)) {
+      return Promise.reject(
+        new Error(
+          'Unable to create token. Payload contains invalid values. Review elements events for more details.'
+        )
+      );
+    }
+
     try {
       const _token = replaceElementRefs(tokenWithRef);
 
