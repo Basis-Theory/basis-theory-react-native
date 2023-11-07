@@ -7,15 +7,17 @@ type TextElementProps = {
   style?: StyleProp<TextStyle>;
   editable?: boolean;
   placeholder?: string;
+  placeholderTextColor?: string;
 } & UseTextElementProps;
 
 export const TextElement = ({
   btRef,
-  style,
   editable,
-  placeholder,
-  onChange,
   mask,
+  onChange,
+  placeholder,
+  placeholderTextColor,
+  style,
 }: TextElementProps) => {
   const { elementRef, elementValue, _onChange } = useTextElement({
     btRef,
@@ -30,6 +32,7 @@ export const TextElement = ({
       onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
+      placeholderTextColor={placeholderTextColor}
       ref={elementRef}
       style={style}
       value={elementValue}

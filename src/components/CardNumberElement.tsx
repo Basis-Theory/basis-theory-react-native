@@ -10,6 +10,7 @@ type CardNumberProps = {
   style?: StyleProp<TextStyle>;
   editable?: boolean;
   placeholder?: string;
+  placeholderTextColor?: string;
 } & UseCardNumberElementProps;
 
 export const CardNumberElement = ({
@@ -17,6 +18,7 @@ export const CardNumberElement = ({
   style,
   editable,
   placeholder,
+  placeholderTextColor,
   onChange,
 }: CardNumberProps) => {
   const { elementRef, _onChange, elementValue, mask } = useCardNumberElement({
@@ -31,6 +33,7 @@ export const CardNumberElement = ({
       onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
+      placeholderTextColor={placeholderTextColor}
       ref={elementRef}
       style={style}
       value={elementValue}

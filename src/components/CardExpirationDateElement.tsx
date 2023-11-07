@@ -10,6 +10,7 @@ type CardExpirationDateProps = {
   style: StyleProp<TextStyle>;
   editable?: boolean;
   placeholder?: string;
+  placeholderTextColor?: string;
 } & UseCardExpirationDateElementProps;
 
 export const CardExpirationDateElement = ({
@@ -17,6 +18,7 @@ export const CardExpirationDateElement = ({
   style,
   editable,
   placeholder,
+  placeholderTextColor,
   onChange,
 }: CardExpirationDateProps) => {
   const { elementRef, _onChange, elementValue, mask } =
@@ -32,6 +34,7 @@ export const CardExpirationDateElement = ({
       onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
+      placeholderTextColor={placeholderTextColor}
       ref={elementRef}
       style={style}
       value={elementValue}

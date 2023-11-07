@@ -10,6 +10,7 @@ type CardVerificationCodeProps = {
   style: StyleProp<TextStyle>;
   editable?: boolean;
   placeholder?: string;
+  placeholderTextColor?: string;
 } & UseCardVerificationCodeElementProps;
 
 export const CardVerificationCodeElement = ({
@@ -19,6 +20,7 @@ export const CardVerificationCodeElement = ({
   placeholder,
   cvcLength,
   onChange,
+  placeholderTextColor,
 }: CardVerificationCodeProps) => {
   const { elementRef, elementValue, mask, _onChange } =
     useCardVerificationCodeElement({
@@ -34,6 +36,7 @@ export const CardVerificationCodeElement = ({
       onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
+      placeholderTextColor={placeholderTextColor}
       ref={elementRef}
       style={style}
       value={elementValue}
