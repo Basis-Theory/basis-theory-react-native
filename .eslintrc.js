@@ -18,6 +18,7 @@ module.exports = {
     '@typescript-eslint/no-unsafe-assignment': 'off',
     'unicorn/consistent-function-scoping': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
   root: true,
 };
