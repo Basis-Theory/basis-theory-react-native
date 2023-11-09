@@ -6,8 +6,6 @@ import {
   replaceSensitiveData,
 } from '../../src/utils/dataManipulationUtils';
 
-/* Mock state for replaceElementRefs tests */
-
 /* hard codes id for replaceSensitiveData, this will keep the same ID for all tests
  * and the replaceSensitiveData function will rewrite the same property on _elementValues
  * does not feel ideal but we have to deal with uuid.v4() somehow
@@ -23,6 +21,8 @@ describe('replace element refs', () => {
     state._elementValues = {
       '123': 'my very sensitive value',
       '456': 'my other very sensitive value',
+      expirationMonth: '12/25',
+      expirationYear: '12/25',
       firstArrayElement: 'first sensitive element in array',
       secondArrayElement: 'second sensitive element in array',
     };
@@ -37,6 +37,8 @@ describe('replace element refs', () => {
       type: 'card',
       data: {
         number: { id: '123', format: jest.fn },
+        expiration_month: { id: 'expirationMonth', datepart: 'month' },
+        expiration_year: { id: 'expirationYear', datepart: 'year' },
         nestedObject: {
           test: { id: '456', format: jest.fn },
         },
@@ -52,6 +54,8 @@ describe('replace element refs', () => {
       type: 'card',
       data: {
         number: 'my very sensitive value',
+        expiration_month: '12',
+        expiration_year: '2025',
         nestedObject: {
           test: 'my other very sensitive value',
         },

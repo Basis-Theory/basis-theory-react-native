@@ -4,9 +4,9 @@ import { CardVerificationCodeElement } from './components/CardVerificationCodeEl
 import { CardExpirationDateElement } from './components/CardExpirationDateElement';
 import { TextElement } from './components/TextElement';
 import { useBasisTheory } from './useBasisTheory';
-import type { BTRef, InputBTRef } from './BaseElementTypes';
+import type { BTRef, BTDateRef } from './BaseElementTypes';
 
-export type { BTRef, InputBTRef };
+export type { BTRef, BTDateRef };
 export {
   useBasisTheory,
   CardNumberElement,

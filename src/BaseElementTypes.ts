@@ -10,14 +10,19 @@ interface InputBTRef {
   format: (plaintextValue: string) => string;
 }
 
-type InputBtDateRef = {
-  year: InputBTRef;
-  month: InputBTRef;
-};
+interface InputBTRefWithDatepart extends InputBTRef {
+  datepart: 'year' | 'month';
+}
+
+interface InputBtDateRef extends InputBTRef {
+  year: () => InputBTRefWithDatepart;
+  month: () => InputBTRefWithDatepart;
+}
 
 type ValueSetter = (val: InputBTRef | InputBtDateRef | undefined) => void;
 
 type BTRef = InputBTRef & CommonBTRefFunctions;
+type BTDateRef = InputBtDateRef & CommonBTRefFunctions;
 
 type Mask = (RegExp | string)[];
 
@@ -34,8 +39,10 @@ type ValidationResult = 'invalid' | 'incomplete' | undefined;
 
 export type {
   BTRef,
+  BTDateRef,
   InputBTRef,
   InputBtDateRef,
+  InputBTRefWithDatepart,
   Mask,
   PrimitiveType,
   ValidationResult,

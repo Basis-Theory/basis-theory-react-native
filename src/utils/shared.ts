@@ -11,7 +11,7 @@ import {
   replace,
   type,
 } from 'ramda';
-import type { BTRef } from '../BaseElementTypes';
+import type { BTRef, InputBTRefWithDatepart } from '../BaseElementTypes';
 import { _elementValues } from '../ElementValues';
 
 export const isString = is(String);
@@ -31,6 +31,9 @@ export const isToken = (val: unknown): val is Token =>
 
 export const isBtRef = (val: unknown): val is BTRef =>
   !isNil(_elementValues[(val as BTRef).id]);
+
+export const isBtDateRef = (val: unknown): val is InputBTRefWithDatepart =>
+  !!(val as InputBTRefWithDatepart).datepart;
 
 export const isPrimitive = anyPass([isString, isBoolean, isNumber, isNil]);
 

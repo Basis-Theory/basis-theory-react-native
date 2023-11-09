@@ -3,7 +3,7 @@ import type {
   Token,
   TokenData,
 } from '@basis-theory/basis-theory-js/types/models';
-import { BTRef } from '../BaseElementTypes';
+import { BTDateRef, BTRef, InputBTRefWithDatepart } from '../BaseElementTypes';
 import {
   replaceElementRefs,
   replaceSensitiveData,
@@ -17,7 +17,7 @@ import { _elementErrors } from '../ElementValues';
 import { isNilOrEmpty } from '../utils/shared';
 
 export type CreateTokenWithBtRef = Omit<CreateToken, 'data'> & {
-  data: TokenData<BTRef>;
+  data: Record<string, BTRef | InputBTRefWithDatepart | null | undefined>;
 };
 
 export const Tokens = (bt: BasisTheoryType) => {
@@ -53,12 +53,9 @@ export const Tokens = (bt: BasisTheoryType) => {
     }
 
     try {
-      const _token = replaceElementRefs(tokenWithRef);
+      const _token = replaceElementRefs<CreateToken>(tokenWithRef);
 
-      const token = await bt.tokens.create(
-        _token as CreateToken,
-        requestOptions
-      );
+      const token = await bt.tokens.create(_token, requestOptions);
 
       logger.log.info('Token created');
 
