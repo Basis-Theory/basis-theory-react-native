@@ -13,6 +13,7 @@ import {
   ElementType,
   InputBTRef,
   InputBtDateRef,
+  InputBtDateRefReveal,
   ValueSetter,
 } from '../../BaseElementTypes';
 import { _elementValues } from '../../ElementValues';
@@ -75,15 +76,19 @@ const updateRef = (btRef: ForwardedRef<BTRef>, newBtRef: BTRef) => {
   }
 };
 
-const isInputBtDateRef = (ref: InputBTRef): ref is InputBtDateRef =>
-  Boolean((ref as InputBtDateRef).month && (ref as InputBtDateRef).year);
+const isInputBtDateRef = (
+  ref: InputBTRef | InputBtDateRefReveal
+): ref is InputBtDateRefReveal =>
+  Boolean(
+    (ref as InputBtDateRefReveal).month && (ref as InputBtDateRefReveal).year
+  );
 
-const valueFormatter = (ref: InputBTRef | undefined) => {
+const valueFormatter = (ref: InputBTRef | InputBtDateRefReveal | undefined) => {
   if (!ref) return '';
 
   if (isInputBtDateRef(ref)) {
-    const month = formatValue(ref.month()).padStart(2, '0');
-    const year = formatValue(ref.year()).slice(-2);
+    const month = formatValue(ref.month).padStart(2, '0');
+    const year = formatValue(ref.year).slice(-2);
 
     return `${month}/${year}`;
   }

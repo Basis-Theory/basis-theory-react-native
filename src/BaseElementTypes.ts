@@ -19,7 +19,12 @@ interface InputBtDateRef extends InputBTRef {
   month: () => InputBTRefWithDatepart;
 }
 
-type ValueSetter = (val: InputBTRef | InputBtDateRef | undefined) => void;
+type InputBtDateRefReveal = {
+  year: InputBTRef;
+  month: InputBTRef;
+};
+
+type ValueSetter = (val: InputBTRef | InputBtDateRefReveal | undefined) => void;
 
 type BTRef = InputBTRef & CommonBTRefFunctions;
 type BTDateRef = InputBtDateRef & CommonBTRefFunctions;
@@ -42,6 +47,7 @@ export type {
   BTDateRef,
   InputBTRef,
   InputBtDateRef,
+  InputBtDateRefReveal,
   InputBTRefWithDatepart,
   Mask,
   PrimitiveType,
