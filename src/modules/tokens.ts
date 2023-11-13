@@ -1,19 +1,18 @@
 import type {
   CreateToken,
   Token,
-  TokenData,
 } from '@basis-theory/basis-theory-js/types/models';
-import { BTDateRef, BTRef, InputBTRefWithDatepart } from '../BaseElementTypes';
-import {
-  replaceElementRefs,
-  replaceSensitiveData,
-} from '../utils/dataManipulationUtils';
 import type {
   BasisTheory as BasisTheoryType,
   RequestOptions,
 } from '@basis-theory/basis-theory-js/types/sdk';
-import { logger } from '../utils/logging';
+import { BTRef, InputBTRefWithDatepart } from '../BaseElementTypes';
 import { _elementErrors } from '../ElementValues';
+import {
+  replaceElementRefs,
+  replaceSensitiveData,
+} from '../utils/dataManipulationUtils';
+import { logger } from '../utils/logging';
 import { isNilOrEmpty } from '../utils/shared';
 
 export type CreateTokenWithBtRef = Omit<CreateToken, 'data'> & {

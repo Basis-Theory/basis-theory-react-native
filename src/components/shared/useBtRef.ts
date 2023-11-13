@@ -12,7 +12,6 @@ import {
   BTRef,
   ElementType,
   InputBTRef,
-  InputBtDateRef,
   InputBtDateRefReveal,
   ValueSetter,
 } from '../../BaseElementTypes';
@@ -22,7 +21,7 @@ interface UseBtRefProps {
   btRef?: ForwardedRef<BTRef | BTDateRef>;
   elementRef: RefObject<TextInput>;
   id: string;
-  type: ElementType;
+  type?: ElementType;
   setElementValue: Dispatch<SetStateAction<string>>;
 }
 
