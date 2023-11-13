@@ -4,7 +4,8 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint . --quiet",
+    "lint": "eslint src --quiet --ignore-path .gitignore",
+    "lint:fix": "eslint src --fix --ignore-path .gitignore",
     "start": "react-native start",
     "build": "bob build && node prepare.js",
     "release": "semantic-release",
@@ -74,10 +75,6 @@
       "typescript"
     ]
   },
-  "eslintIgnore": [
-    "node_modules/",
-    "dist/"
-  ],
   "publishConfig": {
     "access": "public"
   },
