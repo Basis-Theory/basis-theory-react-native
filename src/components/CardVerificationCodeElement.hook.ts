@@ -5,11 +5,11 @@ import uuid from 'react-native-uuid';
 import { ElementType, type BTRef } from '../BaseElementTypes';
 import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
-import { EventConsumer } from './shared/useElementEvent';
+import type { EventConsumer } from './shared/useElementEvent';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
 import { useMask } from './shared/useMask';
 
-export type UseCardVerificationCodeElementProps = {
+type UseCardVerificationCodeElementProps = {
   btRef?: ForwardedRef<BTRef>;
   cvcLength?: number;
   onChange?: EventConsumer;
@@ -29,13 +29,25 @@ export const useCardVerificationCodeElement = ({
 
   useBtRefUnmount({ btRef });
 
-  const mask = useMask({ maskLength: cvcLength, type });
+  const mask = useMask({
+    maskLength: cvcLength,
+    type,
+  });
 
-  useBtRef({ btRef, elementRef, id, setElementValue });
+  useBtRef({
+    btRef,
+    elementRef,
+    id,
+    setElementValue,
+  });
 
   const { _onChange } = useUserEventHandlers({
     setElementValue,
-    element: { id, mask, type },
+    element: {
+      id,
+      mask,
+      type,
+    },
     onChange,
   });
 
@@ -46,3 +58,5 @@ export const useCardVerificationCodeElement = ({
     _onChange,
   };
 };
+
+export type { UseCardVerificationCodeElementProps };

@@ -1,14 +1,15 @@
 import React from 'react';
 import type { StyleProp, TextStyle } from 'react-native';
-import { useTextElement, UseTextElementProps } from './TextElement.hook';
+import type { UseTextElementProps } from './TextElement.hook';
+import { useTextElement } from './TextElement.hook';
 import MaskInput from 'react-native-mask-input';
 
-type TextElementProps = {
+type TextElementProps = UseTextElementProps & {
   style?: StyleProp<TextStyle>;
   editable?: boolean;
   placeholder?: string;
   placeholderTextColor?: string;
-} & UseTextElementProps;
+};
 
 export const TextElement = ({
   btRef,

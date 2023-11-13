@@ -12,7 +12,7 @@ import { useBasisTheoryFromContext } from './BasisTheoryProvider';
 import { logger } from './utils/logging';
 
 const _BasisTheoryElements = async ({ apiKey }: { apiKey: string }) => {
-  let bt: BasisTheoryType = await new BasisTheory().init(apiKey);
+  const bt: BasisTheoryType = await new BasisTheory().init(apiKey);
 
   const proxy = Proxy(bt);
 
@@ -27,9 +27,7 @@ const _BasisTheoryElements = async ({ apiKey }: { apiKey: string }) => {
   };
 };
 
-export type BasisTheoryElements = Awaited<
-  ReturnType<typeof _BasisTheoryElements>
->;
+type BasisTheoryElements = Awaited<ReturnType<typeof _BasisTheoryElements>>;
 
 type UseBasisTheory = {
   error?: Error;
@@ -45,6 +43,7 @@ const useBasisTheory = (
   const { bt } = useBasisTheoryFromContext();
 
   if (!apiKey) {
+    // eslint-disable-next-line no-console
     console.error('Please enter a valid API key');
   }
 
@@ -54,13 +53,16 @@ const useBasisTheory = (
         try {
           const bt = await _BasisTheoryElements({ apiKey });
 
-          logger.log.info('Succesfully initialized Elements');
+          await logger.log.info('Succesfully initialized Elements');
 
           setState({
             bt,
           });
         } catch (error) {
-          logger.log.error('Error while initializing Elements', error as Error);
+          await logger.log.error(
+            'Error while initializing Elements',
+            error as Error
+          );
 
           setState({
             error: error as Error,
@@ -82,4 +84,4 @@ const useBasisTheory = (
   };
 };
 
-export { useBasisTheory };
+export { useBasisTheory, type BasisTheoryElements };

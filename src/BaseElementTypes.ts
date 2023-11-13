@@ -1,53 +1,55 @@
-interface CommonBTRefFunctions {
+type CommonBTRefFunctions = {
   clear: () => void;
   focus: () => void;
   blur: () => void;
   setValue: ValueSetter;
-}
+};
 
-interface InputBTRef {
+type InputBTRef = {
   id: string;
   format: (plaintextValue: string) => string;
-}
+};
 
-interface InputBTRefWithDatepart extends InputBTRef {
-  datepart: 'year' | 'month';
-}
+type InputBTRefWithDatepart = InputBTRef & {
+  datepart: 'month' | 'year';
+};
 
-interface InputBtDateRef extends InputBTRef {
+type InputBtDateRef = InputBTRef & {
   year: () => InputBTRefWithDatepart;
   month: () => InputBTRefWithDatepart;
-}
+};
 
 type InputBtDateRefReveal = {
   year: InputBTRef;
   month: InputBTRef;
 };
 
-type ValueSetter = (val: InputBTRef | InputBtDateRefReveal | undefined) => void;
+type ValueSetter = (val: InputBtDateRefReveal | InputBTRef | undefined) => void;
 
-type BTRef = InputBTRef & CommonBTRefFunctions;
-type BTDateRef = InputBtDateRef & CommonBTRefFunctions;
+type BTRef = CommonBTRefFunctions & InputBTRef;
+
+type BTDateRef = CommonBTRefFunctions & InputBtDateRef;
 
 type Mask = (RegExp | string)[];
 
-export enum ElementType {
+enum ElementType {
   CARD_NUMBER = 'cardNumber',
   EXPIRATION_DATE = 'expirationDate',
   CVC = 'cvc',
   TEXT = 'text',
 }
 
-type PrimitiveType = string | boolean | number | undefined | null;
+type PrimitiveType = boolean | number | string | null | undefined;
 
-type ValidationResult = 'invalid' | 'incomplete' | undefined;
+type ValidationResult = 'incomplete' | 'invalid' | undefined;
 
+export { ElementType };
 export type {
-  BTRef,
   BTDateRef,
-  InputBTRef,
+  BTRef,
   InputBtDateRef,
   InputBtDateRefReveal,
+  InputBTRef,
   InputBTRefWithDatepart,
   Mask,
   PrimitiveType,

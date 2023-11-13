@@ -6,7 +6,7 @@ import type {
   BasisTheory as BasisTheoryType,
   RequestOptions,
 } from '@basis-theory/basis-theory-js/types/sdk';
-import { BTRef, InputBTRefWithDatepart } from '../BaseElementTypes';
+import type { BTRef, InputBTRefWithDatepart } from '../BaseElementTypes';
 import { _elementErrors } from '../ElementValues';
 import {
   replaceElementRefs,
@@ -20,10 +20,7 @@ export type CreateTokenWithBtRef = Omit<CreateToken, 'data'> & {
 };
 
 export const Tokens = (bt: BasisTheoryType) => {
-  const getTokenById = async <T extends unknown>(
-    id: string,
-    apiKey?: string
-  ) => {
+  const getTokenById = async <T>(id: string, apiKey?: string) => {
     try {
       const _token = await bt.tokens.retrieve(id, {
         apiKey,
@@ -31,11 +28,11 @@ export const Tokens = (bt: BasisTheoryType) => {
 
       const token = replaceSensitiveData(_token) as Token<T>;
 
-      logger.log.info('Token retrieved');
+      await logger.log.info('Token retrieved');
 
-      return Promise.resolve(token);
+      return token;
     } catch (error) {
-      logger.log.error('Error while retrieving Token', error as Error);
+      await logger.log.error('Error while retrieving Token', error as Error);
     }
   };
 
@@ -44,10 +41,8 @@ export const Tokens = (bt: BasisTheoryType) => {
     requestOptions?: RequestOptions
   ) => {
     if (!isNilOrEmpty(_elementErrors)) {
-      return Promise.reject(
-        new Error(
-          'Unable to create token. Payload contains invalid values. Review elements events for more details.'
-        )
+      throw new Error(
+        'Unable to create token. Payload contains invalid values. Review elements events for more details.'
       );
     }
 
@@ -56,11 +51,11 @@ export const Tokens = (bt: BasisTheoryType) => {
 
       const token = await bt.tokens.create(_token, requestOptions);
 
-      logger.log.info('Token created');
+      await logger.log.info('Token created');
 
       return token;
     } catch (error) {
-      logger.log.error('Error while creating Token', error as Error);
+      await logger.log.error('Error while creating Token', error as Error);
     }
   };
 

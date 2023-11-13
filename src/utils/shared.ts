@@ -1,4 +1,4 @@
-import { Token } from '@basis-theory/basis-theory-js/types/models';
+import type { Token } from '@basis-theory/basis-theory-js/types/models';
 import {
   anyPass,
   equals,
@@ -14,28 +14,43 @@ import {
 import type { BTRef, InputBTRefWithDatepart } from '../BaseElementTypes';
 import { _elementValues } from '../ElementValues';
 
-export const isString = is(String);
-export const isBoolean = is(Boolean);
-export const isNumber = is(Number);
-export const isRegExp = is(RegExp);
-export const isNilOrEmpty = anyPass([isNil, isEmpty]);
+const isString = is(String);
+const isBoolean = is(Boolean);
+const isNumber = is(Number);
+const isRegExp = is(RegExp);
+const isNilOrEmpty = anyPass([isNil, isEmpty]);
 
-export const extractDigits = (value: string = ''): string | undefined =>
+const extractDigits = (value = ''): string | undefined =>
   value ? replace(/\D+/gu, '', value) : undefined;
 
-export const isObject = (val: unknown): val is Record<string, unknown> =>
+const isObject = (val: unknown): val is Record<string, unknown> =>
   equals('Object', type(val));
 
-export const isToken = (val: unknown): val is Token =>
+const isToken = (val: unknown): val is Token =>
   !isNil((val as Token).data) && !isNil((val as Token).type);
 
-export const isBtRef = (val: unknown): val is BTRef =>
+const isBtRef = (val: unknown): val is BTRef =>
   !isNil(_elementValues[(val as BTRef).id]);
 
-export const isBtDateRef = (val: unknown): val is InputBTRefWithDatepart =>
-  !!(val as InputBTRefWithDatepart).datepart;
+const isBtDateRef = (val: unknown): val is InputBTRefWithDatepart =>
+  Boolean((val as InputBTRefWithDatepart).datepart);
 
-export const isPrimitive = anyPass([isString, isBoolean, isNumber, isNil]);
+const isPrimitive = anyPass([isString, isBoolean, isNumber, isNil]);
 
-export const removeMax = (list: number[]) =>
-  reject(equals(reduce(max, -Infinity, list)), list);
+const removeMax = (list: number[]) =>
+  reject(equals(reduce(max, Number.NEGATIVE_INFINITY, list)), list);
+
+export {
+  extractDigits,
+  isBoolean,
+  isBtDateRef,
+  isBtRef,
+  isNilOrEmpty,
+  isNumber,
+  isObject,
+  isPrimitive,
+  isRegExp,
+  isString,
+  isToken,
+  removeMax,
+};

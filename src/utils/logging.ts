@@ -1,3 +1,5 @@
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import {
   getApplicationName,
   getBundleId,
@@ -32,10 +34,6 @@ export const logger = (() => {
     };
   })();
 
-  const logURL = new URL(
-    `https://http-intake.logs.datadoghq.com/v1/input/${ddTok}`
-  );
-
   const log = async (
     message: string,
     level: string,
@@ -50,13 +48,16 @@ export const logger = (() => {
         level === 'error' && error ? `${message}: ${error.message}` : message,
     };
 
-    const request = new Request(logURL.toString(), {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const request = new Request(
+      `https://http-intake.logs.datadoghq.com/v1/input/${ddTok}`,
+      {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     try {
       const response = await fetch(request);
@@ -66,16 +67,18 @@ export const logger = (() => {
       }
 
       await response.json();
-    } catch (error) {}
+    } catch {
+      // Do nothing
+    }
   };
 
   return {
     log: {
-      error: (message: string, error: Error, attributes?: AttributeMap) =>
+      error: async (message: string, error: Error, attributes?: AttributeMap) =>
         log(message, 'error', error, attributes),
-      info: (message: string, attributes?: AttributeMap) =>
+      info: async (message: string, attributes?: AttributeMap) =>
         log(message, 'info', undefined, attributes),
-      warn: (message: string, attributes?: AttributeMap) =>
+      warn: async (message: string, attributes?: AttributeMap) =>
         log(message, 'warn', undefined, attributes),
     },
   };

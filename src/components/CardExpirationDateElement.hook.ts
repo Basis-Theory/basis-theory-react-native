@@ -2,21 +2,22 @@ import type { ForwardedRef } from 'react';
 import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
-import { ElementType, type BTRef, BTDateRef } from '../BaseElementTypes';
+import type { BTDateRef } from '../BaseElementTypes';
+import { ElementType, type BTRef } from '../BaseElementTypes';
 import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
 import { useMask } from './shared/useMask';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
-import { EventConsumer } from './shared/useElementEvent';
+import type { EventConsumer } from './shared/useElementEvent';
 
-export type UseCardExpirationDateElementProps = {
-  btRef?: ForwardedRef<BTRef | BTDateRef>;
+type UseCardExpirationDateElementProps = {
+  btRef?: ForwardedRef<BTDateRef | BTRef>;
   onChange?: EventConsumer;
 };
 
 const id = uuid.v4().toString();
 
-export const useCardExpirationDateElement = ({
+const useCardExpirationDateElement = ({
   btRef,
   onChange,
 }: UseCardExpirationDateElementProps) => {
@@ -39,7 +40,11 @@ export const useCardExpirationDateElement = ({
 
   const { _onChange } = useUserEventHandlers({
     setElementValue,
-    element: { id, mask, type },
+    element: {
+      id,
+      mask,
+      type,
+    },
     onChange,
   });
 
@@ -50,3 +55,5 @@ export const useCardExpirationDateElement = ({
     _onChange,
   };
 };
+
+export { useCardExpirationDateElement, type UseCardExpirationDateElementProps };

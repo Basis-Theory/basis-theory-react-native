@@ -1,17 +1,18 @@
 import React from 'react';
 import type { StyleProp, TextStyle } from 'react-native';
 import MaskInput from 'react-native-mask-input';
+import type {
+  UseCardExpirationDateElementProps} from './CardExpirationDateElement.hook';
 import {
-  useCardExpirationDateElement,
-  UseCardExpirationDateElementProps,
+  useCardExpirationDateElement
 } from './CardExpirationDateElement.hook';
 
-type CardExpirationDateProps = {
+type CardExpirationDateProps = UseCardExpirationDateElementProps & {
   style: StyleProp<TextStyle>;
   editable?: boolean;
   placeholder?: string;
   placeholderTextColor?: string;
-} & UseCardExpirationDateElementProps;
+};
 
 export const CardExpirationDateElement = ({
   btRef,

@@ -1,12 +1,13 @@
 import { cvv, expirationDate, number } from 'card-validator';
 import { T, always, cond, equals, flip, isEmpty, partial, split } from 'ramda';
-import { ElementType, Mask, ValidationResult } from '../BaseElementTypes';
+import type { Mask, ValidationResult } from '../BaseElementTypes';
+import { ElementType } from '../BaseElementTypes';
 import { extractDigits, isRegExp, isString, removeMax } from './shared';
 
-interface ValidatorResult {
+type ValidatorResult = {
   isValid: boolean;
   isPotentiallyValid: boolean;
-}
+};
 
 type ValidatorFunction = (value: string) => ValidatorResult;
 
@@ -38,17 +39,24 @@ const _cardNumberValidator = (value: string) => {
 
   if (
     cardNumber &&
-    expectedLengths?.includes(cardNumber.length) &&
+    expectedLengths.includes(cardNumber.length) &&
     !isValid &&
     isPotentiallyValid
   ) {
-    return { isValid: false, isPotentiallyValid: false };
+    return {
+      isValid: false,
+      isPotentiallyValid: false,
+    };
   }
 
-  return { isValid, isPotentiallyValid };
+  return {
+    isValid,
+    isPotentiallyValid,
+  };
 };
 const _expirationDateValidator = expirationDate;
 
+// eslint-disable-next-line @typescript-eslint/default-param-last
 const _maskValidator = (mask: Mask = [], value: string) => {
   const customZip = <T, U, V>(fn: (a: T, b: U) => V, a: T[], b: U[]): V[] =>
     a.map((x, i) => fn(x, b[i]));
@@ -71,7 +79,10 @@ const _maskValidator = (mask: Mask = [], value: string) => {
     split('', value)
   ).every(Boolean);
 
-  return { isValid, isPotentiallyValid };
+  return {
+    isValid,
+    isPotentiallyValid,
+  };
 };
 
 const handleValidationResult = (

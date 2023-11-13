@@ -1,4 +1,5 @@
-import { ElementType, Mask } from '../../BaseElementTypes';
+import type { Mask } from '../../BaseElementTypes';
+import { ElementType } from '../../BaseElementTypes';
 import { useElementValidation } from './useElementValidation';
 import { has, isEmpty } from 'ramda';
 import { useMemo } from 'react';
@@ -6,12 +7,12 @@ import { useCardMetadata } from './useCardMetadata';
 import { extractDigits, isNilOrEmpty } from '../../utils/shared';
 import { _elementErrors } from '../../ElementValues';
 
-interface FieldError {
+type FieldError = {
   targetId: string;
   type: 'incomplete' | 'invalid';
-}
+};
 
-export type ElementEvent = {
+type ElementEvent = {
   /**
    * `true` if the element is empty.
    */
@@ -36,9 +37,9 @@ export type ElementEvent = {
   errors?: FieldError[];
 };
 
-export type EventConsumer = (event: ElementEvent) => void;
+type EventConsumer = (event: ElementEvent) => void;
 
-export type CreateEvent = (value: string) => ElementEvent;
+type CreateEvent = (value: string) => ElementEvent;
 
 type UseElementEventProps = {
   type: ElementType;
@@ -61,9 +62,17 @@ export const useElementEvent = ({
     const error = validator(value, mask);
 
     if (error && isNilOrEmpty(_elementErrors[id])) _elementErrors[id] = error;
+
     if (!error && has(id, _elementErrors)) delete _elementErrors[id];
 
-    return error ? [{ targetId: type, type: error }] : undefined;
+    return error
+      ? [
+          {
+            targetId: type,
+            type: error,
+          },
+        ]
+      : undefined;
   };
 
   const getMetadataFromCardNumber = (value: string) => {
@@ -73,7 +82,12 @@ export const useElementEvent = ({
       _getMetadataFromCardNumber(value);
 
     return {
-      card: { cvcLength, cardBin, cardLast4, brand },
+      card: {
+        cvcLength,
+        cardBin,
+        cardLast4,
+        brand,
+      },
       lengths,
     };
   };
@@ -85,8 +99,8 @@ export const useElementEvent = ({
     const valid = !empty && !errors;
 
     const maskSatisfied = mask
-      ? metadata?.lengths?.includes(extractDigits(value)?.length!!) ??
-        mask.length == value.length
+      ? metadata?.lengths?.includes(extractDigits(value)?.length ?? 0) ??
+        mask.length === value.length
       : true;
 
     const complete = !errors && maskSatisfied;
@@ -101,3 +115,5 @@ export const useElementEvent = ({
     };
   };
 };
+
+export type { CreateEvent, EventConsumer, ElementEvent };

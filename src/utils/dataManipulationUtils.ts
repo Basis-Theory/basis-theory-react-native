@@ -2,13 +2,13 @@ import { assoc, cond, identity, isNil, map, mapObjIndexed } from 'ramda';
 import uuid from 'react-native-uuid';
 import type { PrimitiveType } from '../BaseElementTypes';
 import { _elementValues } from '../ElementValues';
-import { _getValidationStrategy } from './validation';
 import { isObject, isPrimitive, isToken, isBtRef, isBtDateRef } from './shared';
 
 const createBtInputRef = (value: PrimitiveType) => {
   if (isNil(value)) return null;
 
   const id = uuid.v4().toString();
+
   _elementValues[id] = value;
 
   return {
@@ -17,7 +17,7 @@ const createBtInputRef = (value: PrimitiveType) => {
   };
 };
 
-export const replaceSensitiveData = (val: unknown): unknown =>
+const replaceSensitiveData = (val: unknown): unknown =>
   cond([
     [isToken, (val) => assoc('data', replaceSensitiveData(val.data), val)],
     [isPrimitive, createBtInputRef],
@@ -25,13 +25,13 @@ export const replaceSensitiveData = (val: unknown): unknown =>
     [Array.isArray, map(replaceSensitiveData)],
   ])(val);
 
-export const replaceElementRefs = <T>(val: unknown): T =>
+const replaceElementRefs = <T>(val: unknown): T =>
   cond([
     // this one should always be evaluated first and ramda doesn't like _elementValues types when using recursion & identity
     [
       isBtDateRef,
       (val) =>
-        val?.datepart === 'month'
+        val.datepart === 'month'
           ? (_elementValues[val.id] as string).split('/')[0]
           : `20${(_elementValues[val.id] as string).split('/')[1]}`,
     ],
@@ -40,3 +40,5 @@ export const replaceElementRefs = <T>(val: unknown): T =>
     [isObject, mapObjIndexed(replaceElementRefs)],
     [isPrimitive, identity],
   ])(val) as T;
+
+export { replaceElementRefs, replaceSensitiveData };
