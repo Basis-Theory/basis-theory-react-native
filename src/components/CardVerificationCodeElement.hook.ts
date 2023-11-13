@@ -3,45 +3,46 @@ import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
 import { ElementType, type BTRef } from '../BaseElementTypes';
-import { useBtRef } from './shared/useBtRef';
 import { useBtRefUnmount } from './shared/useBtRefUnmount';
+import { useBtRef } from './shared/useBtRef';
 import { EventConsumer } from './shared/useElementEvent';
-import { useMask } from './shared/useMask';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
-import { replace } from 'ramda';
+import { useMask } from './shared/useMask';
 
-export type UseCardNumberElementProps = {
+export type UseCardVerificationCodeElementProps = {
   btRef?: ForwardedRef<BTRef>;
+  cvcLength?: number;
   onChange?: EventConsumer;
 };
 
 const id = uuid.v4().toString();
 
-export const useCardNumberElement = ({
+export const useCardVerificationCodeElement = ({
   btRef,
+  cvcLength = 3,
   onChange,
-}: UseCardNumberElementProps) => {
-  const type = ElementType.CARD_NUMBER;
+}: UseCardVerificationCodeElementProps) => {
+  const type = ElementType.CVC;
+
   const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
 
   useBtRefUnmount({ btRef });
 
-  const mask = useMask({ type, id });
+  const mask = useMask({ maskLength: cvcLength, type });
 
   useBtRef({ btRef, elementRef, id, setElementValue });
 
   const { _onChange } = useUserEventHandlers({
     setElementValue,
-    transform: [' ', ''],
     element: { id, mask, type },
-    onChange: onChange,
+    onChange,
   });
 
   return {
     elementRef,
     elementValue,
-    _onChange,
     mask,
+    _onChange,
   };
 };

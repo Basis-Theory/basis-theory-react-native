@@ -37,12 +37,16 @@ type UseBasisTheory = {
 };
 
 const useBasisTheory = (
-  apiKey?: string,
+  apiKey: string,
   options?: BasisTheoryInitOptionsWithoutElements
 ): UseBasisTheory => {
   const [state, setState] = useState<UseBasisTheory>({});
 
   const { bt } = useBasisTheoryFromContext();
+
+  if (!apiKey) {
+    console.error('Please enter a valid API key');
+  }
 
   useEffect(() => {
     (async () => {

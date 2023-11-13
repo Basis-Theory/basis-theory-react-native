@@ -1,22 +1,23 @@
 import React from 'react';
 import type { StyleProp, TextStyle } from 'react-native';
-import { useTextElement, UseTextElementProps } from './TextElement.hooks';
+import { useTextElement, UseTextElementProps } from './TextElement.hook';
 import MaskInput from 'react-native-mask-input';
-import { _elementValues } from '../ElementValues';
 
 type TextElementProps = {
   style?: StyleProp<TextStyle>;
   editable?: boolean;
   placeholder?: string;
+  placeholderTextColor?: string;
 } & UseTextElementProps;
 
 export const TextElement = ({
   btRef,
-  style,
   editable,
-  placeholder,
-  onChange,
   mask,
+  onChange,
+  placeholder,
+  placeholderTextColor,
+  style,
 }: TextElementProps) => {
   const { elementRef, elementValue, _onChange } = useTextElement({
     btRef,
@@ -31,6 +32,7 @@ export const TextElement = ({
       onChangeText={_onChange}
       placeholder={placeholder}
       placeholderFillCharacter=""
+      placeholderTextColor={placeholderTextColor}
       ref={elementRef}
       style={style}
       value={elementValue}

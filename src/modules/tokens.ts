@@ -1,22 +1,22 @@
-import {
+import type {
   CreateToken,
   Token,
-  TokenData,
 } from '@basis-theory/basis-theory-js/types/models';
-import { BTRef } from '../BaseElementTypes';
-import {
-  replaceElementRefs,
-  replaceSensitiveData,
-} from '../utils/dataManipulationUtils';
-
 import type {
   BasisTheory as BasisTheoryType,
   RequestOptions,
 } from '@basis-theory/basis-theory-js/types/sdk';
+import { BTRef, InputBTRefWithDatepart } from '../BaseElementTypes';
+import { _elementErrors } from '../ElementValues';
+import {
+  replaceElementRefs,
+  replaceSensitiveData,
+} from '../utils/dataManipulationUtils';
 import { logger } from '../utils/logging';
+import { isNilOrEmpty } from '../utils/shared';
 
-type CreateTokenWithBtRef = Omit<CreateToken, 'data'> & {
-  data: TokenData<BTRef>;
+export type CreateTokenWithBtRef = Omit<CreateToken, 'data'> & {
+  data: Record<string, BTRef | InputBTRefWithDatepart | null | undefined>;
 };
 
 export const Tokens = (bt: BasisTheoryType) => {
@@ -43,13 +43,18 @@ export const Tokens = (bt: BasisTheoryType) => {
     tokenWithRef: CreateTokenWithBtRef,
     requestOptions?: RequestOptions
   ) => {
-    try {
-      const _token = replaceElementRefs(tokenWithRef);
-
-      const token = await bt.tokens.create(
-        _token as CreateToken,
-        requestOptions
+    if (!isNilOrEmpty(_elementErrors)) {
+      return Promise.reject(
+        new Error(
+          'Unable to create token. Payload contains invalid values. Review elements events for more details.'
+        )
       );
+    }
+
+    try {
+      const _token = replaceElementRefs<CreateToken>(tokenWithRef);
+
+      const token = await bt.tokens.create(_token, requestOptions);
 
       logger.log.info('Token created');
 

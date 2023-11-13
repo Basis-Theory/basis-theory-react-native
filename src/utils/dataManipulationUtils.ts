@@ -1,36 +1,15 @@
-import {
-  anyPass,
-  assoc,
-  cond,
-  equals,
-  identity,
-  is,
-  isNil,
-  map,
-  mapObjIndexed,
-  type,
-} from 'ramda';
+import { assoc, cond, identity, isNil, map, mapObjIndexed } from 'ramda';
 import uuid from 'react-native-uuid';
-import type { BTRef, PrimitiveType } from '../BaseElementTypes';
-import { Token } from '@basis-theory/basis-theory-js/types/models';
+import type { PrimitiveType } from '../BaseElementTypes';
 import { _elementValues } from '../ElementValues';
+import { _getValidationStrategy } from './validation';
+import { isObject, isPrimitive, isToken, isBtRef, isBtDateRef } from './shared';
 
-const isObject = (val: unknown): val is Record<string, unknown> =>
-  equals('Object', type(val));
-
-const isToken = (val: unknown): val is Token =>
-  !isNil((val as Token).data) && !isNil((val as Token).type);
-
-const isBtRef = (val: unknown): val is BTRef =>
-  !isNil(_elementValues[(val as BTRef).id]);
-
-const isPrimitive = anyPass([is(String), is(Boolean), is(Number), isNil]);
-
-const createBtInputRef = (val: PrimitiveType) => {
-  if (isNil(val)) return null;
+const createBtInputRef = (value: PrimitiveType) => {
+  if (isNil(value)) return null;
 
   const id = uuid.v4().toString();
-  _elementValues[id] = val;
+  _elementValues[id] = value;
 
   return {
     id,
@@ -46,11 +25,18 @@ export const replaceSensitiveData = (val: unknown): unknown =>
     [Array.isArray, map(replaceSensitiveData)],
   ])(val);
 
-export const replaceElementRefs = (val: unknown): unknown =>
+export const replaceElementRefs = <T>(val: unknown): T =>
   cond([
     // this one should always be evaluated first and ramda doesn't like _elementValues types when using recursion & identity
+    [
+      isBtDateRef,
+      (val) =>
+        val?.datepart === 'month'
+          ? (_elementValues[val.id] as string).split('/')[0]
+          : `20${(_elementValues[val.id] as string).split('/')[1]}`,
+    ],
     [isBtRef, (val) => (_elementValues as Record<string, unknown>)[val.id]],
     [Array.isArray, map(replaceElementRefs)],
     [isObject, mapObjIndexed(replaceElementRefs)],
     [isPrimitive, identity],
-  ])(val);
+  ])(val) as T;

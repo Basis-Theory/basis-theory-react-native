@@ -1,10 +1,10 @@
 import { ElementType, Mask } from '../../BaseElementTypes';
 import { useElementValidation } from './useElementValidation';
-import { isEmpty } from 'ramda';
+import { has, isEmpty } from 'ramda';
 import { useMemo } from 'react';
 import { useCardMetadata } from './useCardMetadata';
-import { extractDigits } from './utils';
-import { ChangeEvent } from '@basis-theory/basis-theory-js/types/elements';
+import { extractDigits, isNilOrEmpty } from '../../utils/shared';
+import { _elementErrors } from '../../ElementValues';
 
 interface FieldError {
   targetId: string;
@@ -42,11 +42,13 @@ export type CreateEvent = (value: string) => ElementEvent;
 
 type UseElementEventProps = {
   type: ElementType;
+  id: string;
   mask?: Mask;
 };
 
 export const useElementEvent = ({
   type,
+  id,
   mask,
 }: UseElementEventProps): CreateEvent => {
   const { getValidationStrategy } = useElementValidation();
@@ -57,6 +59,9 @@ export const useElementEvent = ({
 
   const validate = (value: string) => {
     const error = validator(value, mask);
+
+    if (error && isNilOrEmpty(_elementErrors[id])) _elementErrors[id] = error;
+    if (!error && has(id, _elementErrors)) delete _elementErrors[id];
 
     return error ? [{ targetId: type, type: error }] : undefined;
   };

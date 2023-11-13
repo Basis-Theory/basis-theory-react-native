@@ -2,11 +2,9 @@ import type { BasisTheory as BasisTheoryType } from '@basis-theory/basis-theory-
 import { logger } from '../utils/logging';
 
 export const Sessions = (bt: BasisTheoryType) => {
-  const create = async (apiKey?: string) => {
+  const create = async () => {
     try {
-      const session = bt.sessions.create({
-        apiKey,
-      });
+      const session = await bt.sessions.create();
 
       logger.log.info('Session created');
 

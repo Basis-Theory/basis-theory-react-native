@@ -8,17 +8,20 @@ import {
 } from 'react';
 import { TextInput } from 'react-native';
 import {
+  BTDateRef,
   BTRef,
+  ElementType,
   InputBTRef,
-  InputBtDateRef,
+  InputBtDateRefReveal,
   ValueSetter,
 } from '../../BaseElementTypes';
 import { _elementValues } from '../../ElementValues';
 
 interface UseBtRefProps {
-  btRef?: ForwardedRef<BTRef>;
+  btRef?: ForwardedRef<BTRef | BTDateRef>;
   elementRef: RefObject<TextInput>;
   id: string;
+  type?: ElementType;
   setElementValue: Dispatch<SetStateAction<string>>;
 }
 
@@ -26,13 +29,37 @@ type CreateBtRefArgs = {
   valueSetter: ValueSetter;
 } & Omit<UseBtRefProps, 'setElementValue' | 'btRef'>;
 
-const createBtRef = ({ id, elementRef, valueSetter }: CreateBtRefArgs) => ({
+const createBTDateRef = ({ id }: { id: string }) => ({
+  month: () => ({
+    id,
+    datepart: 'month',
+    format: (plaintextValue: string) => plaintextValue,
+  }),
+  year: () => ({
+    id,
+    datepart: 'year',
+    format: (plaintextValue: string) => plaintextValue,
+  }),
+});
+
+const createBtRef = ({
+  id,
+  elementRef,
+  valueSetter,
+  type,
+}: CreateBtRefArgs) => ({
   id,
   format: (plaintextValue: string) => plaintextValue,
-  clear: () => elementRef?.current?.clear(),
+  clear: () => {
+    delete _elementValues[id];
+    elementRef?.current?.clear();
+  },
   focus: () => elementRef?.current?.focus(),
   blur: () => elementRef?.current?.blur(),
   setValue: valueSetter,
+  ...(type === ElementType.EXPIRATION_DATE
+    ? createBTDateRef({ id })
+    : undefined),
 });
 
 const formatValue = (ref: InputBTRef) => {
@@ -49,11 +76,13 @@ const updateRef = (btRef: ForwardedRef<BTRef>, newBtRef: BTRef) => {
 };
 
 const isInputBtDateRef = (
-  ref: InputBTRef | InputBtDateRef
-): ref is InputBtDateRef =>
-  Boolean((ref as InputBtDateRef).month && (ref as InputBtDateRef).year);
+  ref: InputBTRef | InputBtDateRefReveal
+): ref is InputBtDateRefReveal =>
+  Boolean(
+    (ref as InputBtDateRefReveal).month && (ref as InputBtDateRefReveal).year
+  );
 
-const valueFormatter = (ref: InputBTRef | InputBtDateRef | undefined) => {
+const valueFormatter = (ref: InputBTRef | InputBtDateRefReveal | undefined) => {
   if (!ref) return '';
 
   if (isInputBtDateRef(ref)) {
@@ -70,12 +99,13 @@ export const useBtRef = ({
   btRef,
   elementRef,
   id,
+  type,
   setElementValue,
 }: UseBtRefProps) => {
   useEffect(() => {
     const valueSetter = compose(setElementValue, valueFormatter);
 
-    const newBtRef = createBtRef({ id, elementRef, valueSetter });
+    const newBtRef = createBtRef({ id, elementRef, valueSetter, type });
 
     updateRef(btRef!!, newBtRef);
   }, [btRef, elementRef, id]);

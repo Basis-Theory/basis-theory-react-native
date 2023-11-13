@@ -1,5 +1,5 @@
 import { number as _cardNumberValidator } from 'card-validator';
-import { extractDigits } from './utils';
+import { extractDigits } from '../../utils/shared';
 
 export type CardMetadata = {
   brand: string;
