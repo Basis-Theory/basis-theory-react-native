@@ -1,3 +1,10 @@
+# [1.0.0-beta.13](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.12...v1.0.0-beta.13) (2023-11-13)
+
+
+### Features
+
+* run validation before tokenization ([#31](https://github.com/Basis-Theory/basis-theory-react-native/issues/31)) ([4dc3d1c](https://github.com/Basis-Theory/basis-theory-react-native/commit/4dc3d1ce5bb000def18a97bb96d3cff36295fc2e))
+
 # [1.0.0-beta.12](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.11...v1.0.0-beta.12) (2023-11-01)
 
 
