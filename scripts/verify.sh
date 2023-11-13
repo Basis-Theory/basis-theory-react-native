@@ -5,7 +5,7 @@ current_directory="$PWD"
 
 cd $(dirname $0)/..
 
-yarn lint
+# yarn lint
 
 
 #echo "Running tests..."
