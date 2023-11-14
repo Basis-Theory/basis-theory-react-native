@@ -28,6 +28,7 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
     'no-warning-comments': 'warn',
+    camelcase: ['error', { allow: ['expiration_year', 'expiration_month'] }],
   },
   root: true,
 };

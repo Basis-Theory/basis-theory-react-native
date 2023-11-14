@@ -43,10 +43,47 @@ type PrimitiveType = boolean | number | string | null | undefined;
 
 type ValidationResult = 'incomplete' | 'invalid' | undefined;
 
+type FieldError = {
+  targetId: string;
+  type: 'incomplete' | 'invalid';
+};
+
+type ElementEvent = {
+  /**
+   * `true` if the element is empty.
+   */
+  empty: boolean;
+  /**
+   * `true` if the input `valid` and `maskSatisfied` properties are `true`.
+   */
+  complete: boolean;
+  /**
+   * `true` if the input is valid according to validation for each element.
+   * Defaults to `true` if no validation is defined for the element.
+   */
+  valid?: boolean;
+  /**
+   * `true` if the input satisfies the mask length requirements.
+   * Defaults to `true` if no mask is provided.
+   */
+  maskSatisfied?: boolean;
+  /**
+   * Array of objects that indicates if an element is invalid or incomplete.
+   */
+  errors?: FieldError[];
+};
+
+type EventConsumer = (event: ElementEvent) => void;
+
+type CreateEvent = (value: string) => ElementEvent;
+
 export { ElementType };
 export type {
   BTDateRef,
   BTRef,
+  CreateEvent,
+  ElementEvent,
+  EventConsumer,
   InputBtDateRef,
   InputBtDateRefReveal,
   InputBTRef,

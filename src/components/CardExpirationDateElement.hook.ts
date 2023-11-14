@@ -3,12 +3,15 @@ import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
 import type { BTDateRef } from '../BaseElementTypes';
-import { ElementType, type BTRef } from '../BaseElementTypes';
+import {
+  ElementType,
+  type BTRef,
+  type EventConsumer,
+} from '../BaseElementTypes';
 import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
 import { useMask } from './shared/useMask';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
-import type { EventConsumer } from './shared/useElementEvent';
 
 type UseCardExpirationDateElementProps = {
   btRef?: ForwardedRef<BTDateRef | BTRef>;

@@ -2,10 +2,13 @@ import type { ForwardedRef } from 'react';
 import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
-import { ElementType, type BTRef } from '../BaseElementTypes';
+import {
+  ElementType,
+  type BTRef,
+  type EventConsumer,
+} from '../BaseElementTypes';
 import { useBtRef } from './shared/useBtRef';
 import { useBtRefUnmount } from './shared/useBtRefUnmount';
-import type { EventConsumer } from './shared/useElementEvent';
 import { useMask } from './shared/useMask';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
 
