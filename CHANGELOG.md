@@ -1,3 +1,10 @@
+# [1.0.0-beta.14](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.13...v1.0.0-beta.14) (2023-11-14)
+
+
+### Features
+
+* bump ramda types ([#33](https://github.com/Basis-Theory/basis-theory-react-native/issues/33)) ([9df3dd8](https://github.com/Basis-Theory/basis-theory-react-native/commit/9df3dd883fd0aa9caaf57dbec6e09f794bb02658))
+
 # [1.0.0-beta.13](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.12...v1.0.0-beta.13) (2023-11-13)
 
 
