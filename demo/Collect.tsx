@@ -1,5 +1,4 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
-/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 /* eslint-disable no-console */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -10,17 +9,16 @@ import {
   Text,
   View,
 } from 'react-native';
-import type { BTRef, BTDateRef } from '../src';
+import type { BTRef, BTDateRef, ElementEvent } from '../src';
 import {
   CardExpirationDateElement,
   CardNumberElement,
   CardVerificationCodeElement,
   useBasisTheory,
 } from '../src';
-import { Token } from '@basis-theory/basis-theory-js/types/models';
+import type { Token } from '@basis-theory/basis-theory-js/types/models';
 import { styles } from './styles';
-import { ElementEvents } from '../App';
-import { ElementEvent } from '../src/components/shared/useElementEvent';
+import type { ElementEvents } from '../App';
 
 export const Collect = () => {
   const [token, setToken] = useState<Token | undefined>();
@@ -63,7 +61,6 @@ export const Collect = () => {
         },
       });
 
-      console.log(_token?.id);
       setToken(_token);
     } catch (error) {
       console.error(error);

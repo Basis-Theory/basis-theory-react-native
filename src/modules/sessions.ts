@@ -6,11 +6,11 @@ export const Sessions = (bt: BasisTheoryType) => {
     try {
       const session = await bt.sessions.create();
 
-      logger.log.info('Session created');
+      await logger.log.info('Session created');
 
       return session;
     } catch (error) {
-      logger.log.error('Error while creating session', error as Error);
+      await logger.log.error('Error while creating session', error as Error);
     }
   };
 

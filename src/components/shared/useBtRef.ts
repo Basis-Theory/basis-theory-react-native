@@ -1,33 +1,28 @@
 import { compose } from 'ramda';
-import {
-  Dispatch,
-  ForwardedRef,
-  RefObject,
-  SetStateAction,
-  useEffect,
-} from 'react';
-import { TextInput } from 'react-native';
-import {
+import type { Dispatch, ForwardedRef, RefObject, SetStateAction } from 'react';
+import { useEffect } from 'react';
+import type { TextInput } from 'react-native';
+import type {
   BTDateRef,
   BTRef,
-  ElementType,
-  InputBTRef,
   InputBtDateRefReveal,
+  InputBTRef,
   ValueSetter,
 } from '../../BaseElementTypes';
+import { ElementType } from '../../BaseElementTypes';
 import { _elementValues } from '../../ElementValues';
 
-interface UseBtRefProps {
-  btRef?: ForwardedRef<BTRef | BTDateRef>;
+type UseBtRefProps = {
+  btRef?: ForwardedRef<BTDateRef | BTRef>;
   elementRef: RefObject<TextInput>;
   id: string;
-  type?: ElementType;
   setElementValue: Dispatch<SetStateAction<string>>;
-}
+  type?: ElementType;
+};
 
-type CreateBtRefArgs = {
+type CreateBtRefArgs = Omit<UseBtRefProps, 'btRef' | 'setElementValue'> & {
   valueSetter: ValueSetter;
-} & Omit<UseBtRefProps, 'setElementValue' | 'btRef'>;
+};
 
 const createBTDateRef = ({ id }: { id: string }) => ({
   month: () => ({
@@ -52,10 +47,10 @@ const createBtRef = ({
   format: (plaintextValue: string) => plaintextValue,
   clear: () => {
     delete _elementValues[id];
-    elementRef?.current?.clear();
+    elementRef.current?.clear();
   },
-  focus: () => elementRef?.current?.focus(),
-  blur: () => elementRef?.current?.blur(),
+  focus: () => elementRef.current?.focus(),
+  blur: () => elementRef.current?.blur(),
   setValue: valueSetter,
   ...(type === ElementType.EXPIRATION_DATE
     ? createBTDateRef({ id })
@@ -64,6 +59,7 @@ const createBtRef = ({
 
 const formatValue = (ref: InputBTRef) => {
   const value = _elementValues[ref.id];
+
   return ref.format(typeof value === 'string' ? value : JSON.stringify(value));
 };
 
@@ -71,18 +67,20 @@ const updateRef = (btRef: ForwardedRef<BTRef>, newBtRef: BTRef) => {
   if (typeof btRef === 'function') {
     btRef(newBtRef);
   } else if (btRef && typeof btRef === 'object') {
+    // eslint-disable-next-line no-param-reassign
     btRef.current = newBtRef;
   }
 };
 
 const isInputBtDateRef = (
-  ref: InputBTRef | InputBtDateRefReveal
+  ref: InputBtDateRefReveal | InputBTRef
 ): ref is InputBtDateRefReveal =>
   Boolean(
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     (ref as InputBtDateRefReveal).month && (ref as InputBtDateRefReveal).year
   );
 
-const valueFormatter = (ref: InputBTRef | InputBtDateRefReveal | undefined) => {
+const valueFormatter = (ref: InputBtDateRefReveal | InputBTRef | undefined) => {
   if (!ref) return '';
 
   if (isInputBtDateRef(ref)) {
@@ -105,8 +103,13 @@ export const useBtRef = ({
   useEffect(() => {
     const valueSetter = compose(setElementValue, valueFormatter);
 
-    const newBtRef = createBtRef({ id, elementRef, valueSetter, type });
+    const newBtRef = createBtRef({
+      id,
+      elementRef,
+      valueSetter,
+      type,
+    });
 
-    updateRef(btRef!!, newBtRef);
+    updateRef(btRef!, newBtRef);
   }, [btRef, elementRef, id]);
 };

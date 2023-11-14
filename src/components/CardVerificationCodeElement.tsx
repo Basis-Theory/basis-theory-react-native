@@ -1,17 +1,18 @@
 import React from 'react';
 import { type StyleProp, type TextStyle } from 'react-native';
 import MaskInput from 'react-native-mask-input';
+import type {
+  UseCardVerificationCodeElementProps} from './CardVerificationCodeElement.hook';
 import {
-  useCardVerificationCodeElement,
-  UseCardVerificationCodeElementProps,
+  useCardVerificationCodeElement
 } from './CardVerificationCodeElement.hook';
 
-type CardVerificationCodeProps = {
+type CardVerificationCodeProps = UseCardVerificationCodeElementProps & {
   style: StyleProp<TextStyle>;
   editable?: boolean;
   placeholder?: string;
   placeholderTextColor?: string;
-} & UseCardVerificationCodeElementProps;
+};
 
 export const CardVerificationCodeElement = ({
   btRef,

@@ -1,7 +1,8 @@
-import { ForwardedRef, useEffect } from 'react';
-import { BTRef } from '../../BaseElementTypes';
+import type { ForwardedRef} from 'react';
+import { useEffect } from 'react';
+import type { BTRef } from '../../BaseElementTypes';
 
-interface UseBtRefUnmountProps {
+type UseBtRefUnmountProps = {
   btRef?: ForwardedRef<BTRef>;
 }
 

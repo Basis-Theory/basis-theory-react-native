@@ -4,7 +4,7 @@ import React from 'react';
 import { MainScreen } from './demo/MainScreen';
 import { Collect } from './demo/Collect';
 import { Reveal } from './demo/Reveal';
-import type { ElementEvent } from './src/components/shared/useElementEvent';
+import type { ElementEvent } from './src';
 
 const Stack = createNativeStackNavigator();
 

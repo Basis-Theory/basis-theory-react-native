@@ -1,7 +1,7 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { RootStackParamList } from '../App';
+import type { RootStackParamList } from '../App';
 import { styles } from './styles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Collect' | 'Reveal'>;

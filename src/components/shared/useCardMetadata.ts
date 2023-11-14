@@ -20,7 +20,7 @@ export const useCardMetadata = () => {
       isValid && cardNumber ? extractDigits(cardNumber) : undefined;
 
     const cardLast4 = sanitizedCardNumber
-      ? sanitizedCardNumber?.slice(-4)
+      ? sanitizedCardNumber.slice(-4)
       : undefined;
 
     const cardBin = sanitizedCardNumber

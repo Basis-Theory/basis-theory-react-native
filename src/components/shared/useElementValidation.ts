@@ -1,7 +1,5 @@
 import { _getValidationStrategy } from '../../utils/validation';
 
-export const useElementValidation = () => {
-  return {
+export const useElementValidation = () => ({
     getValidationStrategy: _getValidationStrategy,
-  };
-};
+  });

@@ -2,14 +2,18 @@ import type { ForwardedRef } from 'react';
 import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
-import { ElementType, type BTRef, type Mask } from '../BaseElementTypes';
+import {
+  ElementType,
+  type BTRef,
+  type EventConsumer,
+  type Mask,
+} from '../BaseElementTypes';
 import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
-import { EventConsumer } from './shared/useElementEvent';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
-import { TransformType } from './shared/useTransform';
+import type { TransformType } from './shared/useTransform';
 
-export type UseTextElementProps = {
+type UseTextElementProps = {
   btRef?: ForwardedRef<BTRef>;
   mask?: Mask;
   onChange?: EventConsumer;
@@ -29,12 +33,21 @@ export const useTextElement = ({
 
   useBtRefUnmount({ btRef });
 
-  useBtRef({ btRef, elementRef, id, setElementValue });
+  useBtRef({
+    btRef,
+    elementRef,
+    id,
+    setElementValue,
+  });
 
   const { _onChange } = useUserEventHandlers({
     setElementValue,
-    element: { id, mask, type: ElementType.TEXT },
-    onChange: onChange,
+    element: {
+      id,
+      mask,
+      type: ElementType.TEXT,
+    },
+    onChange,
     transform,
   });
 
@@ -44,3 +57,5 @@ export const useTextElement = ({
     elementValue,
   };
 };
+
+export type { UseTextElementProps };

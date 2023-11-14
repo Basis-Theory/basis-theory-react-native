@@ -1,21 +1,17 @@
-import React, {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useMemo,
-} from 'react';
-import { BasisTheoryElements } from './useBasisTheory';
+import type { PropsWithChildren } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
+import type { BasisTheoryElements } from './useBasisTheory';
 
-interface BasisTheoryProvider {
+type BasisTheoryProviderType = {
   bt?: BasisTheoryElements;
-}
+};
 
-const BasisTheoryContext = createContext<BasisTheoryProvider>({});
+const BasisTheoryContext = createContext<BasisTheoryProviderType>({});
 
 const BasisTheoryProvider = ({
   bt,
   children,
-}: PropsWithChildren<BasisTheoryProvider>): JSX.Element => {
+}: PropsWithChildren<BasisTheoryProviderType>): JSX.Element => {
   const value = useMemo(
     () => ({
       bt,
@@ -30,7 +26,7 @@ const BasisTheoryProvider = ({
   );
 };
 
-const useBasisTheoryFromContext = (): BasisTheoryProvider =>
+const useBasisTheoryFromContext = (): BasisTheoryProviderType =>
   useContext(BasisTheoryContext);
 
 export { BasisTheoryProvider, useBasisTheoryFromContext };

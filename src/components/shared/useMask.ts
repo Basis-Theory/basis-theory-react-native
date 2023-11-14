@@ -29,7 +29,7 @@ const DEFAULT_CARD_NUMBER_MASK = [
 ];
 
 const createCardMask = (cardNumber: string, card: CardMetadata) => {
-  if (isNil(card) || isNil(card?.lengths) || isNil(card?.gaps)) {
+  if (isNil(card) || isNil(card.lengths) || isNil(card.gaps)) {
     return DEFAULT_CARD_NUMBER_MASK;
   }
 
@@ -42,14 +42,14 @@ const createCardMask = (cardNumber: string, card: CardMetadata) => {
 
   // current length or next length if current mask is met and next length exists
   const length =
-    card.lengths[lengthIndex] == digitsOnly.length &&
+    card.lengths[lengthIndex] === digitsOnly.length &&
     card.lengths[lengthIndex + 1]
       ? card.lengths[lengthIndex + 1]
       : card.lengths[lengthIndex];
 
-  const mask = Array.from<string | RegExp>({ length }).fill(/\d/u);
+  const mask = Array.from<RegExp | string>({ length }).fill(/\d/u);
 
-  card.gaps?.forEach((gap, i) => {
+  card.gaps.forEach((gap, i) => {
     mask.splice(gap + i, 0, ' ');
   });
 
@@ -58,11 +58,11 @@ const createCardMask = (cardNumber: string, card: CardMetadata) => {
 
 const createCvcMask = (maskLength?: number) => {
   const length =
-    maskLength == undefined || maskLength > 4 || maskLength < 3
+    maskLength === undefined || maskLength > 4 || maskLength < 3
       ? 4
       : maskLength;
 
-  return Array.from<string | RegExp>({ length }).fill(/\d/u);
+  return Array.from<RegExp | string>({ length }).fill(/\d/u);
 };
 
 export const useMask = ({ maskLength, type, id }: UseMask) => {

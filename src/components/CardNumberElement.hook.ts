@@ -2,14 +2,17 @@ import type { ForwardedRef } from 'react';
 import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
-import { ElementType, type BTRef } from '../BaseElementTypes';
+import {
+  ElementType,
+  type BTRef,
+  type EventConsumer,
+} from '../BaseElementTypes';
 import { useBtRef } from './shared/useBtRef';
 import { useBtRefUnmount } from './shared/useBtRefUnmount';
-import { EventConsumer } from './shared/useElementEvent';
 import { useMask } from './shared/useMask';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
 
-export type UseCardNumberElementProps = {
+type UseCardNumberElementProps = {
   btRef?: ForwardedRef<BTRef>;
   onChange?: EventConsumer;
 };
@@ -26,15 +29,27 @@ export const useCardNumberElement = ({
 
   useBtRefUnmount({ btRef });
 
-  const mask = useMask({ type, id });
+  const mask = useMask({
+    type,
+    id,
+  });
 
-  useBtRef({ btRef, elementRef, id, setElementValue });
+  useBtRef({
+    btRef,
+    elementRef,
+    id,
+    setElementValue,
+  });
 
   const { _onChange } = useUserEventHandlers({
     setElementValue,
     transform: [' ', ''],
-    element: { id, mask, type },
-    onChange: onChange,
+    element: {
+      id,
+      mask,
+      type,
+    },
+    onChange,
   });
 
   return {
@@ -44,3 +59,5 @@ export const useCardNumberElement = ({
     mask,
   };
 };
+
+export type { UseCardNumberElementProps };
