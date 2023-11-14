@@ -61,7 +61,6 @@ export const Collect = () => {
         },
       });
 
-      console.log(_token?.id);
       setToken(_token);
     } catch (error) {
       console.error(error);

@@ -1,3 +1,5 @@
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable no-console */
 import React, { useRef, useState } from 'react';
 import {
   Pressable,
@@ -8,16 +10,17 @@ import {
   View,
 } from 'react-native';
 import {
-  BTRef,
+  type BTRef,
+  type ElementEvent,
   CardExpirationDateElement,
   CardNumberElement,
   CardVerificationCodeElement,
   useBasisTheory,
 } from '../src';
 import { styles } from './styles';
-import { ElementEvent } from '../src/components/shared/useElementEvent';
-import { ElementEvents } from '../App';
-import { InputBtDateRef, InputBTRef } from '../src/BaseElementTypes';
+
+import type { InputBtDateRef, InputBTRef } from '../src/BaseElementTypes';
+import type { ElementEvents } from '../App';
 
 type CardToken = {
   expiration_year: InputBtDateRef;
