@@ -1,3 +1,10 @@
+# [1.0.0-beta.16](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.15...v1.0.0-beta.16) (2023-11-15)
+
+
+### Features
+
+* remove device info from logging ([#35](https://github.com/Basis-Theory/basis-theory-react-native/issues/35)) ([e7887a2](https://github.com/Basis-Theory/basis-theory-react-native/commit/e7887a2e73ead3762a7d5666d3780fc39557e088))
+
 # [1.0.0-beta.15](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.14...v1.0.0-beta.15) (2023-11-15)
 
 
