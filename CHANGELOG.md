@@ -1,3 +1,10 @@
+# [1.0.0-beta.15](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.14...v1.0.0-beta.15) (2023-11-15)
+
+
+### Features
+
+* add 'latest' tag to release ([#34](https://github.com/Basis-Theory/basis-theory-react-native/issues/34)) ([fe37463](https://github.com/Basis-Theory/basis-theory-react-native/commit/fe37463f821b0446da3f9b48927bce3194443e66))
+
 # [1.0.0-beta.14](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.13...v1.0.0-beta.14) (2023-11-14)
 
 
