@@ -1,38 +1,7 @@
-/* eslint-disable eslint-comments/disable-enable-pair */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-import {
-  getApplicationName,
-  getBundleId,
-  getDeviceName,
-  getSystemName,
-  getSystemVersion,
-  getVersion,
-  isEmulator,
-} from 'react-native-device-info';
-
 type AttributeMap = Record<string, string>;
 
 export const logger = (() => {
   const ddTok = 'pubb96b84a13912504f4354f2d794ea4fab';
-
-  let attrMap: AttributeMap = {
-    application: 'React Native Elements',
-    applicationName: getApplicationName() ?? 'unknown application name',
-    applicationVersion: getVersion() ?? 'Unknown application version',
-    bundleId: getBundleId() ?? 'unknown vendor',
-    ddsource: 'react-native',
-    deviceOS: getSystemName() ?? 'Unknown device OS',
-    deviceOsVersion: getSystemVersion() ?? 'Unknown device OS version',
-    service: 'React Native Elements',
-  };
-
-  (async () => {
-    attrMap = {
-      ...attrMap,
-      device: (await getDeviceName()) ?? 'unknown device',
-      env: (await isEmulator()) ? 'local' : 'prod',
-    };
-  })();
 
   const log = async (
     message: string,
@@ -41,7 +10,9 @@ export const logger = (() => {
     attributes: AttributeMap = {}
   ) => {
     const payload = {
-      ...attrMap,
+      application: 'React Native Elements',
+      ddsource: 'react-native',
+      service: 'React Native Elements',
       ...attributes,
       level,
       message:

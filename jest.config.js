@@ -1,9 +1,6 @@
 module.exports = {
   preset: 'react-native',
-  setupFilesAfterEnv: [
-    './setup.jest.js',
-    '@testing-library/jest-native/extend-expect',
-  ],
+  setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
   displayName: 'Jest',
   transformIgnorePatterns: [],
   transform: { '\\.(js|jsx|ts|tsx)$': '@sucrase/jest-plugin' },
