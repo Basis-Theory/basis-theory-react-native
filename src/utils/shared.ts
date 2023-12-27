@@ -37,11 +37,15 @@ const isBtDateRef = (val: unknown): val is InputBTRefWithDatepart =>
 
 const isPrimitive = anyPass([isString, isBoolean, isNumber, isNil]);
 
-const removeMax = (list: number[]) =>
-  reject(equals(reduce(max, Number.NEGATIVE_INFINITY, list)), list);
+/**
+ * Removes all occurrences of the maximum value from an array of numbers.
+ */
+const filterOutMaxOccurrences = (numbers: number[]) =>
+  numbers.filter((num) => num !== Math.max(...numbers));
 
 export {
   extractDigits,
+  filterOutMaxOccurrences,
   isBoolean,
   isBtDateRef,
   isBtRef,
@@ -52,5 +56,4 @@ export {
   isRegExp,
   isString,
   isToken,
-  removeMax,
 };
