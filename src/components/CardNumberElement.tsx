@@ -1,11 +1,8 @@
 import React from 'react';
 import type { StyleProp, TextStyle } from 'react-native';
-import type {
-  UseCardNumberElementProps} from './CardNumberElement.hook';
-import {
-  useCardNumberElement
-} from './CardNumberElement.hook';
 import MaskInput from 'react-native-mask-input';
+import type { UseCardNumberElementProps } from './CardNumberElement.hook';
+import { useCardNumberElement } from './CardNumberElement.hook';
 
 type CardNumberProps = UseCardNumberElementProps & {
   style?: StyleProp<TextStyle>;
@@ -21,10 +18,12 @@ export const CardNumberElement = ({
   placeholder,
   placeholderTextColor,
   onChange,
+  cardTypes,
 }: CardNumberProps) => {
   const { elementRef, _onChange, elementValue, mask } = useCardNumberElement({
     btRef,
     onChange,
+    cardTypes,
   });
 
   return (
