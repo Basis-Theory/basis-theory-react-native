@@ -6,13 +6,7 @@ import { VISA, MASTERCARD } from '@basis-theory/basis-theory-js/types/elements';
 import 'react-native';
 import React from 'react';
 
-import {
-  render,
-  fireEvent,
-  // userEvent,
-  screen,
-  userEvent,
-} from '@testing-library/react-native';
+import { render, fireEvent, screen } from '@testing-library/react-native';
 import { CardNumberElement } from '../../src';
 import cardValidator from 'card-validator';
 
