@@ -2,13 +2,25 @@
  * @format
  */
 
+import { VISA, MASTERCARD } from '@basis-theory/basis-theory-js/types/elements';
 import 'react-native';
 import React from 'react';
 
-import { render, fireEvent, screen } from '@testing-library/react-native';
+import {
+  render,
+  fireEvent,
+  // userEvent,
+  screen,
+  userEvent,
+} from '@testing-library/react-native';
 import { CardNumberElement } from '../../src';
+import cardValidator from 'card-validator';
 
 describe('CardNumberElement', () => {
+  beforeEach(() => {
+    cardValidator.creditCardType.resetModifications();
+  });
+
   const mockedRef = {
     current: {
       id: '123',
@@ -35,6 +47,72 @@ describe('CardNumberElement', () => {
       fireEvent.changeText(el, '4242424242424242');
 
       expect(el.props.value).toStrictEqual('4242 4242 4242 4242');
+    });
+  });
+
+  describe('CustomBin', () => {
+    test('validates custom bin', async () => {
+      const doStuff = jest.fn();
+
+      const { getByPlaceholderText } = render(
+        <CardNumberElement
+          btRef={mockedRef}
+          cardTypes={[
+            {
+              ...VISA,
+              patterns: [...VISA.patterns, 8405], // add custom bin to VISA from tabapay
+            },
+            MASTERCARD,
+          ]}
+          onChange={doStuff}
+          placeholder="Card Number"
+          style={{}}
+        />
+      );
+
+      const el = getByPlaceholderText('Card Number');
+
+      fireEvent.changeText(el, '8405840704999997', {});
+
+      expect(doStuff).toHaveBeenLastCalledWith({
+        empty: false,
+        errors: undefined,
+        valid: true,
+        maskSatisfied: true,
+        complete: true,
+        cvcLength: 3,
+        cardBin: '84058407',
+        cardLast4: '9997',
+        brand: 'visa',
+      });
+    });
+
+    test('returns unknown for valid bin and unsuported card brand', async () => {
+      const doStuff = jest.fn();
+
+      const { getByPlaceholderText } = render(
+        <CardNumberElement
+          btRef={mockedRef}
+          cardTypes={[VISA]}
+          onChange={doStuff}
+          placeholder="Card Number"
+          style={{}}
+        />
+      );
+
+      const el = getByPlaceholderText('Card Number');
+
+      fireEvent.changeText(el, '5555555555554444', {});
+
+      expect(doStuff).toHaveBeenLastCalledWith({
+        empty: false,
+        errors: [{ targetId: 'cardNumber', type: 'invalid' }],
+        valid: false,
+        maskSatisfied: true,
+        complete: false,
+        cvcLength: undefined,
+        brand: 'unknown',
+      });
     });
   });
 
