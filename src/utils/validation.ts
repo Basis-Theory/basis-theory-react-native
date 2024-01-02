@@ -1,8 +1,13 @@
 import { cvv, expirationDate, number } from 'card-validator';
-import { T, always, cond, equals, flip, isEmpty, partial, split } from 'ramda';
+import { flip, isEmpty, partial, split } from 'ramda';
 import type { Mask, ValidationResult } from '../BaseElementTypes';
 import { ElementType } from '../BaseElementTypes';
-import { extractDigits, isRegExp, isString, removeMax } from './shared';
+import {
+  extractDigits,
+  filterOutMaxOccurrences,
+  isRegExp,
+  isString,
+} from './shared';
 
 type ValidatorResult = {
   isValid: boolean;
@@ -34,7 +39,7 @@ const _cardNumberValidator = (value: string) => {
   // that could be valid
   const expectedLengths =
     card && brandsWithMultipleCardLenghts.includes(card.type)
-      ? removeMax(card.lengths)
+      ? filterOutMaxOccurrences(card.lengths)
       : [];
 
   if (
@@ -58,7 +63,16 @@ const _expirationDateValidator = expirationDate;
 
 // eslint-disable-next-line @typescript-eslint/default-param-last
 const _maskValidator = (mask: Mask = [], value: string) => {
-  const customZip = <T, U, V>(fn: (a: T, b: U) => V, a: T[], b: U[]): V[] =>
+  /**
+   * Combines two arrays element-wise using a specified function.
+   *
+   * @param {function(T, U): V} fn - A function that combines elements from the first and second arrays.
+   * @param {T[]} a - The first array.
+   * @param {U[]} b - The second array.
+   *
+   * @returns {V[]} An array containing the result of applying the function to corresponding elements of the input arrays.
+   */
+  const zipWith = <T, U, V>(fn: (a: T, b: U) => V, a: T[], b: U[]): V[] =>
     a.map((x, i) => fn(x, b[i]));
 
   const matchMaskCharAtIndex = (
@@ -69,11 +83,11 @@ const _maskValidator = (mask: Mask = [], value: string) => {
       ? maskChar.test(valChar)
       : isString(maskChar) && maskChar === valChar;
 
-  const isValid = customZip(matchMaskCharAtIndex, mask, value.split('')).every(
+  const isValid = zipWith(matchMaskCharAtIndex, mask, value.split('')).every(
     Boolean
   );
 
-  const isPotentiallyValid = customZip(
+  const isPotentiallyValid = zipWith(
     matchMaskCharAtIndex,
     mask.slice(0, value.length),
     split('', value)
@@ -120,10 +134,10 @@ const cardVerificationCodeValidator = (cvc: string): ValidationResult =>
 const textMaskValidator = (value: string, mask?: Mask): ValidationResult =>
   runValidator(value, partial(_maskValidator, [mask]));
 
-export const _getValidationStrategy = cond([
-  [equals(ElementType.CVC), always(cardVerificationCodeValidator)],
-  [equals(ElementType.EXPIRATION_DATE), always(cardExpirationDateValidator)],
-  [equals(ElementType.CARD_NUMBER), always(cardNumberValidator)],
-  [equals(ElementType.TEXT), always(textMaskValidator)],
-  [T, always(() => undefined)],
-]);
+export const _getValidationStrategy = (elementType: ElementType) =>
+  ({
+    [ElementType.CVC]: cardVerificationCodeValidator,
+    [ElementType.EXPIRATION_DATE]: cardExpirationDateValidator,
+    [ElementType.CARD_NUMBER]: cardNumberValidator,
+    [ElementType.TEXT]: textMaskValidator,
+  }[elementType]);
