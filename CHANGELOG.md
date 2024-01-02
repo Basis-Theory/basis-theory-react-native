@@ -1,3 +1,10 @@
+# [1.0.0-beta.17](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.16...v1.0.0-beta.17) (2024-01-02)
+
+
+### Features
+
+* adds custom bin validation ([#36](https://github.com/Basis-Theory/basis-theory-react-native/issues/36)) ([5e2b202](https://github.com/Basis-Theory/basis-theory-react-native/commit/5e2b2027a01518d7a731dc3d9b43ba6e9aaf7792))
+
 # [1.0.0-beta.16](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.15...v1.0.0-beta.16) (2023-11-15)
 
 
