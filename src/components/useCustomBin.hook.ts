@@ -15,9 +15,7 @@ const throwIfDuppedCardConfig = ifElse(
   always(false)
 );
 
-const groupByCreditCardType = groupBy(
-  (obj: CreditCardType) => obj['type'] as string
-);
+const groupByCreditCardType = groupBy((obj: CreditCardType) => obj['type']);
 
 const checkDuppedCards = compose(
   throwIfDuppedCardConfig,
