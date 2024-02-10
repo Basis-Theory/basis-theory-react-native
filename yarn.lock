@@ -4013,10 +4013,10 @@ caniuse-lite@^1.0.30001580:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001585.tgz#0b4e848d84919c783b2a41c13f7de8ce96744401"
   integrity sha512-yr2BWR1yLXQ8fMpdS/4ZZXpseBgE7o4g41x3a6AJOqZuOi+iE/WdJYAuZ6Y95i4Ohd2Y+9MzIWRR+uGABH4s3Q==
 
-card-validator@^8.1.1:
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/card-validator/-/card-validator-8.1.1.tgz#418f5f32435553fb9ca2a02634ad413bb38697a9"
-  integrity sha512-cN4FsKwoTfTFnqPwVc7TQLSsH/QMDB3n/gWm0XelcApz4sKipnOQ6k33sa3bWsNnnIpgs7eXOF+mUV2UQAX2Sw==
+card-validator@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/card-validator/-/card-validator-9.1.0.tgz#b6bcf8cee7b15a2b020ae0896f63056cfe7d7b8a"
+  integrity sha512-MhqRKw8Q83qMppvDlkQ37ojocCaRR/hQzklIW7OabT5uQKS/5uDuqdXI6CbQ6uf+Zlc8rmzl7wVo4aw5uWFK9w==
   dependencies:
     credit-card-type "^9.1.0"
 
