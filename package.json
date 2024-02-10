@@ -40,7 +40,7 @@
     "@sucrase/jest-plugin": "^3.0.0",
     "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^12.3.0",
-    "@tsconfig/react-native": "^2.0.2",
+    "@tsconfig/react-native": "^3.0.3",
     "@types/jest": "^29.5.12",
     "@types/ramda": "^0.29.10",
     "@types/react-test-renderer": "^18.0.7",
