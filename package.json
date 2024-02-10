@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@basis-theory/basis-theory-js": "^3.0.0",
-    "@react-navigation/native-stack": "^6.9.17",
-    "@react-navigation/native": "^6.1.9",
+    "@react-navigation/native-stack": "^6.9.18",
+    "@react-navigation/native": "^6.1.10",
     "card-validator": "^8.1.1",
     "ramda": "^0.29.1",
     "react-native-mask-input": "^1.2.3",
