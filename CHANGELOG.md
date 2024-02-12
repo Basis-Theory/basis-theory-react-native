@@ -1,3 +1,16 @@
+# [1.0.0-beta.18](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.17...v1.0.0-beta.18) (2024-02-12)
+
+
+### Bug Fixes
+
+* rebuild lockfile and install semver as devDependency ([#39](https://github.com/Basis-Theory/basis-theory-react-native/issues/39)) ([1a16fc6](https://github.com/Basis-Theory/basis-theory-react-native/commit/1a16fc66fe2af12f6383eb3d8d4ae077affcf96d))
+* remove extends from tsconfig ([#38](https://github.com/Basis-Theory/basis-theory-react-native/issues/38)) ([469a4be](https://github.com/Basis-Theory/basis-theory-react-native/commit/469a4be69d5efe7c565bc943c5578ee530dbaefa))
+
+
+### Features
+
+* upgrade deps ([#37](https://github.com/Basis-Theory/basis-theory-react-native/issues/37)) ([5c8557e](https://github.com/Basis-Theory/basis-theory-react-native/commit/5c8557e6c5b59d61fe6ba4da640b29a077007802))
+
 # [1.0.0-beta.17](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0-beta.16...v1.0.0-beta.17) (2024-01-02)
 
 
