@@ -1,0 +1,10 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-IP-6240864:
+    - '*':
+        reason: not affected, waiting for https://github.com/react-native-community/cli/issues/2294 to be merged
+        expires: 2024-02-15T19:13:02.508Z
+        created: 2024-02-12T19:13:02.519Z
+version: v1.25.0
+patch: {}

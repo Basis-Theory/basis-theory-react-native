@@ -22,7 +22,7 @@ jobs:
         with:
           command: code test --all-sub-projects --severity-threshold=medium
 
-      - name: Snyk dependency scan        
+      - name: Snyk dependency scan
         uses: snyk/actions/node@master
         if: always()
         env:
