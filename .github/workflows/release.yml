@@ -21,7 +21,7 @@ jobs:
     environment: Production
     strategy:
       matrix:
-        node: ['18.x']
+        node: ['20.x']
         os: [ubuntu-latest]
     env:
       CI: 1
