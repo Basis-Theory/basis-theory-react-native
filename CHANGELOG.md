@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.0.0...v1.1.0) (2024-02-20)
+
+
+### Features
+
+* bump deps ([#41](https://github.com/Basis-Theory/basis-theory-react-native/issues/41)) ([7adeea6](https://github.com/Basis-Theory/basis-theory-react-native/commit/7adeea6c724b43a6fb2283469bc1cda6149f5bf8))
+
 # 1.0.0 (2024-02-13)
 
 
