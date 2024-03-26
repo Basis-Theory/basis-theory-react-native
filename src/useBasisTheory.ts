@@ -11,8 +11,13 @@ import { Tokens } from './modules/tokens';
 import { useBasisTheoryFromContext } from './BasisTheoryProvider';
 import { logger } from './utils/logging';
 
-const _BasisTheoryElements = async ({ apiKey }: { apiKey: string }) => {
-  const bt: BasisTheoryType = await new BasisTheory().init(apiKey);
+const _BasisTheoryElements = async ({
+  apiKey,
+  apiBaseUrl,
+}: BasisTheoryInitOptionsWithoutElements & { apiKey: string }) => {
+  const bt: BasisTheoryType = await new BasisTheory().init(apiKey, {
+    apiBaseUrl,
+  });
 
   const proxy = Proxy(bt);
 
@@ -51,7 +56,7 @@ const useBasisTheory = (
     (async () => {
       if (!state.bt && apiKey && !state.error) {
         try {
-          const bt = await _BasisTheoryElements({ apiKey });
+          const bt = await _BasisTheoryElements({ apiKey, ...options });
 
           await logger.log.info('Succesfully initialized Elements');
 

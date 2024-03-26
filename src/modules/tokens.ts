@@ -1,5 +1,6 @@
 import type {
   CreateToken,
+  UpdateToken,
   Token,
 } from '@basis-theory/basis-theory-js/types/models';
 import type {
@@ -16,6 +17,10 @@ import { logger } from '../utils/logging';
 import { isNilOrEmpty } from '../utils/shared';
 
 export type CreateTokenWithBtRef = Omit<CreateToken, 'data'> & {
+  data: Record<string, BTRef | InputBTRefWithDatepart | null | undefined>;
+};
+
+export type UpdateTokenWithBtRef = Omit<UpdateToken, 'data'> & {
   data: Record<string, BTRef | InputBTRefWithDatepart | null | undefined>;
 };
 
@@ -59,8 +64,33 @@ export const Tokens = (bt: BasisTheoryType) => {
     }
   };
 
+  const update = async (
+    tokenId: string,
+    tokenWithRef: UpdateTokenWithBtRef,
+    requestOptions?: RequestOptions
+  ) => {
+    if (!isNilOrEmpty(_elementErrors)) {
+      throw new Error(
+        'Unable to create token. Payload contains invalid values. Review elements events for more details.'
+      );
+    }
+
+    try {
+      const _token = replaceElementRefs<UpdateToken>(tokenWithRef);
+
+      const token = await bt.tokens.update(tokenId, _token, requestOptions);
+
+      await logger.log.info(`Token updated: ${tokenId}`);
+
+      return token;
+    } catch (error) {
+      await logger.log.error('Error while creating Token', error as Error);
+    }
+  };
+
   return {
     getById: getTokenById,
     create,
+    update,
   };
 };

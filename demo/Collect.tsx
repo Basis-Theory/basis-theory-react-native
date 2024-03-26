@@ -67,6 +67,25 @@ export const Collect = () => {
     }
   };
 
+  const updateToken = async () => {
+    try {
+      if (token?.id) {
+        const _token = await bt?.tokens.update(token?.id, {
+          data: {
+            number: cardNumberRef.current,
+            expiration_month: cardExpirationDateRef.current?.month(),
+            expiration_year: cardExpirationDateRef.current?.year(),
+            cvc: cardVerificationCodeRef.current,
+          },
+        });
+
+        setToken(_token);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const clearToken = () => {
     cardExpirationDateRef.current?.clear();
     cardNumberRef.current?.clear();
@@ -125,6 +144,21 @@ export const Collect = () => {
               style={disabled ? styles.buttonTextDisabled : styles.buttonText}
             >
               {'Collect'}
+            </Text>
+          </Pressable>
+
+          <Pressable
+            disabled={disabled}
+            onPress={updateToken}
+            style={{
+              marginTop: 12,
+              ...(disabled ? styles.buttonDisabled : styles.button),
+            }}
+          >
+            <Text
+              style={disabled ? styles.buttonTextDisabled : styles.buttonText}
+            >
+              {'Update'}
             </Text>
           </Pressable>
 
