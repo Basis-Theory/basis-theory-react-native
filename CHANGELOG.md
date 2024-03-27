@@ -1,3 +1,5 @@
+## [1.2.1](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.2.0...v1.2.1) (2024-03-27)
+
 # [1.2.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.1.2...v1.2.0) (2024-03-26)
 
 
