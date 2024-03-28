@@ -15,9 +15,10 @@ const _BasisTheoryElements = async ({
   apiKey,
   apiBaseUrl,
 }: BasisTheoryInitOptionsWithoutElements & { apiKey: string }) => {
-  const bt: BasisTheoryType = await new BasisTheory().init(apiKey, {
-    apiBaseUrl,
-  });
+  const bt: BasisTheoryType = await new BasisTheory().init(
+    apiKey,
+    apiBaseUrl ? { apiBaseUrl } : undefined
+  );
 
   const proxy = Proxy(bt);
 
