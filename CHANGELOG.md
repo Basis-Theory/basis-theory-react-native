@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.2.1...v1.2.2) (2024-03-28)
+
+
+### Bug Fixes
+
+* fix initialization w custom config object ([#49](https://github.com/Basis-Theory/basis-theory-react-native/issues/49)) ([4dc48ce](https://github.com/Basis-Theory/basis-theory-react-native/commit/4dc48ce6828d68a6737bb941fc9f450c012ad2c8))
+
 ## [1.2.1](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.2.0...v1.2.1) (2024-03-27)
 
 # [1.2.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.1.2...v1.2.0) (2024-03-26)
