@@ -16,7 +16,11 @@ jest.mock('react-native-uuid', () => ({
 }));
 
 describe('replace element refs', () => {
-  beforeEach(() => {
+  afterAll(() => {
+    //@ts-ignore
+    state._elementValues = {};
+  });
+  test('replaces refs with proper values', () => {
     //@ts-ignore
     state._elementValues = {
       '123': 'my very sensitive value',
@@ -26,12 +30,7 @@ describe('replace element refs', () => {
       firstArrayElement: 'first sensitive element in array',
       secondArrayElement: 'second sensitive element in array',
     };
-  });
-  afterAll(() => {
-    //@ts-ignore
-    state._elementValues = {};
-  });
-  test('replaces refs with proper values', () => {
+
     const tokenWithRef = {
       id: 'tokenID',
       type: 'card',
@@ -69,6 +68,25 @@ describe('replace element refs', () => {
     const result = replaceElementRefs(tokenWithRef);
 
     expect(result).toStrictEqual(expectedResult);
+  });
+
+  test('handles undefined values in state', () => {
+    //@ts-ignore
+    state._elementValues = {};
+
+    const tokenWithRef = {
+      id: 'tokenID',
+      type: 'card',
+      data: {
+        number: { id: '123', format: jest.fn },
+        expiration_month: { id: 'expirationMonth', datepart: 'month' },
+        expiration_year: { id: 'expirationYear', datepart: 'year' },
+      },
+    };
+
+    expect(() => replaceElementRefs(tokenWithRef)).toThrow(
+      'Couldn\'t find value for element "expirationMonth". Make sure the element is initialized correctly and that it contains a valid value.'
+    );
   });
 });
 
