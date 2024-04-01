@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.2.2...v1.3.0) (2024-04-01)
+
+
+### Features
+
+* exposes token delete and tokenize ([#50](https://github.com/Basis-Theory/basis-theory-react-native/issues/50)) ([cd551d1](https://github.com/Basis-Theory/basis-theory-react-native/commit/cd551d1ccb9cbcb92974ee683887d9374b3f456c))
+
 ## [1.2.2](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.2.1...v1.2.2) (2024-03-28)
 
 
