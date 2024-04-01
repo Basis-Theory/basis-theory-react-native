@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
+  Alert,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -16,12 +17,20 @@ import {
   CardVerificationCodeElement,
   useBasisTheory,
 } from '../src';
-import type { Token } from '@basis-theory/basis-theory-js/types/models';
+import type {
+  Token,
+  TokenizeData,
+} from '@basis-theory/basis-theory-js/types/models';
 import { styles } from './styles';
 import type { ElementEvents } from '../App';
 
+const Divider = () => <View style={styles.divider} />;
+
 export const Collect = () => {
   const [token, setToken] = useState<Token | undefined>();
+  const [tokenizedData, setTokenizedData] = useState<
+    TokenizeData | undefined
+  >();
   const [elementsEvents, setElementsEvents] = useState<ElementEvents>({
     cardExpirationDate: undefined,
     cvc: undefined,
@@ -49,6 +58,24 @@ export const Collect = () => {
       });
     };
 
+  const createTokenWithTokenize = async () => {
+    try {
+      const _token = await bt?.tokens.tokenize({
+        type: 'card',
+        data: {
+          number: cardNumberRef.current,
+          expiration_month: cardExpirationDateRef.current?.month(),
+          expiration_year: cardExpirationDateRef.current?.year(),
+          cvc: cardVerificationCodeRef.current,
+        },
+      });
+
+      setTokenizedData(_token);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const createToken = async () => {
     try {
       const _token = await bt?.tokens.create({
@@ -75,11 +102,30 @@ export const Collect = () => {
             number: cardNumberRef.current,
             expiration_month: cardExpirationDateRef.current?.month(),
             expiration_year: cardExpirationDateRef.current?.year(),
-            cvc: cardVerificationCodeRef.current,
           },
         });
 
         setToken(_token);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteToken = async () => {
+    try {
+      if (token?.id) {
+        const tokenID = token?.id;
+
+        await bt?.tokens.delete(token?.id);
+
+        setToken(undefined);
+
+        Alert.alert(
+          `Token Deleted`,
+          `Token with ID ${tokenID} has been deleted`,
+          [{ text: 'OK' }]
+        );
       }
     } catch (error) {
       console.error(error);
@@ -91,7 +137,8 @@ export const Collect = () => {
     cardNumberRef.current?.clear();
     cardVerificationCodeRef.current?.clear();
 
-    setToken({} as unknown as Token);
+    setToken(undefined);
+    setTokenizedData(undefined);
   };
 
   const disabled = useMemo(
@@ -143,7 +190,7 @@ export const Collect = () => {
             <Text
               style={disabled ? styles.buttonTextDisabled : styles.buttonText}
             >
-              {'Collect'}
+              {'Create token'}
             </Text>
           </Pressable>
 
@@ -151,22 +198,72 @@ export const Collect = () => {
             disabled={disabled}
             onPress={updateToken}
             style={{
-              marginTop: 12,
               ...(disabled ? styles.buttonDisabled : styles.button),
             }}
           >
             <Text
               style={disabled ? styles.buttonTextDisabled : styles.buttonText}
             >
-              {'Update'}
+              {'Update Token'}
             </Text>
           </Pressable>
+
+          <Pressable
+            disabled={disabled}
+            onPress={deleteToken}
+            style={{
+              ...(disabled ? styles.buttonDisabled : styles.button),
+            }}
+          >
+            <Text
+              style={disabled ? styles.buttonTextDisabled : styles.buttonText}
+            >
+              {'Delete Token'}
+            </Text>
+          </Pressable>
+
+          <Divider />
+
+          <Pressable
+            disabled={disabled}
+            onPress={createTokenWithTokenize}
+            style={{
+              ...(disabled ? styles.buttonDisabled : styles.button),
+            }}
+          >
+            <Text
+              style={disabled ? styles.buttonTextDisabled : styles.buttonText}
+            >
+              {'Tokenize Data'}
+            </Text>
+          </Pressable>
+
+          <Divider />
 
           <Pressable onPress={clearToken} style={styles.button}>
             <Text style={styles.buttonText}>{'Clear'}</Text>
           </Pressable>
 
-          <Text style={styles.text}>{JSON.stringify(token, undefined, 2)}</Text>
+          {token && (
+            <>
+              <Divider />
+              <Text style={styles.text}>TOKEN: </Text>
+
+              <Text style={styles.text}>
+                {JSON.stringify(token, undefined, 2)}
+              </Text>
+            </>
+          )}
+
+          {tokenizedData && (
+            <>
+              <Divider />
+              <Text style={styles.text}>TOKENIZED DATA: </Text>
+              <Text style={styles.text}>
+                {JSON.stringify(tokenizedData, undefined, 2)}
+              </Text>
+            </>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

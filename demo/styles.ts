@@ -51,6 +51,14 @@ export const styles = StyleSheet.create({
     height: 40,
     ...spacing,
   },
+  divider: {
+    ...buttonSpacing,
+    margin: 5,
+    borderBottomColor: '#d1d7ff26',
+    borderBottomWidth: 1,
+    width: '100%',
+    alignSelf: 'stretch',
+  },
   text: {
     color: '#fff',
     textAlign: 'center',
