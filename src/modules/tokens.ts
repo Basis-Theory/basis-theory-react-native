@@ -2,12 +2,17 @@ import type {
   CreateToken,
   UpdateToken,
   Token,
+  TokenizeData as _TokenizeData,
 } from '@basis-theory/basis-theory-js/types/models';
 import type {
   BasisTheory as BasisTheoryType,
   RequestOptions,
 } from '@basis-theory/basis-theory-js/types/sdk';
-import type { BTRef, InputBTRefWithDatepart } from '../BaseElementTypes';
+import type {
+  BTRef,
+  InputBTRefWithDatepart,
+  PrimitiveType,
+} from '../BaseElementTypes';
 import { _elementErrors } from '../ElementValues';
 import {
   replaceElementRefs,
@@ -21,8 +26,15 @@ export type CreateTokenWithBtRef = Omit<CreateToken, 'data'> & {
 };
 
 export type UpdateTokenWithBtRef = Omit<UpdateToken, 'data'> & {
-  data: Record<string, BTRef | InputBTRefWithDatepart | null | undefined>;
+  data: Record<
+    string,
+    BTRef | InputBTRefWithDatepart | string | null | undefined
+  >;
 };
+
+export type TokenizeData = _TokenizeData<
+  BTRef | InputBTRefWithDatepart | PrimitiveType
+>;
 
 export const Tokens = (bt: BasisTheoryType) => {
   const getTokenById = async <T>(id: string, apiKey?: string) => {
@@ -84,13 +96,39 @@ export const Tokens = (bt: BasisTheoryType) => {
 
       return token;
     } catch (error) {
-      await logger.log.error('Error while creating Token', error as Error);
+      await logger.log.error('Error while updating Token', error as Error);
+    }
+  };
+
+  const deleteToken = async (id: string) => {
+    try {
+      if (id) {
+        return await bt.tokens.delete(id);
+      }
+    } catch (error) {
+      await logger.log.error('Error while deleting Token', error as Error);
+    }
+  };
+
+  const tokenize = async (data: TokenizeData) => {
+    try {
+      if (data) {
+        const _token = replaceElementRefs<_TokenizeData>(data);
+
+        return await bt.tokenize(_token);
+      }
+    } catch (error) {
+      await logger.log.error('Error while running tokenize', error as Error);
     }
   };
 
   return {
+    /** @deprecated use `bt.tokens.retrieve` instead */
     getById: getTokenById,
+    retrieve: getTokenById,
     create,
     update,
+    delete: deleteToken,
+    tokenize,
   };
 };
