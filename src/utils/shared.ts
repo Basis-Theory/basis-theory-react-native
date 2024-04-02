@@ -22,7 +22,7 @@ const isBtRef = (val: unknown): val is BTRef =>
   isObject(val) && 'id' in val && 'format' in val;
 
 const isBtDateRef = (val: unknown): val is InputBTRefWithDatepart =>
-  Boolean((val as InputBTRefWithDatepart)?.datepart);
+  isObject(val) && 'datepart' in val;
 
 const isPrimitive = anyPass([isNil, isString, isBoolean, isNumber]);
 
