@@ -45,11 +45,14 @@ export const Tokens = (bt: BasisTheoryType) => {
 
       const token = replaceSensitiveData(_token) as Token<T>;
 
-      await logger.log.info('Token retrieved');
+      await logger.log.info(`Token retrieved ${id}`);
 
       return token;
     } catch (error) {
-      await logger.log.error('Error while retrieving Token', error as Error);
+      await logger.log.error(
+        `Error while retrieving Token ${id}`,
+        error as Error
+      );
     }
   };
 
@@ -68,7 +71,7 @@ export const Tokens = (bt: BasisTheoryType) => {
 
       const token = await bt.tokens.create(_token, requestOptions);
 
-      await logger.log.info('Token created');
+      await logger.log.info(`Token created: ${token.id}`);
 
       return token;
     } catch (error) {
@@ -103,7 +106,9 @@ export const Tokens = (bt: BasisTheoryType) => {
   const deleteToken = async (id: string) => {
     try {
       if (id) {
-        return await bt.tokens.delete(id);
+        await bt.tokens.delete(id);
+
+        await logger.log.info(`Token deleted: ${id}`);
       }
     } catch (error) {
       await logger.log.error('Error while deleting Token', error as Error);
