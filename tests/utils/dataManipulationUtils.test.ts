@@ -87,7 +87,7 @@ describe('replace element refs', () => {
         },
       },
       {
-        description: 'handles card number values in state',
+        description: 'handles missing card number values in state',
         stateValues: {
           date: '12/25',
         },
@@ -97,14 +97,12 @@ describe('replace element refs', () => {
         },
       },
       {
-        description: 'handles card number values in state',
+        description: 'handles undefined values in state',
         stateValues: {
-          date: '12/25',
+          date: undefined,
+          number: undefined,
         },
-        expectedData: {
-          expiration_month: '12',
-          expiration_year: '2025',
-        },
+        expectedData: {},
       },
     ];
 
@@ -124,6 +122,30 @@ describe('replace element refs', () => {
 
       expect(replaceElementRefs(tokenWithRef)).toEqual({
         data: expectedData,
+        id: 'tokenID',
+        type: 'card',
+      });
+    });
+
+    test('handles undefined element refs', () => {
+      //@ts-ignore
+      state._elementValues = {
+        date: '12/25',
+        number: '4242424242424242',
+      };
+
+      const tokenWithRef = {
+        id: 'tokenID',
+        type: 'card',
+        data: {
+          number: undefined,
+          expiration_month: undefined,
+          expiration_year: { id: 'date', datepart: 'year' },
+        },
+      };
+
+      expect(replaceElementRefs(tokenWithRef)).toEqual({
+        data: { expiration_year: '2025' },
         id: 'tokenID',
         type: 'card',
       });
