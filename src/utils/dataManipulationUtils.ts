@@ -35,7 +35,7 @@ const replaceSensitiveData = (val: unknown): unknown =>
 
 const replaceElementRefs = <T>(val: unknown): T =>
   cond([
-    // this one should always be evaluated first and ramda doesn't like _elementValues types when using recursion & identity
+    [isPrimitive, identity],
     [
       isBtDateRef,
       (val) => {
@@ -46,20 +46,23 @@ const replaceElementRefs = <T>(val: unknown): T =>
             ? value.split('/')[0]
             : `20${value.split('/')[1]}`;
         } else {
-          const err = new Error(
-            `Couldn't find value for element "${val.id}". Make sure the element is initialized correctly and that it contains a valid value.`
-          );
-
-          logger.log.error('Error while replacing element refs', err);
-
-          throw err;
+          return undefined;
         }
       },
     ],
-    [isBtRef, (val) => (_elementValues as Record<string, unknown>)[val.id]],
+    [
+      isBtRef,
+      (val) => {
+        const value = (_elementValues as Record<string, unknown>)[val.id];
+        if (!value) {
+          return undefined;
+        }
+
+        return value;
+      },
+    ],
     [Array.isArray, map(replaceElementRefs)],
     [isObject, mapObjIndexed(replaceElementRefs)],
-    [isPrimitive, identity],
   ])(val) as T;
 
 export { replaceElementRefs, replaceSensitiveData };
