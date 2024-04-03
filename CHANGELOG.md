@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.3.0...v1.3.1) (2024-04-03)
+
+
+### Bug Fixes
+
+* improves handling of falsy values  ([#51](https://github.com/Basis-Theory/basis-theory-react-native/issues/51)) ([a34de6f](https://github.com/Basis-Theory/basis-theory-react-native/commit/a34de6f19c011f7740cddca4c4e86a1310f6ddf5))
+
 # [1.3.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.2.2...v1.3.0) (2024-04-01)
 
 
