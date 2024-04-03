@@ -1,6 +1,6 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable no-console */
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Pressable,
@@ -8,6 +8,7 @@ import {
   ScrollView,
   StatusBar,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import type { BTRef, BTDateRef, ElementEvent } from '../src';
@@ -31,6 +32,9 @@ export const Collect = () => {
   const [tokenizedData, setTokenizedData] = useState<
     TokenizeData | undefined
   >();
+
+  const [tokenId, setTokenId] = useState('');
+
   const [elementsEvents, setElementsEvents] = useState<ElementEvents>({
     cardExpirationDate: undefined,
     cvc: undefined,
@@ -88,6 +92,8 @@ export const Collect = () => {
         },
       });
 
+      if (_token?.id) setTokenId(_token?.id);
+
       setToken(_token);
     } catch (error) {
       console.error(error);
@@ -96,8 +102,8 @@ export const Collect = () => {
 
   const updateToken = async () => {
     try {
-      if (token?.id) {
-        const _token = await bt?.tokens.update(token?.id, {
+      if (token?.id || tokenId) {
+        const _token = await bt?.tokens.update(token?.id || tokenId, {
           data: {
             number: cardNumberRef.current,
             expiration_month: cardExpirationDateRef.current?.month(),
@@ -114,18 +120,16 @@ export const Collect = () => {
 
   const deleteToken = async () => {
     try {
-      if (token?.id) {
-        const tokenID = token?.id;
-
-        await bt?.tokens.delete(token?.id);
-
-        setToken(undefined);
+      if (token?.id || tokenId) {
+        await bt?.tokens.delete(token?.id || tokenId);
 
         Alert.alert(
           `Token Deleted`,
-          `Token with ID ${tokenID} has been deleted`,
+          `Token with ID ${token?.id || tokenId} has been deleted`,
           [{ text: 'OK' }]
         );
+
+        setToken(undefined);
       }
     } catch (error) {
       console.error(error);
@@ -137,25 +141,24 @@ export const Collect = () => {
     cardNumberRef.current?.clear();
     cardVerificationCodeRef.current?.clear();
 
+    setTokenId('');
     setToken(undefined);
     setTokenizedData(undefined);
   };
-
-  const disabled = useMemo(
-    () =>
-      !(
-        elementsEvents.cardExpirationDate?.valid &&
-        elementsEvents.cardNumber?.valid &&
-        elementsEvents.cvc?.valid
-      ),
-    [elementsEvents]
-  );
 
   return (
     <SafeAreaView>
       <StatusBar />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View style={styles.viewContainer}>
+          <TextInput
+            placeholder="Token ID*"
+            style={styles.elements}
+            onChangeText={setTokenId}
+            placeholderTextColor="#99a0bf"
+            value={tokenId}
+          />
+
           <CardNumberElement
             btRef={cardNumberRef}
             onChange={updateElementsEvents('cardNumber')}
@@ -180,62 +183,42 @@ export const Collect = () => {
           />
 
           <Pressable
-            disabled={disabled}
             onPress={createToken}
             style={{
               marginTop: 24,
-              ...(disabled ? styles.buttonDisabled : styles.button),
+              ...styles.button,
             }}
           >
-            <Text
-              style={disabled ? styles.buttonTextDisabled : styles.buttonText}
-            >
-              {'Create token'}
-            </Text>
+            <Text style={styles.buttonText}>{'Create token'}</Text>
           </Pressable>
 
           <Pressable
-            disabled={disabled}
             onPress={updateToken}
             style={{
-              ...(disabled ? styles.buttonDisabled : styles.button),
+              ...styles.button,
             }}
           >
-            <Text
-              style={disabled ? styles.buttonTextDisabled : styles.buttonText}
-            >
-              {'Update Token'}
-            </Text>
+            <Text style={styles.buttonText}>{'Update Token'}</Text>
           </Pressable>
 
           <Pressable
-            disabled={disabled}
             onPress={deleteToken}
             style={{
-              ...(disabled ? styles.buttonDisabled : styles.button),
+              ...styles.button,
             }}
           >
-            <Text
-              style={disabled ? styles.buttonTextDisabled : styles.buttonText}
-            >
-              {'Delete Token'}
-            </Text>
+            <Text style={styles.buttonText}>{'Delete Token'}</Text>
           </Pressable>
 
           <Divider />
 
           <Pressable
-            disabled={disabled}
             onPress={createTokenWithTokenize}
             style={{
-              ...(disabled ? styles.buttonDisabled : styles.button),
+              ...styles.button,
             }}
           >
-            <Text
-              style={disabled ? styles.buttonTextDisabled : styles.buttonText}
-            >
-              {'Tokenize Data'}
-            </Text>
+            <Text style={styles.buttonText}>{'Tokenize Data'}</Text>
           </Pressable>
 
           <Divider />

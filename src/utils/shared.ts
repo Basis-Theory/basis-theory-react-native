@@ -19,12 +19,12 @@ const isToken = (val: unknown): val is Token =>
   !isNil((val as Token).data) && !isNil((val as Token).type);
 
 const isBtRef = (val: unknown): val is BTRef =>
-  !isNil(_elementValues[(val as BTRef).id]);
+  isObject(val) && 'id' in val && 'format' in val;
 
 const isBtDateRef = (val: unknown): val is InputBTRefWithDatepart =>
-  Boolean((val as InputBTRefWithDatepart).datepart);
+  isObject(val) && 'datepart' in val;
 
-const isPrimitive = anyPass([isString, isBoolean, isNumber, isNil]);
+const isPrimitive = anyPass([isNil, isString, isBoolean, isNumber]);
 
 /**
  * Removes all occurrences of the maximum value from an array of numbers.

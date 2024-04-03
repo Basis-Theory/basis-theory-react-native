@@ -70,23 +70,86 @@ describe('replace element refs', () => {
     expect(result).toStrictEqual(expectedResult);
   });
 
-  test('handles undefined values in state', () => {
-    //@ts-ignore
-    state._elementValues = {};
+  describe('Partial token updates', () => {
+    afterEach(() => {
+      //@ts-ignore
+      state._elementValues = {};
+    });
 
-    const tokenWithRef = {
-      id: 'tokenID',
-      type: 'card',
-      data: {
-        number: { id: '123', format: jest.fn },
-        expiration_month: { id: 'expirationMonth', datepart: 'month' },
-        expiration_year: { id: 'expirationYear', datepart: 'year' },
+    const testCases = [
+      {
+        description: 'handles undefined/empty date values in state',
+        stateValues: {
+          '123': '4242424242424242',
+        },
+        expectedData: {
+          number: '4242424242424242',
+        },
       },
-    };
+      {
+        description: 'handles missing card number values in state',
+        stateValues: {
+          date: '12/25',
+        },
+        expectedData: {
+          expiration_month: '12',
+          expiration_year: '2025',
+        },
+      },
+      {
+        description: 'handles undefined values in state',
+        stateValues: {
+          date: undefined,
+          number: undefined,
+        },
+        expectedData: {},
+      },
+    ];
 
-    expect(() => replaceElementRefs(tokenWithRef)).toThrow(
-      'Couldn\'t find value for element "expirationMonth". Make sure the element is initialized correctly and that it contains a valid value.'
-    );
+    test.each(testCases)('$description', ({ stateValues, expectedData }) => {
+      //@ts-ignore
+      state._elementValues = stateValues;
+
+      const tokenWithRef = {
+        id: 'tokenID',
+        type: 'card',
+        data: {
+          number: { id: '123', format: jest.fn },
+          expiration_month: { id: 'date', datepart: 'month' },
+          expiration_year: { id: 'date', datepart: 'year' },
+        },
+      };
+
+      expect(replaceElementRefs(tokenWithRef)).toEqual({
+        data: expectedData,
+        id: 'tokenID',
+        type: 'card',
+      });
+    });
+
+    test('handles undefined element refs', () => {
+      //@ts-ignore
+      state._elementValues = {
+        date: '12/25',
+        number: '4242424242424242',
+      };
+
+      const tokenWithRef = {
+        id: 'tokenID',
+        type: 'card',
+        data: {
+          number: undefined,
+          expiration_month: undefined,
+          expiration_year: { id: 'date', datepart: 'year' },
+        },
+      };
+
+      expect(replaceElementRefs(tokenWithRef)).toEqual({
+        data: { expiration_year: '2025' },
+        id: 'tokenID',
+        type: 'card',
+      });
+    });
   });
 });
 
