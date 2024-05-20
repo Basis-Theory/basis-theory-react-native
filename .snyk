@@ -1,10 +1,15 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
-  SNYK-JS-IP-6240864:
+  SNYK-JS-BRACES-6838727:
     - '*':
-        reason: not affected, waiting for https://github.com/react-native-community/cli/issues/2294 to be merged
-        expires: 2024-02-15T19:13:02.508Z
-        created: 2024-02-12T19:13:02.519Z
+        reason: A fix was pushed into the master branch but not yet published.
+        expires: 2024-05-25T16:40:02.519Z
+        created: 2024-05-20T16:40:02.519Z
+  SNYK-JS-MICROMATCH-6838728:
+    - '*':
+        reason: A fix was pushed into the master branch but not yet published.
+        expires: 2024-05-25T16:40:02.519Z
+        created: 2024-05-20T16:40:02.519Z
 version: v1.25.0
 patch: {}
