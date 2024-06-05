@@ -3,3 +3,9 @@ dist
 coverage
 .github
 CHANGELOG.md
+android
+ios
+**/.git
+**/.svn
+**/.hg
+**/node_modules

@@ -3,7 +3,7 @@ module.exports = {
   setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
   displayName: 'Jest',
   transformIgnorePatterns: [],
-  transform: {'\\.(js|jsx|ts|tsx)$': '@sucrase/jest-plugin'},
+  transform: { '\\.(js|jsx|ts|tsx)$': '@sucrase/jest-plugin' },
   coverageThreshold: {
     global: {
       statements: 80,

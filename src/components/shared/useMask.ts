@@ -37,7 +37,7 @@ const createCardMask = (cardNumber: string, card: CardMetadata) => {
 
   const lengthIndex = findIndex(
     (length) => length >= digitsOnly.length,
-    card.lengths,
+    card.lengths
   );
 
   // current length or next length if current mask is met and next length exists

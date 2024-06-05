@@ -17,7 +17,7 @@ const _BasisTheoryElements = async ({
 }: BasisTheoryInitOptionsWithoutElements & { apiKey: string }) => {
   const bt: BasisTheoryType = await new BasisTheory().init(
     apiKey,
-    apiBaseUrl ? { apiBaseUrl } : undefined,
+    apiBaseUrl ? { apiBaseUrl } : undefined
   );
 
   const proxy = Proxy(bt);
@@ -42,7 +42,7 @@ type UseBasisTheory = {
 
 const useBasisTheory = (
   apiKey: string,
-  options?: BasisTheoryInitOptionsWithoutElements,
+  options?: BasisTheoryInitOptionsWithoutElements
 ): UseBasisTheory => {
   const [state, setState] = useState<UseBasisTheory>({});
 
@@ -67,7 +67,7 @@ const useBasisTheory = (
         } catch (error) {
           await logger.log.error(
             'Error while initializing Elements',
-            error as Error,
+            error as Error
           );
 
           setState({

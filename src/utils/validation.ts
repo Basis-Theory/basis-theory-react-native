@@ -77,20 +77,20 @@ const _maskValidator = (mask: Mask = [], value: string) => {
 
   const matchMaskCharAtIndex = (
     maskChar: RegExp | string,
-    valChar: string,
+    valChar: string
   ): boolean =>
     isRegExp(maskChar)
       ? maskChar.test(valChar)
       : isString(maskChar) && maskChar === valChar;
 
   const isValid = zipWith(matchMaskCharAtIndex, mask, value.split('')).every(
-    Boolean,
+    Boolean
   );
 
   const isPotentiallyValid = zipWith(
     matchMaskCharAtIndex,
     mask.slice(0, value.length),
-    split('', value),
+    split('', value)
   ).every(Boolean);
 
   return {
@@ -101,7 +101,7 @@ const _maskValidator = (mask: Mask = [], value: string) => {
 
 const handleValidationResult = (
   isValid: boolean,
-  isPotentiallyValid: boolean,
+  isPotentiallyValid: boolean
 ) => {
   if (!isValid) return isPotentiallyValid ? 'incomplete' : 'invalid';
 
@@ -110,7 +110,7 @@ const handleValidationResult = (
 
 const runValidator = (
   fieldValue: string,
-  validatorFn: ValidatorFunction,
+  validatorFn: ValidatorFunction
 ): ValidationResult => {
   const { isValid: _isValid, isPotentiallyValid: _isPotentiallyValid } =
     validatorFn(fieldValue);
@@ -125,7 +125,7 @@ const cardNumberValidator = (cardNumber: string): ValidationResult =>
   runValidator(cardNumber, _cardNumberValidator);
 
 const cardExpirationDateValidator = (
-  expirationDate: string,
+  expirationDate: string
 ): ValidationResult => runValidator(expirationDate, _expirationDateValidator);
 
 const cardVerificationCodeValidator = (cvc: string): ValidationResult =>

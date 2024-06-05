@@ -1,10 +1,10 @@
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {MainScreen} from './demo/MainScreen';
-import {Collect} from './demo/Collect';
-import {Reveal} from './demo/Reveal';
-import type {ElementEvent} from './src';
+import { MainScreen } from './demo/MainScreen';
+import { Collect } from './demo/Collect';
+import { Reveal } from './demo/Reveal';
+import type { ElementEvent } from './src';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,7 +34,8 @@ const App = () => (
         headerTitleStyle: {
           fontWeight: 'bold',
         },
-      }}>
+      }}
+    >
       <Stack.Screen
         component={MainScreen}
         name="Basis Theory React Native SDK"
@@ -42,16 +43,16 @@ const App = () => (
       <Stack.Screen
         component={Collect}
         name="Collect"
-        options={{title: 'Collect Card Information'}}
+        options={{ title: 'Collect Card Information' }}
       />
       <Stack.Screen
         component={Reveal}
         name="Reveal"
-        options={{title: 'Reveal Card Information'}}
+        options={{ title: 'Reveal Card Information' }}
       />
     </Stack.Navigator>
   </NavigationContainer>
 );
 
-export type {RootStackParamList, ElementEvents};
+export type { RootStackParamList, ElementEvents };
 export default App;

@@ -15,7 +15,7 @@ export const Proxy = (bt: BasisTheoryType) => {
     }: Omit<ProxyRequestOptions, 'includeResponseHeaders'> & {
       method: keyof BasisTheory['proxy'];
     },
-    apiKey?: string,
+    apiKey?: string
   ): Promise<unknown> => {
     try {
       // eslint-disable-next-line no-param-reassign

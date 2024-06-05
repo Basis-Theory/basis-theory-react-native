@@ -12,7 +12,7 @@ const throwIfDuppedCardConfig = ifElse(
     //    telemetryLogger.logger.info(msg);
     throw new Error(msg);
   },
-  always(false),
+  always(false)
 );
 
 const groupByCreditCardType = groupBy((obj: CreditCardType) => obj['type']);
@@ -20,7 +20,7 @@ const groupByCreditCardType = groupBy((obj: CreditCardType) => obj['type']);
 const checkDuppedCards = compose(
   throwIfDuppedCardConfig,
   Object.values,
-  groupByCreditCardType,
+  groupByCreditCardType
 );
 
 export const useCustomBin = (cardTypes?: CreditCardType[]) => {
