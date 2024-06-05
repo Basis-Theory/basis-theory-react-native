@@ -27,5 +27,13 @@ module.exports = {
     'sort-keys': 'off',
     camelcase: ['error', { allow: ['expiration_year', 'expiration_month'] }],
   },
+  ignorePatterns: [
+    '**/*.cjs',
+    '**/*.mjs',
+    '**/*.js',
+    'dist',
+    '**/*.test.ts',
+    'jest.config.js',
+  ],
   root: true,
 };
