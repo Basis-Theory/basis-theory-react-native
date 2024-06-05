@@ -93,6 +93,5 @@
     "types-ramda": "0.29.4",
     "unset-value": "^2.0.1",
     "wrap-ansi": "7.0.0"
-  },
-  "packageManager": "yarn@3.6.4"
+  }
 }
