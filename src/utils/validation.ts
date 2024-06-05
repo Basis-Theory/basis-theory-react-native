@@ -140,4 +140,4 @@ export const _getValidationStrategy = (elementType: ElementType) =>
     [ElementType.EXPIRATION_DATE]: cardExpirationDateValidator,
     [ElementType.CARD_NUMBER]: cardNumberValidator,
     [ElementType.TEXT]: textMaskValidator,
-  }[elementType]);
+  })[elementType];

@@ -1,7 +1,6 @@
 import type { Token } from '@basis-theory/basis-theory-js/types/models';
 import { anyPass, equals, is, isEmpty, isNil, replace, type } from 'ramda';
 import type { BTRef, InputBTRefWithDatepart } from '../BaseElementTypes';
-import { _elementValues } from '../ElementValues';
 
 const isString = is(String);
 const isBoolean = is(Boolean);

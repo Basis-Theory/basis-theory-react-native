@@ -1,11 +1,8 @@
 import React from 'react';
 import type { StyleProp, TextStyle } from 'react-native';
 import MaskInput from 'react-native-mask-input';
-import type {
-  UseCardExpirationDateElementProps} from './CardExpirationDateElement.hook';
-import {
-  useCardExpirationDateElement
-} from './CardExpirationDateElement.hook';
+import type { UseCardExpirationDateElementProps } from './CardExpirationDateElement.hook';
+import { useCardExpirationDateElement } from './CardExpirationDateElement.hook';
 
 type CardExpirationDateProps = UseCardExpirationDateElementProps & {
   style: StyleProp<TextStyle>;

@@ -10,7 +10,6 @@ import {
   isBtDateRef,
   isString,
 } from './shared';
-import { logger } from './logging';
 
 const createBtInputRef = (value: PrimitiveType) => {
   if (isNil(value)) return null;

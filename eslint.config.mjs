@@ -1,4 +1,15 @@
-module.exports = {
+import { FlatCompat } from '@eslint/eslintrc';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const compat = new FlatCompat({
+  recommendedConfig: {},
+});
+
+export default compat.config({
   extends: [
     '@react-native',
     'eslint:recommended',
@@ -8,6 +19,12 @@ module.exports = {
     'plugin:react/recommended',
   ],
   plugins: ['eslint-plugin-prettier'],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    project: './tsconfig.json',
+    tsconfigRootDir: __dirname,
+  },
   rules: {
     '@typescript-eslint/dot-notation': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -21,11 +38,20 @@ module.exports = {
     '@typescript-eslint/restrict-plus-operands': 'off',
     'consistent-return': 'off',
     'import/order': 'off',
+    'react-hooks/exhaustive-deps': 'warn',
     'new-cap': 'off',
     'no-use-before-define': 'off',
     'no-warning-comments': 'warn',
     'sort-keys': 'off',
     camelcase: ['error', { allow: ['expiration_year', 'expiration_month'] }],
   },
+  ignorePatterns: [
+    '**/*.cjs',
+    '**/*.mjs',
+    '**/*.js',
+    'dist',
+    '**/*.test.ts',
+    'jest.config.js',
+  ],
   root: true,
-};
+});
