@@ -7,7 +7,7 @@ export const logger = (() => {
     message: string,
     level: string,
     error?: Error,
-    attributes: AttributeMap = {}
+    attributes: AttributeMap = {},
   ) => {
     const payload = {
       application: 'React Native Elements',
@@ -27,7 +27,7 @@ export const logger = (() => {
         headers: {
           'Content-Type': 'application/json',
         },
-      }
+      },
     );
 
     try {
@@ -48,7 +48,7 @@ export const logger = (() => {
       error: async (
         message: string,
         error?: Error,
-        attributes?: AttributeMap
+        attributes?: AttributeMap,
       ) => log(message, 'error', error, attributes),
       info: async (message: string, attributes?: AttributeMap) =>
         log(message, 'info', undefined, attributes),

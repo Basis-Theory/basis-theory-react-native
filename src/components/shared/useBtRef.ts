@@ -73,11 +73,11 @@ const updateRef = (btRef: ForwardedRef<BTRef>, newBtRef: BTRef) => {
 };
 
 const isInputBtDateRef = (
-  ref: InputBtDateRefReveal | InputBTRef
+  ref: InputBtDateRefReveal | InputBTRef,
 ): ref is InputBtDateRefReveal =>
   Boolean(
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    (ref as InputBtDateRefReveal).month && (ref as InputBtDateRefReveal).year
+    (ref as InputBtDateRefReveal).month && (ref as InputBtDateRefReveal).year,
   );
 
 const valueFormatter = (ref: InputBtDateRefReveal | InputBTRef | undefined) => {

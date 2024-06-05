@@ -15,6 +15,6 @@ export const useBtRefUnmount = ({ btRef }: UseBtRefUnmountProps) => {
       // eslint-disable-next-line no-param-reassign,
       btRef = null;
     },
-    []
+    [],
   );
 };

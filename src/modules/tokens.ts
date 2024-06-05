@@ -51,18 +51,18 @@ export const Tokens = (bt: BasisTheoryType) => {
     } catch (error) {
       await logger.log.error(
         `Error while retrieving Token ${id}`,
-        error as Error
+        error as Error,
       );
     }
   };
 
   const create = async (
     tokenWithRef: CreateTokenWithBtRef,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ) => {
     if (!isNilOrEmpty(_elementErrors)) {
       throw new Error(
-        'Unable to create token. Payload contains invalid values. Review elements events for more details.'
+        'Unable to create token. Payload contains invalid values. Review elements events for more details.',
       );
     }
 
@@ -82,11 +82,11 @@ export const Tokens = (bt: BasisTheoryType) => {
   const update = async (
     tokenId: string,
     tokenWithRef: UpdateTokenWithBtRef,
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ) => {
     if (!isNilOrEmpty(_elementErrors)) {
       throw new Error(
-        'Unable to create token. Payload contains invalid values. Review elements events for more details.'
+        'Unable to create token. Payload contains invalid values. Review elements events for more details.',
       );
     }
 
