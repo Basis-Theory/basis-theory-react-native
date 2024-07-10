@@ -1,5 +1,5 @@
 import type { ForwardedRef } from 'react';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
 import {
@@ -18,13 +18,13 @@ type UseCardVerificationCodeElementProps = {
   onChange?: EventConsumer;
 };
 
-const id = uuid.v4().toString();
-
 export const useCardVerificationCodeElement = ({
   btRef,
   cvcLength = 3,
   onChange,
 }: UseCardVerificationCodeElementProps) => {
+  const id = useId();
+
   const type = ElementType.CVC;
 
   const elementRef = useRef<TextInput>(null);

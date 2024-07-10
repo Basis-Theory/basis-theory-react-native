@@ -1,5 +1,5 @@
 import type { ForwardedRef } from 'react';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
 import type { BTDateRef } from '../BaseElementTypes';
@@ -18,12 +18,12 @@ type UseCardExpirationDateElementProps = {
   onChange?: EventConsumer;
 };
 
-const id = uuid.v4().toString();
-
 const useCardExpirationDateElement = ({
   btRef,
   onChange,
 }: UseCardExpirationDateElementProps) => {
+  const id = useId();
+
   const type = ElementType.EXPIRATION_DATE;
 
   const elementRef = useRef<TextInput>(null);
