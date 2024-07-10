@@ -6,7 +6,12 @@ import { VISA, MASTERCARD } from '@basis-theory/basis-theory-js/types/elements';
 import 'react-native';
 import React from 'react';
 
-import { render, fireEvent, screen } from '@testing-library/react-native';
+import {
+  render,
+  userEvent,
+  fireEvent,
+  screen,
+} from '@testing-library/react-native';
 import { CardNumberElement } from '../../src';
 import cardValidator from 'card-validator';
 
@@ -251,7 +256,8 @@ describe('CardNumberElement', () => {
         },
         '4242 4242 4242 424242',
       ],
-    ])('input: %s', (_, inputValue, expectedEvent, expectedValue) => {
+    ])('input: %s', async (_, inputValue, expectedEvent, expectedValue) => {
+      const user = userEvent.setup();
       const onChange = jest.fn();
 
       render(
@@ -265,7 +271,7 @@ describe('CardNumberElement', () => {
 
       const el = screen.getByPlaceholderText('Card Number');
 
-      fireEvent.changeText(el, inputValue);
+      await user.type(el, inputValue);
 
       expect(el.props.value).toStrictEqual(expectedValue);
       expect(onChange).toHaveBeenCalledWith(expectedEvent);
