@@ -11,6 +11,7 @@ import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
 import { useMask } from './shared/useMask';
+import { useCleanupStateBeforeUnmount } from './shared/useCleanStateOnUnmount';
 
 type UseCardVerificationCodeElementProps = {
   btRef?: ForwardedRef<BTRef>;
@@ -29,6 +30,8 @@ export const useCardVerificationCodeElement = ({
 
   const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
+
+  useCleanupStateBeforeUnmount(id);
 
   useBtRefUnmount({ btRef });
 

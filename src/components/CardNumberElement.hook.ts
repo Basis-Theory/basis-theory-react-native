@@ -13,6 +13,7 @@ import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useMask } from './shared/useMask';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
 import { useCustomBin } from './useCustomBin.hook';
+import { useCleanupStateBeforeUnmount } from './shared/useCleanStateOnUnmount';
 
 type UseCardNumberElementProps = {
   btRef?: ForwardedRef<BTRef>;
@@ -30,6 +31,8 @@ export const useCardNumberElement = ({
   const type = ElementType.CARD_NUMBER;
   const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
+
+  useCleanupStateBeforeUnmount(id);
 
   useCustomBin(cardTypes);
 

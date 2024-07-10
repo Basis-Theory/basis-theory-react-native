@@ -12,6 +12,7 @@ import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
 import { useMask } from './shared/useMask';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
+import { useCleanupStateBeforeUnmount } from './shared/useCleanStateOnUnmount';
 
 type UseCardExpirationDateElementProps = {
   btRef?: ForwardedRef<BTDateRef | BTRef>;
@@ -28,6 +29,8 @@ const useCardExpirationDateElement = ({
 
   const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
+
+  useCleanupStateBeforeUnmount(id);
 
   useBtRefUnmount({ btRef });
 

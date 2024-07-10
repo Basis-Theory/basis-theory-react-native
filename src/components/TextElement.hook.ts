@@ -12,6 +12,7 @@ import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
 import type { TransformType } from './shared/useTransform';
+import { useCleanupStateBeforeUnmount } from './shared/useCleanStateOnUnmount';
 
 type UseTextElementProps = {
   btRef?: ForwardedRef<BTRef>;
@@ -32,6 +33,8 @@ export const useTextElement = ({
   const [elementValue, setElementValue] = useState<string>('');
 
   useBtRefUnmount({ btRef });
+
+  useCleanupStateBeforeUnmount(id);
 
   useBtRef({
     btRef,
