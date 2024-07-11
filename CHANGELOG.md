@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.3.7...v1.4.0) (2024-07-11)
+
+
+### Features
+
+* adds support for secureTextEntry in text element ([#63](https://github.com/Basis-Theory/basis-theory-react-native/issues/63)) ([5a93321](https://github.com/Basis-Theory/basis-theory-react-native/commit/5a93321d6f1aef80314934f0fdf3c6743d84008c))
+
 ## [1.3.7](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.3.6...v1.3.7) (2024-07-08)
 
 ## [1.3.6](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.3.5...v1.3.6) (2024-06-25)
