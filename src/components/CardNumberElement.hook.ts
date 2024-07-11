@@ -1,6 +1,6 @@
 import type { CreditCardType } from '@basis-theory/basis-theory-js/types/elements';
 import type { ForwardedRef } from 'react';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
 import {
@@ -13,6 +13,7 @@ import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useMask } from './shared/useMask';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
 import { useCustomBin } from './useCustomBin.hook';
+import { useCleanupStateBeforeUnmount } from './shared/useCleanStateOnUnmount';
 
 type UseCardNumberElementProps = {
   btRef?: ForwardedRef<BTRef>;
@@ -20,16 +21,18 @@ type UseCardNumberElementProps = {
   cardTypes?: CreditCardType[];
 };
 
-const id = uuid.v4().toString();
-
 export const useCardNumberElement = ({
   btRef,
   onChange,
   cardTypes,
 }: UseCardNumberElementProps) => {
+  const id = useId();
+
   const type = ElementType.CARD_NUMBER;
   const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
+
+  useCleanupStateBeforeUnmount(id);
 
   useCustomBin(cardTypes);
 

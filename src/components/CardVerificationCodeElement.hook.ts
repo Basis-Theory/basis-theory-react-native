@@ -1,5 +1,5 @@
 import type { ForwardedRef } from 'react';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
 import {
@@ -11,6 +11,7 @@ import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
 import { useMask } from './shared/useMask';
+import { useCleanupStateBeforeUnmount } from './shared/useCleanStateOnUnmount';
 
 type UseCardVerificationCodeElementProps = {
   btRef?: ForwardedRef<BTRef>;
@@ -18,17 +19,19 @@ type UseCardVerificationCodeElementProps = {
   onChange?: EventConsumer;
 };
 
-const id = uuid.v4().toString();
-
 export const useCardVerificationCodeElement = ({
   btRef,
   cvcLength = 3,
   onChange,
 }: UseCardVerificationCodeElementProps) => {
+  const id = useId();
+
   const type = ElementType.CVC;
 
   const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
+
+  useCleanupStateBeforeUnmount(id);
 
   useBtRefUnmount({ btRef });
 

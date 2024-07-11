@@ -1,5 +1,5 @@
 import type { ForwardedRef } from 'react';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
 import type { BTDateRef } from '../BaseElementTypes';
@@ -12,22 +12,25 @@ import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
 import { useMask } from './shared/useMask';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
+import { useCleanupStateBeforeUnmount } from './shared/useCleanStateOnUnmount';
 
 type UseCardExpirationDateElementProps = {
   btRef?: ForwardedRef<BTDateRef | BTRef>;
   onChange?: EventConsumer;
 };
 
-const id = uuid.v4().toString();
-
 const useCardExpirationDateElement = ({
   btRef,
   onChange,
 }: UseCardExpirationDateElementProps) => {
+  const id = useId();
+
   const type = ElementType.EXPIRATION_DATE;
 
   const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
+
+  useCleanupStateBeforeUnmount(id);
 
   useBtRefUnmount({ btRef });
 

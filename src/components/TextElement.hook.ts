@@ -1,5 +1,5 @@
 import type { ForwardedRef } from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import uuid from 'react-native-uuid';
 import {
@@ -12,6 +12,7 @@ import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
 import { useUserEventHandlers } from './shared/useUserEventHandlers';
 import type { TransformType } from './shared/useTransform';
+import { useCleanupStateBeforeUnmount } from './shared/useCleanStateOnUnmount';
 
 type UseTextElementProps = {
   btRef?: ForwardedRef<BTRef>;
@@ -20,18 +21,20 @@ type UseTextElementProps = {
   transform?: TransformType;
 };
 
-const id = uuid.v4().toString();
-
 export const useTextElement = ({
   btRef,
   mask,
   onChange,
   transform,
 }: UseTextElementProps) => {
+  const id = useId();
+
   const elementRef = useRef<TextInput>(null);
   const [elementValue, setElementValue] = useState<string>('');
 
   useBtRefUnmount({ btRef });
+
+  useCleanupStateBeforeUnmount(id);
 
   useBtRef({
     btRef,

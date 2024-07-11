@@ -9,6 +9,7 @@ type TextElementProps = UseTextElementProps & {
   editable?: boolean;
   placeholder?: string;
   placeholderTextColor?: string;
+  secureTextEntry?: boolean;
 };
 
 export const TextElement = ({
@@ -18,6 +19,7 @@ export const TextElement = ({
   onChange,
   placeholder,
   placeholderTextColor,
+  secureTextEntry,
   style,
 }: TextElementProps) => {
   const { elementRef, elementValue, _onChange } = useTextElement({
@@ -35,6 +37,7 @@ export const TextElement = ({
       placeholderFillCharacter=""
       placeholderTextColor={placeholderTextColor}
       ref={elementRef}
+      secureTextEntry={secureTextEntry}
       style={style}
       value={elementValue}
     />
