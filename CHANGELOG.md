@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.4.0...v1.5.0) (2024-07-16)
+
+
+### Features
+
+* adds new props to text element ([#64](https://github.com/Basis-Theory/basis-theory-react-native/issues/64)) ([1eb941a](https://github.com/Basis-Theory/basis-theory-react-native/commit/1eb941a3d8a5eed37d05f994ec1bfaf996a326fb))
+
 # [1.4.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.3.7...v1.4.0) (2024-07-11)
 
 
