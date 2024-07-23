@@ -46,7 +46,7 @@ jobs:
       - name: Install deps (with cache)
         uses: bahmutov/npm-install@v1
         with:
-          install-command: yarn --frozen-lockfile --no-progress --ignore-scripts
+          install-command: yarn --immutable --no-progress --ignore-scripts
 
       - name: Build
         run: make build
