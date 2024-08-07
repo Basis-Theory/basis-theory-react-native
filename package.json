@@ -31,10 +31,10 @@
     "@babel/preset-env": "^7.25.3",
     "@babel/runtime": "^7.25.0",
     "@eslint/eslintrc": "^3.1.0",
-    "@react-native/babel-preset": "0.75.0-rc.6",
-    "@react-native/eslint-config": "0.75.0-rc.6",
-    "@react-native/metro-config": "0.75.0-rc.6",
-    "@react-native/typescript-config": "0.75.0-rc.6",
+    "@react-native/babel-preset": "^0.74.87",
+    "@react-native/eslint-config": "^0.74.87",
+    "@react-native/metro-config": "^0.74.87",
+    "@react-native/typescript-config": "^0.74.87",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.0",
     "@semantic-release/exec": "^6.0.3",
@@ -86,7 +86,6 @@
     "tag": "latest"
   },
   "resolutions": {
-    "@babel/traverse": "7.23.2",
     "@typescript-eslint/eslint-plugin": "6.21.0",
     "@typescript-eslint/parser": "6.21.0",
     "types-ramda": "0.29.4",
