@@ -65,8 +65,8 @@ export const useElementEvent = ({
     const valid = !empty && !errors;
 
     const maskSatisfied = mask
-      ? metadata?.lengths?.includes(extractDigits(value)?.length ?? 0) ??
-        mask.length === value.length
+      ? (metadata?.lengths?.includes(extractDigits(value)?.length ?? 0) ??
+        mask.length === value.length)
       : true;
 
     const complete = !errors && maskSatisfied;

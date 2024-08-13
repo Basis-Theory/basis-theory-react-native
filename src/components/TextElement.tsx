@@ -1,5 +1,5 @@
 import React from 'react';
-import type { StyleProp, TextStyle, TextInputProps } from 'react-native';
+import type { TextInputProps } from 'react-native';
 import type { UseTextElementProps } from './TextElement.hook';
 import { useTextElement } from './TextElement.hook';
 import MaskInput from 'react-native-mask-input';

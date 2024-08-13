@@ -2,7 +2,6 @@ import type { CreditCardType } from '@basis-theory/basis-theory-js/types/element
 import type { ForwardedRef } from 'react';
 import { useId, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
-import uuid from 'react-native-uuid';
 import {
   ElementType,
   type BTRef,
