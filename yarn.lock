@@ -2054,18 +2054,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@basis-theory/basis-theory-js@npm:^4.7.0":
-  version: 4.7.0
-  resolution: "@basis-theory/basis-theory-js@npm:4.7.0"
+"@basis-theory/basis-theory-js@npm:^4.7.1":
+  version: 4.7.1
+  resolution: "@basis-theory/basis-theory-js@npm:4.7.1"
   dependencies:
-    axios: ^1.6.4
+    axios: ^1.7.4
     camelcase-keys: ^6.2.2
     csstype: ^3.0.11
     os: ^0.1.2
     os-browserify: ^0.3.0
     snake-case: ^3.0.4
     snakecase-keys: ^3.2.1
-  checksum: 5c57b7736d3ba876ba0e5921d7343e390a2a39b44971fe5f3455f4a8517329e332fbcd24dee9f4d544448db42efc65b542402253b57b2fc1df8a34a27dcbb160
+  checksum: 28fb471d5a24a1e5bd745a12327a0478a3222cb22c474336fa2a4fdf18c28e607ed498052f637e2cd2f5dcc029b6091aa9e576cf793076cf7af51c045eef9c1c
   languageName: node
   linkType: hard
 
@@ -2077,7 +2077,7 @@ __metadata:
     "@babel/plugin-transform-private-methods": ^7.24.7
     "@babel/preset-env": ^7.25.3
     "@babel/runtime": ^7.25.0
-    "@basis-theory/basis-theory-js": ^4.7.0
+    "@basis-theory/basis-theory-js": ^4.7.1
     "@eslint/eslintrc": ^3.1.0
     "@react-native/babel-preset": ^0.74.87
     "@react-native/eslint-config": ^0.74.87
@@ -4641,14 +4641,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.4":
-  version: 1.7.2
-  resolution: "axios@npm:1.7.2"
+"axios@npm:^1.7.4":
+  version: 1.7.4
+  resolution: "axios@npm:1.7.4"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: e457e2b0ab748504621f6fa6609074ac08c824bf0881592209dfa15098ece7e88495300e02cd22ba50b3468fd712fe687e629dcb03d6a3f6a51989727405aedf
+  checksum: 0c17039a9acfe6a566fca8431ba5c1b455c83d30ea6157fec68a6722878fcd30f3bd32d172f6bee0c51fe75ca98e6414ddcd968a87b5606b573731629440bfaf
   languageName: node
   linkType: hard
 
