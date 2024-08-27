@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.5.2...v1.5.3) (2024-08-27)
+
+
+### Bug Fixes
+
+* relax react version ([#69](https://github.com/Basis-Theory/basis-theory-react-native/issues/69)) ([5c0102b](https://github.com/Basis-Theory/basis-theory-react-native/commit/5c0102bdb3b03da0c26caa558bd603ebc17b7343))
+
 ## [1.5.2](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.5.1...v1.5.2) (2024-08-07)
 
 
