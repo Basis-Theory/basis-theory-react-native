@@ -1,24 +1,28 @@
 import React from 'react';
-import type { StyleProp, TextStyle } from 'react-native';
+import type { StyleProp, TextStyle, TextInputProps } from 'react-native';
 import MaskInput from 'react-native-mask-input';
 import type { UseCardNumberElementProps } from './CardNumberElement.hook';
 import { useCardNumberElement } from './CardNumberElement.hook';
 
-type CardNumberProps = UseCardNumberElementProps & {
-  style?: StyleProp<TextStyle>;
-  editable?: boolean;
-  placeholder?: string;
-  placeholderTextColor?: string;
-};
+type TextInputSupportedProps =
+  | 'editable'
+  | 'keyboardType'
+  | 'placeholder'
+  | 'placeholderTextColor'
+  | 'style';
+
+type CardNumberProps = UseCardNumberElementProps &
+  Pick<TextInputProps, TextInputSupportedProps>;
 
 export const CardNumberElement = ({
   btRef,
-  style,
+  cardTypes,
   editable,
+  keyboardType,
+  onChange,
   placeholder,
   placeholderTextColor,
-  onChange,
-  cardTypes,
+  style,
 }: CardNumberProps) => {
   const { elementRef, _onChange, elementValue, mask } = useCardNumberElement({
     btRef,
@@ -29,6 +33,7 @@ export const CardNumberElement = ({
   return (
     <MaskInput
       editable={editable}
+      keyboardType={keyboardType}
       mask={mask}
       onChangeText={_onChange}
       placeholder={placeholder}

@@ -1,23 +1,27 @@
 import React from 'react';
-import type { StyleProp, TextStyle } from 'react-native';
+import type { StyleProp, TextStyle, TextInputProps } from 'react-native';
 import MaskInput from 'react-native-mask-input';
 import type { UseCardExpirationDateElementProps } from './CardExpirationDateElement.hook';
 import { useCardExpirationDateElement } from './CardExpirationDateElement.hook';
 
-type CardExpirationDateProps = UseCardExpirationDateElementProps & {
-  style: StyleProp<TextStyle>;
-  editable?: boolean;
-  placeholder?: string;
-  placeholderTextColor?: string;
-};
+type TextInputSupportedProps =
+  | 'editable'
+  | 'keyboardType'
+  | 'placeholder'
+  | 'placeholderTextColor'
+  | 'style';
+
+type CardExpirationDateProps = UseCardExpirationDateElementProps &
+  Pick<TextInputProps, TextInputSupportedProps>;
 
 export const CardExpirationDateElement = ({
   btRef,
-  style,
   editable,
+  keyboardType,
+  onChange,
   placeholder,
   placeholderTextColor,
-  onChange,
+  style,
 }: CardExpirationDateProps) => {
   const { elementRef, _onChange, elementValue, mask } =
     useCardExpirationDateElement({
@@ -28,6 +32,7 @@ export const CardExpirationDateElement = ({
   return (
     <MaskInput
       editable={editable}
+      keyboardType={keyboardType}
       mask={mask}
       onChangeText={_onChange}
       placeholder={placeholder}
