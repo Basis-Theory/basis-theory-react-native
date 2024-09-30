@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.5.3...v1.6.0) (2024-09-30)
+
+
+### Features
+
+* adds keyboard type to card* elements ([#70](https://github.com/Basis-Theory/basis-theory-react-native/issues/70)) ([c58636b](https://github.com/Basis-Theory/basis-theory-react-native/commit/c58636b8d7fb98ad5061fc35c97c21650cd3ea88))
+
 ## [1.5.3](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.5.2...v1.5.3) (2024-08-27)
 
 
