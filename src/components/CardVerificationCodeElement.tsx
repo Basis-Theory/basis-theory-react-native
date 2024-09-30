@@ -1,24 +1,28 @@
 import React from 'react';
-import { type StyleProp, type TextStyle } from 'react-native';
+import { type TextInputProps } from 'react-native';
 import MaskInput from 'react-native-mask-input';
 import type { UseCardVerificationCodeElementProps } from './CardVerificationCodeElement.hook';
 import { useCardVerificationCodeElement } from './CardVerificationCodeElement.hook';
 
-type CardVerificationCodeProps = UseCardVerificationCodeElementProps & {
-  style: StyleProp<TextStyle>;
-  editable?: boolean;
-  placeholder?: string;
-  placeholderTextColor?: string;
-};
+type TextInputSupportedProps =
+  | 'editable'
+  | 'keyboardType'
+  | 'placeholder'
+  | 'placeholderTextColor'
+  | 'style';
+
+type CardVerificationCodeProps = UseCardVerificationCodeElementProps &
+  Pick<TextInputProps, TextInputSupportedProps>;
 
 export const CardVerificationCodeElement = ({
   btRef,
-  style,
-  editable,
-  placeholder,
   cvcLength,
+  editable,
+  keyboardType,
   onChange,
+  placeholder,
   placeholderTextColor,
+  style,
 }: CardVerificationCodeProps) => {
   const { elementRef, elementValue, mask, _onChange } =
     useCardVerificationCodeElement({
@@ -30,6 +34,7 @@ export const CardVerificationCodeElement = ({
   return (
     <MaskInput
       editable={editable}
+      keyboardType={keyboardType}
       mask={mask}
       onChangeText={_onChange}
       placeholder={placeholder}

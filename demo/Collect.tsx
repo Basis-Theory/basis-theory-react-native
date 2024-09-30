@@ -161,6 +161,7 @@ export const Collect = () => {
 
           <CardNumberElement
             btRef={cardNumberRef}
+            keyboardType="numeric"
             onChange={updateElementsEvents('cardNumber')}
             placeholder="Card Number"
             placeholderTextColor="#99a0bf"
@@ -168,6 +169,7 @@ export const Collect = () => {
           />
           <CardExpirationDateElement
             btRef={cardExpirationDateRef}
+            keyboardType="numeric"
             onChange={updateElementsEvents('cardExpirationDate')}
             placeholder="Card Expiration Date"
             placeholderTextColor="#99a0bf"
@@ -176,6 +178,7 @@ export const Collect = () => {
           <CardVerificationCodeElement
             btRef={cardVerificationCodeRef}
             cvcLength={3}
+            keyboardType="numeric"
             onChange={updateElementsEvents('cvc')}
             placeholder="CVC"
             placeholderTextColor="#99a0bf"
