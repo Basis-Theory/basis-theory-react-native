@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  type StyleProp,
-  type TextStyle,
-  type TextInputProps,
-} from 'react-native';
+import { type TextInputProps } from 'react-native';
 import MaskInput from 'react-native-mask-input';
 import type { UseCardVerificationCodeElementProps } from './CardVerificationCodeElement.hook';
 import { useCardVerificationCodeElement } from './CardVerificationCodeElement.hook';
