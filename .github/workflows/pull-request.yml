@@ -39,7 +39,7 @@ jobs:
         os: [ubuntu-latest]
     env:
       CI: 1
-      NPM_TOKEN: ${{ secrets.NPM_RELEASE_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_RO_TOKEN }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
