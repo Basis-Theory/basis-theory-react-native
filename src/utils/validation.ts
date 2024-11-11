@@ -18,9 +18,24 @@ type ValidatorFunction = (value: string) => ValidatorResult;
 
 const _cardCvvValidator = partial(flip(cvv), [[3, 4]]);
 
-const _cardNumberValidator = (value: string) => {
+interface CardNumberValidatorOptions {
+  skipLuhnValidation?: boolean;
+}
+
+interface TextValidatorOptions {
+  mask?: Mask;
+}
+
+export type ValidatorOptions = CardNumberValidatorOptions &
+  TextValidatorOptions;
+
+const _cardNumberValidator = (
+  options: CardNumberValidatorOptions = {},
+  value: string
+) => {
   const { isValid, isPotentiallyValid, card } = number(value, {
     luhnValidateUnionPay: true,
+    skipLuhnValidation: options?.skipLuhnValidation ?? false,
   });
 
   const brandsWithMultipleCardLenghts = [
@@ -61,8 +76,9 @@ const _cardNumberValidator = (value: string) => {
 };
 const _expirationDateValidator = expirationDate;
 
-// eslint-disable-next-line @typescript-eslint/default-param-last
-const _maskValidator = (mask: Mask = [], value: string) => {
+const _maskValidator = (options: ValidatorOptions = {}, value: string) => {
+  const mask = options.mask ?? [];
+
   /**
    * Combines two arrays element-wise using a specified function.
    *
@@ -121,8 +137,11 @@ const runValidator = (
   return handleValidationResult(isValid, isPotentiallyValid);
 };
 
-const cardNumberValidator = (cardNumber: string): ValidationResult =>
-  runValidator(cardNumber, _cardNumberValidator);
+const cardNumberValidator = (
+  cardNumber: string,
+  validatorOptions?: ValidatorOptions
+): ValidationResult =>
+  runValidator(cardNumber, partial(_cardNumberValidator, [validatorOptions]));
 
 const cardExpirationDateValidator = (
   expirationDate: string
@@ -131,8 +150,11 @@ const cardExpirationDateValidator = (
 const cardVerificationCodeValidator = (cvc: string): ValidationResult =>
   runValidator(cvc, _cardCvvValidator);
 
-const textMaskValidator = (value: string, mask?: Mask): ValidationResult =>
-  runValidator(value, partial(_maskValidator, [mask]));
+const textMaskValidator = (
+  value: string,
+  validatorOptions?: ValidatorOptions
+): ValidationResult =>
+  runValidator(value, partial(_maskValidator, [validatorOptions]));
 
 export const _getValidationStrategy = (elementType: ElementType) =>
   ({

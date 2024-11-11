@@ -4,13 +4,14 @@ import { useElementEvent } from './useElementEvent';
 import type { ElementType, EventConsumer, Mask } from '../../BaseElementTypes';
 import type { TransformType } from './useTransform';
 import { useTransform } from './useTransform';
+import { ValidatorOptions } from '../../utils/validation';
 
 type UseUserEventHandlers = {
   setElementValue: Dispatch<SetStateAction<string>>;
   element: {
     id: string;
     type: ElementType;
-    mask?: Mask;
+    validatorOptions?: ValidatorOptions;
   };
   onChange?: EventConsumer;
   transform?: TransformType;

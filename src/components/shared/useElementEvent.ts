@@ -6,17 +6,18 @@ import { useMemo } from 'react';
 import { useCardMetadata } from './useCardMetadata';
 import { extractDigits, isNilOrEmpty } from '../../utils/shared';
 import { _elementErrors } from '../../ElementValues';
+import { ValidatorOptions } from '../../utils/validation';
 
 type UseElementEventProps = {
   type: ElementType;
   id: string;
-  mask?: Mask;
+  validatorOptions?: ValidatorOptions;
 };
 
 export const useElementEvent = ({
   type,
   id,
-  mask,
+  validatorOptions,
 }: UseElementEventProps): CreateEvent => {
   const { getValidationStrategy } = useElementValidation();
   const { getMetadataFromCardNumber: _getMetadataFromCardNumber } =
@@ -25,7 +26,7 @@ export const useElementEvent = ({
   const validator = useMemo(() => getValidationStrategy(type), [type]);
 
   const validate = (value: string) => {
-    const error = validator(value, mask);
+    const error = validator(value, validatorOptions);
 
     if (error && isNilOrEmpty(_elementErrors[id])) _elementErrors[id] = error;
 
@@ -64,9 +65,9 @@ export const useElementEvent = ({
     const errors = validate(value);
     const valid = !empty && !errors;
 
-    const maskSatisfied = mask
+    const maskSatisfied = validatorOptions?.mask
       ? (metadata?.lengths?.includes(extractDigits(value)?.length ?? 0) ??
-        mask.length === value.length)
+        validatorOptions?.mask.length === value.length)
       : true;
 
     const complete = !errors && maskSatisfied;

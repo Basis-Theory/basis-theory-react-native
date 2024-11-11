@@ -47,7 +47,7 @@ const useCardExpirationDateElement = ({
     setElementValue,
     element: {
       id,
-      mask,
+      validatorOptions: { mask },
       type,
     },
     onChange,

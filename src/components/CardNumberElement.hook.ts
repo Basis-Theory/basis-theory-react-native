@@ -18,12 +18,14 @@ type UseCardNumberElementProps = {
   btRef?: ForwardedRef<BTRef>;
   onChange?: EventConsumer;
   cardTypes?: CreditCardType[];
+  skipLuhnValidation?: boolean;
 };
 
 export const useCardNumberElement = ({
   btRef,
   onChange,
   cardTypes,
+  skipLuhnValidation,
 }: UseCardNumberElementProps) => {
   const id = useId();
 
@@ -54,7 +56,7 @@ export const useCardNumberElement = ({
     transform: [' ', ''],
     element: {
       id,
-      mask,
+      validatorOptions: { skipLuhnValidation, mask },
       type,
     },
     onChange,
