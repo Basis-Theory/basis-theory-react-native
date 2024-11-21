@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.6.0...v1.7.0) (2024-11-21)
+
+
+### Features
+
+* add skipLuhnValidation to card number element ([#75](https://github.com/Basis-Theory/basis-theory-react-native/issues/75)) ([6a30b68](https://github.com/Basis-Theory/basis-theory-react-native/commit/6a30b68833b584ed2b84bc1ad0611da50c45af56))
+
 # [1.6.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.5.3...v1.6.0) (2024-09-30)
 
 
