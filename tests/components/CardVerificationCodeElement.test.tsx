@@ -23,7 +23,7 @@ describe('CardVerificationCodeElement', () => {
   describe('mask', () => {
     test.each([3, 4])(
       'applies mask correctly with cvcLength = %d',
-      (cvcLength: any) => {
+      (cvcLength) => {
         render(
           <CardVerificationCodeElement
             btRef={mockedRef}
