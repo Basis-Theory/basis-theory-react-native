@@ -46,7 +46,7 @@ export const useTextElement = ({
     setElementValue,
     element: {
       id,
-      mask,
+      validatorOptions: { mask },
       type: ElementType.TEXT,
     },
     onChange,
