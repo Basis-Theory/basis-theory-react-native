@@ -6,24 +6,26 @@ import {
 } from '../../src/modules/tokens';
 import type { BasisTheory as BasisTheoryType } from '@basis-theory/basis-theory-js/types/sdk';
 
+jest.mock('../../src/ElementValues', () => ({
+  _elementValues: {},
+  _elementErrors: {},
+}));
+
 describe('tokens', () => {
   beforeEach(() => {
-    //@ts-ignore
-    _elementValues = {
+    Object.assign(_elementValues, {
       '123': 'my very sensitive value',
       '456': 'my other very sensitive value',
       firstArrayElement: 'first sensitive element in array',
       secondArrayElement: 'second sensitive element in array',
       expirationDate: '12/23',
-    };
-    //@ts-ignore
-    _elementErrors = {};
+    });
+
+    Object.assign(_elementErrors, {});
   });
   afterAll(() => {
-    //@ts-ignore
-    _elementValues = {};
-    //@ts-ignore
-    _elementErrors = {};
+    Object.keys(_elementValues).forEach((key) => delete _elementValues[key]);
+    Object.keys(_elementErrors).forEach((key) => delete _elementErrors[key]);
   });
 
   test('calls bt tokens create', async () => {
@@ -157,10 +159,9 @@ test('calls bt tokens delete', async () => {
 
 describe('tokens - Validation', () => {
   test('throws if there are any validation errors', () => {
-    //@ts-ignore
-    _elementErrors = {
+    Object.assign(_elementErrors, {
       secondArrayElement: 'incomplete',
-    };
+    });
 
     const tokens = Tokens({} as BasisTheoryType);
 

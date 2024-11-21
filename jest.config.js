@@ -2,8 +2,12 @@ module.exports = {
   preset: 'react-native',
   setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
   displayName: 'Jest',
-  transformIgnorePatterns: [],
-  transform: { '\\.(js|jsx|ts|tsx)$': '@sucrase/jest-plugin' },
+  transform: {
+    '\\.(js|jsx|ts|tsx)$': 'babel-jest',
+  },
+  transformIgnorePatterns: [
+    'node_modules/(?!react-native-url-polyfill|@react-native|react-native)',
+  ],
   coverageThreshold: {
     global: {
       statements: 80,
