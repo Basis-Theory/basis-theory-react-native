@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react';
 import { _elementValues } from '../../ElementValues';
 import { useElementEvent } from './useElementEvent';
-import type { ElementType, EventConsumer, Mask } from '../../BaseElementTypes';
+import type { ElementType, EventConsumer } from '../../BaseElementTypes';
 import type { TransformType } from './useTransform';
 import { useTransform } from './useTransform';
 import { ValidatorOptions } from '../../utils/validation';

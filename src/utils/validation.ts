@@ -138,7 +138,10 @@ const runValidator = (
   return handleValidationResult(isValid, isPotentiallyValid);
 };
 
-const cardNumberValidator = (cardNumber: string, validatorOptions?: ValidatorOptions): ValidationResult =>
+const cardNumberValidator = (
+  cardNumber: string,
+  validatorOptions?: ValidatorOptions
+): ValidationResult =>
   runValidator(cardNumber, partial(_cardNumberValidator, [validatorOptions]));
 
 const cardExpirationDateValidator = (
@@ -148,7 +151,10 @@ const cardExpirationDateValidator = (
 const cardVerificationCodeValidator = (cvc: string): ValidationResult =>
   runValidator(cvc, _cardCvvValidator);
 
-const textMaskValidator = (value: string, validatorOptions?: ValidatorOptions): ValidationResult =>
+const textMaskValidator = (
+  value: string,
+  validatorOptions?: ValidatorOptions
+): ValidationResult =>
   runValidator(value, partial(_maskValidator, [validatorOptions]));
 
 export const _getValidationStrategy = (elementType: ElementType) =>

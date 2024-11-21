@@ -1,4 +1,4 @@
-import type { CreateEvent, Mask } from '../../BaseElementTypes';
+import type { CreateEvent } from '../../BaseElementTypes';
 import { ElementType } from '../../BaseElementTypes';
 import { useElementValidation } from './useElementValidation';
 import { has, isEmpty } from 'ramda';
