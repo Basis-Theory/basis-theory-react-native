@@ -1,3 +1,21 @@
+# [2.0.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.7.0...v2.0.0) (2024-11-21)
+
+
+### chore
+
+* upgrade dependencies ([#74](https://github.com/Basis-Theory/basis-theory-react-native/issues/74)) ([1ec7864](https://github.com/Basis-Theory/basis-theory-react-native/commit/1ec786419c56cdffe4a9ed721b7928e3ed81c233))
+
+
+### BREAKING CHANGES
+
+* upgrade react native to latest
+
+* chore: drop usage of sucrase/jest-plugin in favor of babel-jest
+
+test: mock ElementValues
+
+* chore: trasnformIgnores RN packages in jest config
+
 # [1.7.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.6.0...v1.7.0) (2024-11-21)
 
 
