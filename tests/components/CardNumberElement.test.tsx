@@ -277,4 +277,37 @@ describe('CardNumberElement', () => {
       expect(onChange).toHaveBeenCalledWith(expectedEvent);
     });
   });
+
+  describe('skipLuhnValidation', () => {
+    test('skips luhn validation when skipLuhnValidation is true', async () => {
+      const onChange = jest.fn();
+
+      const { getByPlaceholderText } = render(
+        <CardNumberElement
+          btRef={mockedRef}
+          skipLuhnValidation
+          onChange={onChange}
+          placeholder="Card Number"
+          style={{}}
+        />
+      );
+
+      const el = getByPlaceholderText('Card Number');
+
+      // luhn invalid card
+      fireEvent.changeText(el, '4242424242424241', {});
+
+      expect(onChange).toHaveBeenLastCalledWith({
+        empty: false,
+        errors: undefined,
+        valid: true,
+        maskSatisfied: true,
+        complete: true,
+        cvcLength: 3,
+        cardBin: undefined, // card validator does not compute 'card' when card is not valid
+        cardLast4: undefined,
+        brand: 'visa',
+      });
+    });
+  });
 });

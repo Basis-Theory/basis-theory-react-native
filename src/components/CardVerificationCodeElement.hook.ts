@@ -50,7 +50,7 @@ export const useCardVerificationCodeElement = ({
     setElementValue,
     element: {
       id,
-      mask,
+      validatorOptions: { mask },
       type,
     },
     onChange,

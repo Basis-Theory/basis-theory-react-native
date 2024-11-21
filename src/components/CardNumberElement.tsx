@@ -22,12 +22,14 @@ export const CardNumberElement = ({
   onChange,
   placeholder,
   placeholderTextColor,
+  skipLuhnValidation,
   style,
 }: CardNumberProps) => {
   const { elementRef, _onChange, elementValue, mask } = useCardNumberElement({
     btRef,
     onChange,
     cardTypes,
+    skipLuhnValidation,
   });
 
   return (
