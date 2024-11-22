@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/Basis-Theory/basis-theory-react-native/compare/v2.0.0...v2.0.1) (2024-11-22)
+
+
+### Bug Fixes
+
+* move @react-navigation/* packages to devDependencies ([#76](https://github.com/Basis-Theory/basis-theory-react-native/issues/76)) ([ebf5587](https://github.com/Basis-Theory/basis-theory-react-native/commit/ebf5587ce30f4493b9c8c72f401f39a56f357ecd))
+
 # [2.0.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v1.7.0...v2.0.0) (2024-11-21)
 
 
