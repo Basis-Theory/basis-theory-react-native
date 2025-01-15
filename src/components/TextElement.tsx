@@ -24,17 +24,22 @@ export const TextElement = ({
   mask,
   maxLength,
   onChange,
+  onBlur,
+  onFocus,
   placeholder,
   placeholderTextColor,
   secureTextEntry,
   style,
   textContentType,
 }: TextElementProps) => {
-  const { elementRef, elementValue, _onChange } = useTextElement({
-    btRef,
-    onChange,
-    mask,
-  });
+  const { elementRef, elementValue, _onChange, _onBlur, _onFocus } =
+    useTextElement({
+      btRef,
+      onChange,
+      onBlur,
+      onFocus,
+      mask,
+    });
 
   return (
     <MaskInput
@@ -42,7 +47,9 @@ export const TextElement = ({
       keyboardType={keyboardType}
       mask={mask}
       maxLength={maxLength}
+      onBlur={_onBlur}
       onChangeText={_onChange}
+      onFocus={_onFocus}
       placeholder={placeholder}
       placeholderFillCharacter=""
       placeholderTextColor={placeholderTextColor}

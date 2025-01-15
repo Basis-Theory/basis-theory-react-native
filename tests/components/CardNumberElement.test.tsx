@@ -310,4 +310,66 @@ describe('CardNumberElement', () => {
       });
     });
   });
+
+  describe('OnBlur', () => {
+    test('triggers event', () => {
+      const onBlur = jest.fn();
+
+      render(
+        <CardNumberElement
+          btRef={mockedRef}
+          placeholder="Card Number"
+          style={{}}
+          onBlur={onBlur}
+        />
+      );
+
+      const el = screen.getByPlaceholderText('Card Number');
+
+      fireEvent(el, 'blur');
+
+      expect(onBlur).toHaveBeenCalledWith({
+        brand: 'unknown',
+        cardBin: undefined,
+        cardLast4: undefined,
+        complete: false,
+        cvcLength: undefined,
+        empty: true,
+        errors: undefined,
+        maskSatisfied: false,
+        valid: false,
+      });
+    });
+  });
+
+  describe('OnFocus', () => {
+    test('triggers event', () => {
+      const onFocus = jest.fn();
+
+      render(
+        <CardNumberElement
+          btRef={mockedRef}
+          placeholder="Card Number"
+          style={{}}
+          onFocus={onFocus}
+        />
+      );
+
+      const el = screen.getByPlaceholderText('Card Number');
+
+      fireEvent(el, 'focus');
+
+      expect(onFocus).toHaveBeenCalledWith({
+        brand: 'unknown',
+        cardBin: undefined,
+        cardLast4: undefined,
+        complete: false,
+        cvcLength: undefined,
+        empty: true,
+        errors: undefined,
+        maskSatisfied: false,
+        valid: false,
+      });
+    });
+  });
 });

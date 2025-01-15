@@ -19,16 +19,20 @@ export const CardVerificationCodeElement = ({
   cvcLength,
   editable,
   keyboardType,
+  onBlur,
   onChange,
+  onFocus,
   placeholder,
   placeholderTextColor,
   style,
 }: CardVerificationCodeProps) => {
-  const { elementRef, elementValue, mask, _onChange } =
+  const { elementRef, elementValue, mask, _onChange, _onBlur, _onFocus } =
     useCardVerificationCodeElement({
       btRef,
       cvcLength,
       onChange,
+      onBlur,
+      onFocus,
     });
 
   return (
@@ -36,7 +40,9 @@ export const CardVerificationCodeElement = ({
       editable={editable}
       keyboardType={keyboardType}
       mask={mask}
+      onBlur={_onBlur}
       onChangeText={_onChange}
+      onFocus={_onFocus}
       placeholder={placeholder}
       placeholderFillCharacter=""
       placeholderTextColor={placeholderTextColor}
