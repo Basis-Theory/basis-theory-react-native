@@ -9,7 +9,6 @@ const throwIfDuppedCardConfig = ifElse(
   () => {
     const msg = `Detected multiple cardType objects with the same type in the element configuration.`;
 
-    //    telemetryLogger.logger.info(msg);
     throw new Error(msg);
   },
   always(false)
