@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v2.0.1...v2.1.0) (2025-01-16)
+
+
+### Features
+
+* adds onFocus and onBlur event handlers ([#78](https://github.com/Basis-Theory/basis-theory-react-native/issues/78)) ([7a22e52](https://github.com/Basis-Theory/basis-theory-react-native/commit/7a22e5262e20d9fabc2d7708a7cd0e5efba0fda2))
+
 ## [2.0.1](https://github.com/Basis-Theory/basis-theory-react-native/compare/v2.0.0...v2.0.1) (2024-11-22)
 
 
