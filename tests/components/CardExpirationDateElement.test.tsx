@@ -106,4 +106,58 @@ describe('CardVerificationCodeElement', () => {
       expect(onChange).toHaveBeenCalledWith(expectedEvent);
     });
   });
+
+  describe('OnBlur', () => {
+    test('triggers event', () => {
+      const onBlur = jest.fn();
+
+      render(
+        <CardExpirationDateElement
+          btRef={mockedRef}
+          placeholder="Expiration Date"
+          style={{}}
+          onBlur={onBlur}
+        />
+      );
+
+      const el = screen.getByPlaceholderText('Expiration Date');
+
+      fireEvent(el, 'blur');
+
+      expect(onBlur).toHaveBeenCalledWith({
+        complete: false,
+        empty: true,
+        errors: undefined,
+        maskSatisfied: false,
+        valid: false,
+      });
+    });
+  });
+
+  describe('OnFocus', () => {
+    test('triggers event', () => {
+      const onFocus = jest.fn();
+
+      render(
+        <CardExpirationDateElement
+          btRef={mockedRef}
+          placeholder="Expiration Date"
+          style={{}}
+          onFocus={onFocus}
+        />
+      );
+
+      const el = screen.getByPlaceholderText('Expiration Date');
+
+      fireEvent(el, 'focus');
+
+      expect(onFocus).toHaveBeenCalledWith({
+        complete: false,
+        empty: true,
+        errors: undefined,
+        maskSatisfied: false,
+        valid: false,
+      });
+    });
+  });
 });

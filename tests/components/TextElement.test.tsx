@@ -5,7 +5,12 @@
 import 'react-native';
 import React from 'react';
 
-import { render, fireEvent, screen } from '@testing-library/react-native';
+import {
+  render,
+  fireEvent,
+  screen,
+  userEvent,
+} from '@testing-library/react-native';
 import { TextElement } from '../../src';
 
 describe('TextElement', () => {
@@ -19,20 +24,6 @@ describe('TextElement', () => {
       blur: () => {},
     },
   };
-
-  describe('Field', () => {
-    test('works', () => {
-      render(
-        <TextElement btRef={mockedRef} placeholder="Name on Card" style={{}} />
-      );
-
-      const el = screen.getByPlaceholderText('Name on Card');
-
-      fireEvent.changeText(el, 'Peter Panda');
-
-      expect(el.props.value).toStrictEqual('Peter Panda');
-    });
-  });
 
   describe('Events', () => {
     describe('OnChange w/ mask', () => {
@@ -102,6 +93,86 @@ describe('TextElement', () => {
 
         expect(el.props.value).toStrictEqual(expectedValue);
         expect(onChange).toHaveBeenCalledWith(expectedEvent);
+      });
+    });
+  });
+
+  describe('OnBlur', () => {
+    test('triggers event', () => {
+      const onBlur = jest.fn();
+
+      render(
+        <TextElement
+          btRef={mockedRef}
+          placeholder="SSN"
+          mask={[
+            /\d/u,
+            /\d/u,
+            /\d/u,
+            '-',
+            /\d/u,
+            /\d/u,
+            '-',
+            /\d/u,
+            /\d/u,
+            /\d/u,
+            /\d/u,
+          ]}
+          style={{}}
+          onBlur={onBlur}
+        />
+      );
+
+      const el = screen.getByPlaceholderText('SSN');
+
+      fireEvent(el, 'blur');
+
+      expect(onBlur).toHaveBeenCalledWith({
+        complete: false,
+        empty: true,
+        errors: undefined,
+        maskSatisfied: false,
+        valid: false,
+      });
+    });
+  });
+
+  describe('OnFocus', () => {
+    test('triggers event', () => {
+      const onFocus = jest.fn();
+
+      render(
+        <TextElement
+          btRef={mockedRef}
+          placeholder="SSN"
+          mask={[
+            /\d/u,
+            /\d/u,
+            /\d/u,
+            '-',
+            /\d/u,
+            /\d/u,
+            '-',
+            /\d/u,
+            /\d/u,
+            /\d/u,
+            /\d/u,
+          ]}
+          style={{}}
+          onFocus={onFocus}
+        />
+      );
+
+      const el = screen.getByPlaceholderText('SSN');
+
+      fireEvent(el, 'focus');
+
+      expect(onFocus).toHaveBeenCalledWith({
+        complete: false,
+        empty: true,
+        errors: undefined,
+        maskSatisfied: false,
+        valid: false,
       });
     });
   });

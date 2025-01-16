@@ -1,10 +1,12 @@
 import type { Dispatch, SetStateAction } from 'react';
 import { _elementValues } from '../../ElementValues';
 import { useElementEvent } from './useElementEvent';
-import type { ElementType, EventConsumer } from '../../BaseElementTypes';
+import type { ElementType, EventConsumers } from '../../BaseElementTypes';
 import type { TransformType } from './useTransform';
 import { useTransform } from './useTransform';
 import { ValidatorOptions } from '../../utils/validation';
+import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
+import { isString } from '../../utils/shared';
 
 type UseUserEventHandlers = {
   setElementValue: Dispatch<SetStateAction<string>>;
@@ -13,14 +15,15 @@ type UseUserEventHandlers = {
     type: ElementType;
     validatorOptions?: ValidatorOptions;
   };
-  onChange?: EventConsumer;
   transform?: TransformType;
-};
+} & EventConsumers;
 
 export const useUserEventHandlers = ({
   setElementValue,
   element,
   onChange,
+  onBlur,
+  onFocus,
   transform,
 }: UseUserEventHandlers) => {
   const createEvent = useElementEvent(element);
@@ -41,11 +44,21 @@ export const useUserEventHandlers = ({
         return _elementValue;
       });
     },
-    _onFocus: () => {
-      // TODO
+    _onFocus: (_event: NativeSyntheticEvent<TextInputFocusEventData>) => {
+      const val = _elementValues[element.id] ?? '';
+
+      if (onFocus && isString(val)) {
+        const event = createEvent(val);
+        onFocus(event);
+      }
     },
-    _onBlur: () => {
-      // TODO
+    _onBlur: (_event: NativeSyntheticEvent<TextInputFocusEventData>) => {
+      const val = _elementValues[element.id] ?? '';
+
+      if (onBlur && isString(val)) {
+        const event = createEvent(val);
+        onBlur(event);
+      }
     },
     _onReady: () => {
       // TODO

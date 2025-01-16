@@ -101,4 +101,60 @@ describe('CardVerificationCodeElement', () => {
       expect(onChange).toHaveBeenCalledWith(expectedEvent);
     });
   });
+
+  describe('OnBlur', () => {
+    test('triggers event', () => {
+      const onBlur = jest.fn();
+
+      render(
+        <CardVerificationCodeElement
+          btRef={mockedRef}
+          placeholder="CVC"
+          cvcLength={3}
+          style={{}}
+          onBlur={onBlur}
+        />
+      );
+
+      const el = screen.getByPlaceholderText('CVC');
+
+      fireEvent(el, 'blur');
+
+      expect(onBlur).toHaveBeenCalledWith({
+        complete: false,
+        empty: true,
+        errors: undefined,
+        maskSatisfied: false,
+        valid: false,
+      });
+    });
+  });
+
+  describe('OnFocus', () => {
+    test('triggers event', () => {
+      const onFocus = jest.fn();
+
+      render(
+        <CardVerificationCodeElement
+          btRef={mockedRef}
+          placeholder="CVC"
+          cvcLength={3}
+          style={{}}
+          onFocus={onFocus}
+        />
+      );
+
+      const el = screen.getByPlaceholderText('CVC');
+
+      fireEvent(el, 'focus');
+
+      expect(onFocus).toHaveBeenCalledWith({
+        complete: false,
+        empty: true,
+        errors: undefined,
+        maskSatisfied: false,
+        valid: false,
+      });
+    });
+  });
 });

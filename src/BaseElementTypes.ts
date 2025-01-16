@@ -75,6 +75,12 @@ type ElementEvent = {
 
 type EventConsumer = (event: ElementEvent) => void;
 
+interface EventConsumers {
+  onBlur?: EventConsumer;
+  onChange?: EventConsumer;
+  onFocus?: EventConsumer;
+}
+
 type CreateEvent = (value: string) => ElementEvent;
 
 export { ElementType };
@@ -83,7 +89,7 @@ export type {
   BTRef,
   CreateEvent,
   ElementEvent,
-  EventConsumer,
+  EventConsumers,
   InputBtDateRef,
   InputBtDateRefReveal,
   InputBTRef,
