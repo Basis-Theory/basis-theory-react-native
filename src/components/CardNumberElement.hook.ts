@@ -5,7 +5,7 @@ import type { TextInput } from 'react-native';
 import {
   ElementType,
   type BTRef,
-  type EventConsumer,
+  type EventConsumers,
 } from '../BaseElementTypes';
 import { useBtRef } from './shared/useBtRef';
 import { useBtRefUnmount } from './shared/useBtRefUnmount';
@@ -16,14 +16,15 @@ import { useCleanupStateBeforeUnmount } from './shared/useCleanStateOnUnmount';
 
 type UseCardNumberElementProps = {
   btRef?: ForwardedRef<BTRef>;
-  onChange?: EventConsumer;
   cardTypes?: CreditCardType[];
   skipLuhnValidation?: boolean;
-};
+} & EventConsumers;
 
 export const useCardNumberElement = ({
   btRef,
+  onBlur,
   onChange,
+  onFocus,
   cardTypes,
   skipLuhnValidation,
 }: UseCardNumberElementProps) => {
@@ -51,7 +52,7 @@ export const useCardNumberElement = ({
     setElementValue,
   });
 
-  const { _onChange } = useUserEventHandlers({
+  const { _onChange, _onBlur, _onFocus } = useUserEventHandlers({
     setElementValue,
     transform: [' ', ''],
     element: {
@@ -60,12 +61,16 @@ export const useCardNumberElement = ({
       type,
     },
     onChange,
+    onBlur,
+    onFocus,
   });
 
   return {
     elementRef,
     elementValue,
     _onChange,
+    _onBlur,
+    _onFocus,
     mask,
   };
 };

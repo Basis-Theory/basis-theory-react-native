@@ -3,8 +3,8 @@ import { useId, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import {
   ElementType,
+  type EventConsumers,
   type BTRef,
-  type EventConsumer,
   type Mask,
 } from '../BaseElementTypes';
 import { useBtRefUnmount } from './shared/useBtRefUnmount';
@@ -16,14 +16,15 @@ import { useCleanupStateBeforeUnmount } from './shared/useCleanStateOnUnmount';
 type UseTextElementProps = {
   btRef?: ForwardedRef<BTRef>;
   mask?: Mask;
-  onChange?: EventConsumer;
   transform?: TransformType;
-};
+} & EventConsumers;
 
 export const useTextElement = ({
   btRef,
   mask,
   onChange,
+  onBlur,
+  onFocus,
   transform,
 }: UseTextElementProps) => {
   const id = useId();
@@ -42,7 +43,7 @@ export const useTextElement = ({
     setElementValue,
   });
 
-  const { _onChange } = useUserEventHandlers({
+  const { _onChange, _onBlur, _onFocus } = useUserEventHandlers({
     setElementValue,
     element: {
       id,
@@ -50,12 +51,16 @@ export const useTextElement = ({
       type: ElementType.TEXT,
     },
     onChange,
+    onBlur,
+    onFocus,
     transform,
   });
 
   return {
     elementRef,
     _onChange,
+    _onBlur,
+    _onFocus,
     elementValue,
   };
 };

@@ -18,7 +18,6 @@ import {
   replaceElementRefs,
   replaceSensitiveData,
 } from '../utils/dataManipulationUtils';
-import { logger } from '../utils/logging';
 import { isNilOrEmpty } from '../utils/shared';
 
 export type CreateTokenWithBtRef = Omit<CreateToken, 'data'> & {
@@ -45,14 +44,9 @@ export const Tokens = (bt: BasisTheoryType) => {
 
       const token = replaceSensitiveData(_token) as Token<T>;
 
-      await logger.log.info(`Token retrieved ${id}`);
-
       return token;
     } catch (error) {
-      await logger.log.error(
-        `Error while retrieving Token ${id}`,
-        error as Error
-      );
+      console.error(error);
     }
   };
 
@@ -71,11 +65,9 @@ export const Tokens = (bt: BasisTheoryType) => {
 
       const token = await bt.tokens.create(_token, requestOptions);
 
-      await logger.log.info(`Token created: ${token.id}`);
-
       return token;
     } catch (error) {
-      await logger.log.error('Error while creating Token', error as Error);
+      console.error(error);
     }
   };
 
@@ -95,11 +87,9 @@ export const Tokens = (bt: BasisTheoryType) => {
 
       const token = await bt.tokens.update(tokenId, _token, requestOptions);
 
-      await logger.log.info(`Token updated: ${tokenId}`);
-
       return token;
     } catch (error) {
-      await logger.log.error('Error while updating Token', error as Error);
+      console.error(error);
     }
   };
 
@@ -107,11 +97,9 @@ export const Tokens = (bt: BasisTheoryType) => {
     try {
       if (id) {
         await bt.tokens.delete(id);
-
-        await logger.log.info(`Token deleted: ${id}`);
       }
     } catch (error) {
-      await logger.log.error('Error while deleting Token', error as Error);
+      console.error(error);
     }
   };
 
@@ -123,7 +111,7 @@ export const Tokens = (bt: BasisTheoryType) => {
         return await bt.tokenize(_token);
       }
     } catch (error) {
-      await logger.log.error('Error while running tokenize', error as Error);
+      console.error(error);
     }
   };
 

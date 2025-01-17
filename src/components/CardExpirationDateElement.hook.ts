@@ -1,11 +1,11 @@
 import type { ForwardedRef } from 'react';
 import { useId, useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
-import type { BTDateRef } from '../BaseElementTypes';
 import {
   ElementType,
+  type BTDateRef,
   type BTRef,
-  type EventConsumer,
+  type EventConsumers,
 } from '../BaseElementTypes';
 import { useBtRefUnmount } from './shared/useBtRefUnmount';
 import { useBtRef } from './shared/useBtRef';
@@ -15,12 +15,13 @@ import { useCleanupStateBeforeUnmount } from './shared/useCleanStateOnUnmount';
 
 type UseCardExpirationDateElementProps = {
   btRef?: ForwardedRef<BTDateRef | BTRef>;
-  onChange?: EventConsumer;
-};
+} & EventConsumers;
 
 const useCardExpirationDateElement = ({
   btRef,
+  onBlur,
   onChange,
+  onFocus,
 }: UseCardExpirationDateElementProps) => {
   const id = useId();
 
@@ -43,7 +44,7 @@ const useCardExpirationDateElement = ({
     type,
   });
 
-  const { _onChange } = useUserEventHandlers({
+  const { _onChange, _onBlur, _onFocus } = useUserEventHandlers({
     setElementValue,
     element: {
       id,
@@ -51,13 +52,17 @@ const useCardExpirationDateElement = ({
       type,
     },
     onChange,
+    onBlur,
+    onFocus,
   });
 
   return {
+    _onBlur,
+    _onChange,
+    _onFocus,
     elementRef,
     elementValue,
     mask,
-    _onChange,
   };
 };
 

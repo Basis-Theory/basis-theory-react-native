@@ -19,25 +19,32 @@ export const CardNumberElement = ({
   cardTypes,
   editable,
   keyboardType,
+  onBlur,
   onChange,
+  onFocus,
   placeholder,
   placeholderTextColor,
   skipLuhnValidation,
   style,
 }: CardNumberProps) => {
-  const { elementRef, _onChange, elementValue, mask } = useCardNumberElement({
-    btRef,
-    onChange,
-    cardTypes,
-    skipLuhnValidation,
-  });
+  const { elementRef, _onChange, _onBlur, _onFocus, elementValue, mask } =
+    useCardNumberElement({
+      btRef,
+      onBlur,
+      onChange,
+      onFocus,
+      cardTypes,
+      skipLuhnValidation,
+    });
 
   return (
     <MaskInput
       editable={editable}
       keyboardType={keyboardType}
       mask={mask}
+      onBlur={_onBlur}
       onChangeText={_onChange}
+      onFocus={_onFocus}
       placeholder={placeholder}
       placeholderFillCharacter=""
       placeholderTextColor={placeholderTextColor}
