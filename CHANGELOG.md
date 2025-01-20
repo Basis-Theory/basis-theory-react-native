@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/Basis-Theory/basis-theory-react-native/compare/v2.1.0...v2.1.1) (2025-01-20)
+
+
+### Bug Fixes
+
+* move react and react-native to peerDependencies ([#79](https://github.com/Basis-Theory/basis-theory-react-native/issues/79)) ([05a0fa6](https://github.com/Basis-Theory/basis-theory-react-native/commit/05a0fa668964357f0ac972923f9b664fe3907090))
+
 # [2.1.0](https://github.com/Basis-Theory/basis-theory-react-native/compare/v2.0.1...v2.1.0) (2025-01-16)
 
 
