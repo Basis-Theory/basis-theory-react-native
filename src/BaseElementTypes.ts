@@ -71,6 +71,43 @@ type ElementEvent = {
    * Array of objects that indicates if an element is invalid or incomplete.
    */
   errors?: FieldError[];
+
+  /**
+   * Card brand identifier
+   * Only present for card number elements
+   */
+  brand?:
+    | string
+    | 'american-express'
+    | 'diners-club'
+    | 'discover'
+    | 'ebt'
+    | 'elo'
+    | 'hiper'
+    | 'hipercard'
+    | 'jcb'
+    | 'maestro'
+    | 'mastercard'
+    | 'mir'
+    | 'private-label'
+    | 'proprietary'
+    | 'unionpay'
+    | 'visa';
+  /**
+   * Last 4 digits of the card number
+   * Only present for card number elements
+   */
+  cardLast4?: string;
+  /**
+   * Required length of the CVC for the detected card brand
+   * Only present for card number elements
+   */
+  cvcLength?: number;
+  /**
+   * Bank Identification Number (first 6-8 digits of card number)
+   * Only present for card number elements
+   */
+  cardBin?: string;
 };
 
 type EventConsumer = (event: ElementEvent) => void;

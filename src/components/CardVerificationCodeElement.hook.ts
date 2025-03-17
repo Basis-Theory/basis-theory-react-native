@@ -51,7 +51,7 @@ export const useCardVerificationCodeElement = ({
     setElementValue,
     element: {
       id,
-      validatorOptions: { mask },
+      validatorOptions: { mask, cvcLength: [cvcLength] },
       type,
     },
     onBlur,

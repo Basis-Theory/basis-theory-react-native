@@ -47,6 +47,8 @@ export const Collect = () => {
 
   const { bt, error } = useBasisTheory('<API_KEY>');
 
+  const [cvcLength, setCvcLength] = useState<number>();
+
   useEffect(() => {
     if (error) {
       console.log(error);
@@ -56,6 +58,10 @@ export const Collect = () => {
   const updateElementsEvents =
     (eventSource: 'cardExpirationDate' | 'cardNumber' | 'cvc') =>
     (event: ElementEvent) => {
+      if (event.cvcLength) {
+        setCvcLength(event.cvcLength);
+      }
+
       setElementsEvents({
         ...elementsEvents,
         [eventSource]: event,
@@ -177,10 +183,10 @@ export const Collect = () => {
           />
           <CardVerificationCodeElement
             btRef={cardVerificationCodeRef}
-            cvcLength={3}
+            cvcLength={cvcLength}
             keyboardType="numeric"
             onChange={updateElementsEvents('cvc')}
-            placeholder="CVC"
+            placeholder={'Security code'}
             placeholderTextColor="#99a0bf"
             style={styles.elements}
           />
