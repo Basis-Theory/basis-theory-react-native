@@ -1,5 +1,5 @@
 import { cvv, expirationDate, number } from 'card-validator';
-import { flip, isEmpty, partial, split } from 'ramda';
+import { isEmpty, partial, split } from 'ramda';
 import type { Mask, ValidationResult } from '../BaseElementTypes';
 import { ElementType } from '../BaseElementTypes';
 import {
