@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/Basis-Theory/basis-theory-react-native/compare/v2.1.1...v2.1.2) (2025-03-17)
+
+
+### Bug Fixes
+
+* add types for card number element events ([#82](https://github.com/Basis-Theory/basis-theory-react-native/issues/82)) ([44d37d0](https://github.com/Basis-Theory/basis-theory-react-native/commit/44d37d01471ac6c27596c67881933561d7758e7f))
+
 ## [2.1.1](https://github.com/Basis-Theory/basis-theory-react-native/compare/v2.1.0...v2.1.1) (2025-01-20)
 
 
