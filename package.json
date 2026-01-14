@@ -97,6 +97,7 @@
     "micromatch": "4.0.8",
     "types-ramda": "0.29.4",
     "unset-value": "^2.0.1",
-    "wrap-ansi": "7.0.0"
+    "wrap-ansi": "7.0.0",
+    "form-data": "^4.0.4"
   }
 }
